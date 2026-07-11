@@ -1,0 +1,232 @@
+{
+  "_meta": {
+    "nome": "Motor de Discovery de Inflexões",
+    "versao": "1.0",
+    "data": "2026-07-11",
+    "origem": "Reconstrução autónoma da fase de discovery do framework v1 (step_1 macro + critério 5), industrializando as duas forças identificadas por engenharia reversa da sessão de 20/10/2025: leitura causal de gargalo em 2.ª ordem e triangulação por sinais custosos independentes.",
+    "objetivo": "Encontrar ações em verdadeiro ponto de inflexão, ainda invisíveis ao retail mainstream — antes da cobertura da imprensa financeira generalista.",
+    "fronteira_de_ambito": "Este motor TERMINA na watchlist qualificada + cartões de tese + calendário de eventos. Não produz níveis de entrada, stops, sizing nem timing. A execução pertence a um sistema separado, qualquer que ele seja. Esta fronteira é dura: a narrativa informa convicção e prioridade; nunca decide execução.",
+    "regras_de_honestidade": [
+      "Cada sinal registado exige fonte identificável + data. Sem fonte, o sinal não existe.",
+      "Proibido estimar silenciosamente: dado não obtível declara-se 'não obtível', nunca se inventa.",
+      "Opiniões (nível L1) nunca substituem compromissos (L3+) — servem apenas de pointer para procurar L3+.",
+      "Cada tese arquiva os seus invalidadores no momento da criação — nunca retroativamente."
+    ]
+  },
+  "perfil_comunicacao": {
+    "idioma": "Português de Portugal",
+    "tom": "próximo, inteligente e direto - mentor experiente a explicar a pupilo",
+    "formato": "Completude mede-se pelo preenchimento de todos os campos de cada template (mapa, contagem, cartão) — não existe mínimo nem máximo de caracteres.",
+    "clarification_protocol": "Se o objetivo não estiver 100% claro, perguntar antes de proceder."
+  },
+  "fase_0_definicao_do_alvo": {
+    "titulo": "Definição operacional de 'inflexão'",
+    "definicao": "Mudança de regime na taxa de compromissos custosos de capital dirigidos a uma camada específica de uma cadeia de valor, ANTES de essa camada ter cobertura na imprensa financeira generalista.",
+    "observaveis": {
+      "obs_1": "Sinais de nível L3+ (ver fase 3) a acelerar em frequência na janela de 90 dias vs os 12 meses anteriores",
+      "obs_2": "Sintomas de procura > oferta na camada: lead times a esticar, preços/dayrates a subir, utilizações >90%, book-to-bill >1",
+      "obs_3": "Cobertura ainda confinada aos níveis 1-2 do gradiente (ver fase 4)"
+    },
+    "anti_definicao": "Uma tendência estabelecida com cobertura generalista NÃO é uma inflexão, por muito válida que seja — é beta de tema, sem edge informacional. Este motor procura a derivada, não o nível.",
+    "outputs_entregues": ["criterio_de_inflexao (aplicado em todas as fases seguintes)"]
+  },
+  "fase_1_motores_de_hipoteses": {
+    "titulo": "Cinco motores geradores de hipóteses de tema",
+    "regra_de_uso": "Cada corrida semanal executa os 5 motores. Cada motor produz 0-3 hipóteses em bruto. Uma hipótese é uma frase no formato: 'A camada [X] da cadeia [Y] vai receber capex forçado porque [restrição]'. Hipóteses que não couberem neste formato reprovam à entrada.",
+    "motor_1_gargalo": {
+      "pergunta_template": "Para cada megatendência JÁ mainstream: mapeada a cadeia física de produção ponta-a-ponta, onde é que a física, a capacidade instalada ou o tempo travam o próximo doubling da procura?",
+      "onde_procurar": [
+        "Limites físicos declarados na imprensa técnica (dimensões, densidades, térmica, energia por unidade)",
+        "Utilizações de capacidade >90% e fábricas/frota esgotadas ('sold out until...')",
+        "Lead times a esticar trimestre a trimestre; filas de espera formais",
+        "Escassez de mão-de-obra especializada ou de um material específico"
+      ],
+      "sinal_de_que_ha_hipotese": "Quando os operadores da camada dizem publicamente que não conseguem entregar tudo o que lhes pedem."
+    },
+    "motor_2_derivada_segunda": {
+      "pergunta_template": "Onde é que o crescimento do crescimento está a mudar de regime — bookings a crescer mais depressa que a receita, backlog a bater recordes, book-to-bill >1 sustentado, preços spot acima de contrato?",
+      "onde_procurar": [
+        "Releases de resultados de fornecedores de bens de capital (bookings vs receita — a receita é passado, o booking é futuro)",
+        "Backlogs e carteiras plurianuais reportadas",
+        "Índices de preços de nicho (dayrates, preços spot de componentes, prémios de urgência)"
+      ],
+      "sinal_de_que_ha_hipotese": "Bookings/backlog a acelerar enquanto a receita ainda não reflete — a inflexão está entre os dois."
+    },
+    "motor_3_standards": {
+      "pergunta_template": "Que standard, especificação ou exigência regulatória está a passar de rascunho a norma (JEDEC, OCP, IEEE, regulação setorial)? Quando o standard fecha, a lista de fornecedores compatíveis cristaliza — e torna-se investível.",
+      "onde_procurar": [
+        "Calendários de organismos de standards e consórcios industriais",
+        "Anúncios de interoperabilidade/certificação entre fornecedores",
+        "Regulação com prazos de conformidade obrigatórios e financiados"
+      ],
+      "sinal_de_que_ha_hipotese": "O momento em que 'quem pode fornecer isto' passa de pergunta aberta a lista fechada de 3-8 nomes."
+    },
+    "motor_4_politica_financiada": {
+      "pergunta_template": "Que dinheiro público está APROPRIADO e a converter-se em awards e purchase orders — não proposto, não anunciado, não em debate?",
+      "onde_procurar": [
+        "Final awards de programas industriais (com beneficiário e montante nomeados)",
+        "Notices to proceed em projetos de infraestrutura",
+        "Concursos adjudicados (preferred bidder → contrato assinado)"
+      ],
+      "regra_dura": "Propostas, planos e discursos políticos não geram hipóteses. Só dinheiro com beneficiário nomeado.",
+      "sinal_de_que_ha_hipotese": "A transição adjudicação → encomenda a fornecedores privados identificáveis."
+    },
+    "motor_5_segunda_linha": {
+      "pergunta_template": "Para cada vencedor que o retail JÁ descobriu: quem são os fornecedores, o BOM, os provedores de capacidade e os resolvedores dos novos problemas que o crescimento desse vencedor cria?",
+      "onde_procurar": [
+        "Supply chain e design wins do vencedor mainstream (imprensa técnica, teardowns, filings)",
+        "Os novos modos de falha que a escala do vencedor cria (térmica, yield, energia, logística) — quem os resolve?",
+        "Fornecedores em expansão de capacidade sincronizada com o vencedor"
+      ],
+      "sinal_de_que_ha_hipotese": "O vencedor mainstream é a prova de procura; a segunda linha ainda cobra sem cobertura."
+    },
+    "inputs_recebidos": ["criterio_de_inflexao (fase 0)"],
+    "outputs_entregues": ["hipoteses_em_bruto (0-15 por corrida, cada uma no formato obrigatório)"]
+  },
+  "fase_2_cartografia_da_portagem": {
+    "titulo": "Mapa da cadeia e das portagens (por hipótese sobrevivente)",
+    "procedimento": {
+      "passo_1": "Desenhar o fluxo físico da camada em 3-7 etapas sequenciais (ex.: desenhar → testar → montar → inspecionar → embalar → instalar).",
+      "passo_2": "Nomear os operadores de cada etapa (empresas concretas, cotadas ou não).",
+      "passo_3": "Classificar a concentração de cada etapa: monopólio funcional / oligopólio / commodity. Etapas commodity não geram portagem — descartar.",
+      "passo_4": "Determinar a elasticidade: quem cobra por unidade do volume NOVO (por die, por rack, por MW, por km de cabo)? Preferir cobradores por unidade a beneficiários difusos.",
+      "passo_5": "Localizar o modo de falha do tema: onde é que o crescimento parte? (yield, sobreaquecimento, contaminação, gargalo de teste). Quem vende a solução do modo de falha tem a portagem mais defensável — a procura dele cresce com os PROBLEMAS do tema, não só com o sucesso."
+    },
+    "template_output": {
+      "cadeia": "nome da cadeia",
+      "etapas": [
+        {
+          "etapa": "",
+          "operadores": [],
+          "concentracao": "monopolio_funcional | oligopolio | commodity",
+          "cobra_por_unidade_de": "",
+          "e_modo_de_falha": false
+        }
+      ]
+    },
+    "regra_anti_correlacao": "Uma watchlist final não pode ter dois tickers na mesma etapa da mesma cadeia — seria a mesma aposta duas vezes disfarçada de diversificação.",
+    "inputs_recebidos": ["hipoteses_em_bruto (fase 1)"],
+    "outputs_entregues": ["mapa_de_portagens (por hipótese)"]
+  },
+  "fase_3_triangulacao_sinais_custosos": {
+    "titulo": "Triangulação por sinais custosos convergentes — o gate central do motor",
+    "principio": "Quem paga para falar > quem é pago para falar. A verdade de uma tese mede-se pelo capital que atores independentes já comprometeram com ela, não pela qualidade da prosa que a descreve.",
+    "classes_de_emissor": {
+      "classe_1": "Fornecedores de equipamento/componentes da camada (lançamentos, capacidade própria)",
+      "classe_2": "Produtores/operadores diretos (foundries, fabricantes, utilities, operadores de frota)",
+      "classe_3": "Integradores e intermediários (OSAT, EMS, EPC, distribuidores a fazer stock)",
+      "classe_4": "Clientes finais (hyperscalers, OEMs, governos-como-clientes) a comprometer procura",
+      "classe_5": "Estado como financiador (awards apropriados, notices to proceed)",
+      "classe_6": "Talento (vagas e contratações especializadas na camada — antecede a imprensa por trimestres)",
+      "classe_7": "Infraestrutura física (permits de construção, encomendas de rede/água/energia, obra visível)"
+    },
+    "hierarquia_de_custo_do_sinal": {
+      "L5": "Capex irreversível comprometido (fábrica em obra, frota encomendada, aquisição fechada)",
+      "L4": "Produto lançado / produção certificada / qualificação de cliente concluída",
+      "L3": "Contratos e encomendas firmes (POs, LTAs, awards adjudicados, design wins nomeados)",
+      "L2": "Pilotos, contratações em escala, permits obtidos, joint ventures assinadas",
+      "L1": "Discurso: guidance, price targets, artigos, keynotes, roadmaps sem compromisso",
+      "regra_L1": "L1 NUNCA conta para a triangulação. Serve exclusivamente de pointer: um L1 interessante é uma instrução para procurar o L3+ que o sustenta. Se o L3+ não existir, o L1 morre ali."
+    },
+    "regra_de_qualificacao": {
+      "minimo": "≥3 classes de emissor independentes com sinais ≥L3, dentro de uma janela de 90 dias",
+      "rajada": "≥1 desses sinais nos últimos 30 dias (concentração temporal = inflexão a acontecer agora, não arquivo histórico)",
+      "forte": "≥5 classes com ≥1 sinal L5 → tema de convicção máxima"
+    },
+    "teste_de_independencia": {
+      "pergunta": "Este sinal teria sido emitido mesmo que os outros não existissem?",
+      "anti_cascata": "Sinais que citam a mesma fonte primária (o mesmo press release, o mesmo relatório) contam como UM sinal, na classe do emissor original.",
+      "anti_eco": "Cobertura mediática de um sinal não é um novo sinal."
+    },
+    "template_output": {
+      "tema": "",
+      "sinais": [
+        {
+          "classe": "1-7",
+          "nivel": "L2-L5",
+          "descricao": "",
+          "emissor": "",
+          "fonte": "",
+          "data": ""
+        }
+      ],
+      "classes_convergentes": 0,
+      "sinal_mais_recente_dias": 0,
+      "veredito": "QUALIFICADO | EMBRIAO (voltar a testar em N semanas) | REPROVADO"
+    },
+    "inputs_recebidos": ["mapa_de_portagens (fase 2)"],
+    "outputs_entregues": ["temas_qualificados (com pilha de sinais datada e fontes)"]
+  },
+  "fase_4_teste_de_invisibilidade": {
+    "titulo": "Gradiente de cobertura — medir a distância ao retail",
+    "gradiente": {
+      "nivel_1": "Imprensa técnica e de trade (journals de engenharia, publicações setoriais, atas de consórcios, conference papers)",
+      "nivel_2": "Sell-side especializado e nicho institucional (analistas do subsetor, newsletters profissionais)",
+      "nivel_3": "Imprensa financeira generalista (Bloomberg, WSJ, FT, Reuters markets)",
+      "nivel_4": "Retail media (CNBC segments, YouTube finance, Reddit/X retail, ETFs temáticos dedicados)"
+    },
+    "medicao": "Para cada tema qualificado, procurar ativamente o tema nos níveis 3-4 e registar o que se encontra (com exemplos). A ausência tem de ser verificada, não assumida.",
+    "regra": "Tema investível enquanto a cobertura da SUB-CAMADA está confinada aos níveis 1-2. (O tema-mãe pode ser mainstream — é irrelevante; o que conta é a camada da portagem.)",
+    "sinal_de_morte_do_edge": [
+      "A sub-camada ganha nome próprio na imprensa financeira generalista ('the X trade')",
+      "Lançamento de ETF temático dedicado à sub-camada",
+      "O ticker da portagem aparece em listas retail de 'top picks' generalistas"
+    ],
+    "nota": "Morte do edge informacional não significa vender — significa que o tema passa ao estado 'maduro' (fase 6) e novas entradas deixam de ter a vantagem de quem chegou cedo.",
+    "inputs_recebidos": ["temas_qualificados (fase 3)"],
+    "outputs_entregues": ["temas_qualificados_invisiveis (com registo do gradiente)"]
+  },
+  "fase_5_do_tema_aos_tickers": {
+    "titulo": "Cartões de tese por ticker (o critério 5 reconstruído)",
+    "selecao": {
+      "regra_1": "Um ticker por etapa de portagem (regra anti-correlação da fase 2).",
+      "regra_2": "Preferência por pure-plays: % da receita exposta à etapa declarada no cartão. Conglomerados só entram se a etapa puder mover o grupo (>20% da receita ou do crescimento).",
+      "regra_3": "Investibilidade parametrizada à conta: dollar volume mínimo = max($5M, 100 × posição máxima prevista em $). Nunca um número fixo universal.",
+      "regra_4": "Se a melhor portagem não for investível (privada, ilíquida, subsidiária), registar na mesma — o mapa fica completo e a empresa pode IPO/spin-off mais tarde."
+    },
+    "cartao_de_tese": {
+      "ticker": "",
+      "etapa_da_portagem": "qual etapa do mapa da fase 2 este ticker cobra",
+      "frase_da_restricao": "porque é que a procura por esta etapa NÃO é opcional — uma frase, com a restrição física/económica explícita. Se a frase precisar das palavras 'narrativa', 'sentimento' ou 'hype', o cartão reprova.",
+      "perna_produto": "o que vende exatamente para a etapa (produtos/linhas nomeadas)",
+      "perna_procura": "evidência de que já está a ser comprado (bookings, encomendas, backlog — com fonte e data)",
+      "perna_validacao": "sinais custosos de terceiros que tocam este ticker diretamente (da pilha da fase 3)",
+      "gradiente_cobertura": "nível 1-4 em que ESTE ticker está (não o tema)",
+      "calendario_do_instrumento": "OBRIGATÓRIO: data dos próximos earnings + eventos corporativos conhecidos (capital markets day, decisões regulatórias, lock-ups). Um cartão sem calendário está incompleto e não pode ser entregue.",
+      "invalidadores": "2-4 acontecimentos concretos e observáveis que matariam a tese (ex.: 'cliente X cancela a expansão', 'standard fecha sem o protocolo deles', 'book-to-bill <1 dois trimestres seguidos'). Registados AGORA, imutáveis depois.",
+      "estado": "embriao | qualificado | maduro | morto"
+    },
+    "output_final_da_corrida": "Watchlist de 3-7 cartões completos, ordenados por (classes_convergentes, nível máximo de sinal, distância ao retail). SEM níveis de entrada, SEM stops, SEM sizing — a fronteira de âmbito do _meta aplica-se aqui.",
+    "inputs_recebidos": ["temas_qualificados_invisiveis (fase 4)", "mapa_de_portagens (fase 2)"],
+    "outputs_entregues": ["watchlist_de_cartoes + calendario_consolidado_de_eventos"]
+  },
+  "fase_6_registo_e_autoavaliacao": {
+    "titulo": "Ciclo de vida, arquivo e métricas do próprio motor",
+    "estados_do_tema": {
+      "embriao": "Hipótese com <3 classes ou sem rajada — re-testar em 2-6 semanas",
+      "qualificado": "Passou fases 3+4 — cartões ativos na watchlist",
+      "maduro": "Edge informacional morto (fase 4) — cartões mantidos só para posições existentes",
+      "morto": "Invalidador acionado ou sinais custosos em reversão (cancelamentos, write-offs, capex cortado)"
+    },
+    "arquivo": "Cada cartão e cada pilha de sinais fica arquivado com data de criação, janela prevista (6-18 meses) e invalidadores. Nada se apaga; transições de estado são datadas e justificadas.",
+    "revisao_mensal": {
+      "passo_1": "Re-testar gradiente de cobertura de todos os temas qualificados",
+      "passo_2": "Verificar invalidadores de todos os cartões ativos",
+      "passo_3": "Re-contar classes convergentes (sinais novos? reversões?)",
+      "passo_4": "Promover/despromover estados e registar porquê"
+    },
+    "metricas_do_motor": {
+      "lead_time": "Meses entre qualificação do tema e chegada ao nível 3-4 do gradiente (mede se o motor chega mesmo cedo)",
+      "taxa_de_maturacao": "% de temas qualificados que chegaram a 'maduro' (vs mortos por invalidador)",
+      "honestidade_preditiva": "% de cartões cujos invalidadores pré-registados foram os que de facto mataram a tese (mede se os invalidadores eram reais ou decorativos)"
+    },
+    "inputs_recebidos": ["watchlist_de_cartoes (fase 5)"],
+    "outputs_entregues": ["arquivo_datado + relatorio_mensal_de_estados + metricas_do_motor"]
+  },
+  "comandos_de_iniciacao": {
+    "corrida_semanal": "INICIAR MOTOR DE INFLEXÕES — CORRIDA COMPLETA\nExecutar fases 0-5: 5 motores de hipóteses → mapas de portagem → triangulação de sinais custosos → teste de invisibilidade → cartões de tese\nOutput: watchlist de 3-7 cartões + calendário consolidado\nRegras: fontes+datas em todos os sinais; L1 nunca conta; um ticker por etapa; cartão sem calendário de earnings não é entregue",
+    "deep_dive_tema": "MOTOR DE INFLEXÕES — DEEP DIVE [TEMA]\nAplicar fases 2-5 a um tema específico: mapa de portagens completo, pilha de sinais com contagem de classes, gradiente de cobertura, cartões por etapa",
+    "reteste_cobertura": "MOTOR DE INFLEXÕES — RE-TESTE DE INVISIBILIDADE [TEMA]\nRe-correr a fase 4 sobre um tema existente e reportar transições no gradiente (o edge ainda existe?)",
+    "revisao_mensal": "MOTOR DE INFLEXÕES — REVISÃO MENSAL\nExecutar fase 6: invalidadores, re-contagem de classes, transições de estado, métricas do motor"
+  }
+}
