@@ -60,6 +60,7 @@
 | T5 — Generalização | pendente | Corrida ex-semis por agendar |
 | T6 — Degradação graciosa | pendente | — |
 | T7 — Integração a jusante | pendente | Cartões FORM/TER disponíveis |
+| **T9 — Qualidade de tese (batismo)** | **CONCLUÍDO 13/07/2026 — BATISMO VÁLIDO** | t9-tese-batismo + t9-avaliacao (grelha pré-committada em 68dca5f7). Operador semeado só com o perfil, mandato neutro, sem tema: produziu "A portagem sobre a derivada" (dP/dt / GW-por-segundo como bem escasso) — acima do padrão fundador, forma própria, falsificadores operáveis, rasto íntegro, zero teatro/jaula. Ressalva única: gravidade de domínio (ficou em infraestrutura de IA) → testar com T5 ex-IA |
 | T8 — Invalidadores retroativos | **CONCLUÍDO 11/07/2026 — PASSA** | teste-t8-invalidadores-retroativos.md: 14/14 operáveis, 0 disparos falsos em nov/2025 e 05/06/2026, 1 disparo correto (JEDEC/altura HBM, ~2 meses antes do preço), controlo negativo 3/3 reprovado. 4 correções candidatas à v1.2 (aplicar junto com as do T3) |
 
 ## Especificação da Routine T1 (pendente de ativação pelo utilizador)
