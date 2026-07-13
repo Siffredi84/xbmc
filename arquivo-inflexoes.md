@@ -55,7 +55,7 @@
 |---|---|---|
 | **T1 — Longitudinal forward** | **EM CURSO desde 11/07/2026 (modo manual)** | Ponto de dados #1 = corrida-inflexoes-2026-07-11.md. Automação pendente: a criação de Routine/agendamento persistente exige aprovação que a sessão de origem não conseguiu apresentar (3 tentativas bloqueadas a 11/07/2026 — create_trigger ×2, send_later ×1). Até lá, cada corrida é disparada manualmente ("corre a corrida"); este arquivo garante a continuidade. Duração prevista: 3-6 meses → relatório de calibração |
 | T2 — Variância do operador | pendente | Requer 3 sessões paralelas na mesma data |
-| T3 — Adversarial | pendente | Bateria 1 por desenhar (5 armadilhas) |
+| T3 — Adversarial | **CONCLUÍDO 11/07/2026 — PASSA 5/5** | teste-t3-adversarial-gates.md: quantum (contagem, margem de 1 classe), cascata NVIDIA (anti-cascata), hidrogénio (rajada; lacuna: reversões sem campo na fase 3), drones/3 ETFs (verificação ativa), 6G (L1-nunca-conta). +1 correção candidata (sinais_negativos) → 5 acumuladas para a v1.2. Suite reutilizável como regressão |
 | T4 — Ablação | pendente | Aguarda ≥4-6 corridas arquivadas |
 | T5 — Generalização | pendente | Corrida ex-semis por agendar |
 | T6 — Degradação graciosa | pendente | — |
