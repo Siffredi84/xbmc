@@ -53,7 +53,7 @@
 
 | Teste | Estado | Registo |
 |---|---|---|
-| **T1 — Longitudinal forward** | **EM CURSO desde 11/07/2026** | Ponto de dados #1 = corrida-inflexoes-2026-07-11.md. Routine semanal ativa (sábados 10:00 UTC) — corre a corrida, atualiza este arquivo, commit+push ao branch. Duração prevista: 3-6 meses → relatório de calibração |
+| **T1 — Longitudinal forward** | **EM CURSO desde 11/07/2026 (modo manual)** | Ponto de dados #1 = corrida-inflexoes-2026-07-11.md. Automação pendente: a criação de Routine/agendamento persistente exige aprovação que a sessão de origem não conseguiu apresentar (3 tentativas bloqueadas a 11/07/2026 — create_trigger ×2, send_later ×1). Até lá, cada corrida é disparada manualmente ("corre a corrida"); este arquivo garante a continuidade. Duração prevista: 3-6 meses → relatório de calibração |
 | T2 — Variância do operador | pendente | Requer 3 sessões paralelas na mesma data |
 | T3 — Adversarial | pendente | Bateria 1 por desenhar (5 armadilhas) |
 | T4 — Ablação | pendente | Aguarda ≥4-6 corridas arquivadas |
@@ -61,6 +61,14 @@
 | T6 — Degradação graciosa | pendente | — |
 | T7 — Integração a jusante | pendente | Cartões FORM/TER disponíveis |
 | T8 — Invalidadores retroativos | pendente | Outcomes 2025-26 já reconstruídos no post-mortem |
+
+## Especificação da Routine T1 (pendente de ativação pelo utilizador)
+
+Para ativar a automação do T1 a partir da interface do Claude Code (agendamento/Routines), usar exatamente:
+
+- **Nome:** T1 — Corrida semanal do Motor de Inflexões
+- **Cadência:** sábados, 10:00 UTC (cron `0 10 * * 6`)
+- **Prompt:** "[T1 — teste longitudinal, corrida semanal automática] Executa a corrida semanal do Motor de Discovery de Inflexões: (1) lê arquivo-inflexoes.md e inflection-discovery-engine.json (v1.1+) no branch claude/handoff-audit-0w2a31; (2) trata primeiro as ações pendentes do arquivo — prazos de reavaliação TRANSICAO_2_PARA_3, ações de desbloqueio de cartões retidos, verificação de invalidadores dos cartões entregues e do calendário de eventos; (3) corre as fases 0-5 com pesquisa live (orçamento ~10-15 pesquisas), aplicando as regras de honestidade do motor: fonte+data em cada sinal, NÃO OBTÍVEL declarado, L1 nunca conta, cartão sem calendário fica retido com ação de desbloqueio; (4) grava o output como corrida-inflexoes-AAAA-MM-DD.md, atualiza arquivo-inflexoes.md (estados, histórico, métricas, proxy de valor com fechos mais recentes de FORM/TER/SOXX e novos cartões), commit e push ao branch claude/handoff-audit-0w2a31; (5) na resposta final, resume apenas mudanças de estado materiais. Isto é research/watchlist, não aconselhamento financeiro — mantém o disclaimer no output."
 
 ## Regras de atualização deste arquivo
 
