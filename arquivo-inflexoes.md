@@ -60,7 +60,7 @@
 | T5 — Generalização | pendente | Corrida ex-semis por agendar |
 | T6 — Degradação graciosa | pendente | — |
 | T7 — Integração a jusante | pendente | Cartões FORM/TER disponíveis |
-| T8 — Invalidadores retroativos | pendente | Outcomes 2025-26 já reconstruídos no post-mortem |
+| T8 — Invalidadores retroativos | **CONCLUÍDO 11/07/2026 — PASSA** | teste-t8-invalidadores-retroativos.md: 14/14 operáveis, 0 disparos falsos em nov/2025 e 05/06/2026, 1 disparo correto (JEDEC/altura HBM, ~2 meses antes do preço), controlo negativo 3/3 reprovado. 4 correções candidatas à v1.2 (aplicar junto com as do T3) |
 
 ## Especificação da Routine T1 (pendente de ativação pelo utilizador)
 
