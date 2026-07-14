@@ -71,6 +71,12 @@ Para ativar a automação do T1 a partir da interface do Claude Code (agendament
 - **Cadência:** sábados, 10:00 UTC (cron `0 10 * * 6`)
 - **Prompt:** "[T1 — teste longitudinal, corrida semanal automática] Executa a corrida semanal do Motor de Discovery de Inflexões: (1) lê arquivo-inflexoes.md e inflection-discovery-engine.json (v1.1+) no branch claude/handoff-audit-0w2a31; (2) trata primeiro as ações pendentes do arquivo — prazos de reavaliação TRANSICAO_2_PARA_3, ações de desbloqueio de cartões retidos, verificação de invalidadores dos cartões entregues e do calendário de eventos; (3) corre as fases 0-5 com pesquisa live (orçamento ~10-15 pesquisas), aplicando as regras de honestidade do motor: fonte+data em cada sinal, NÃO OBTÍVEL declarado, L1 nunca conta, cartão sem calendário fica retido com ação de desbloqueio; (4) grava o output como corrida-inflexoes-AAAA-MM-DD.md, atualiza arquivo-inflexoes.md (estados, histórico, métricas, proxy de valor com fechos mais recentes de FORM/TER/SOXX e novos cartões), commit e push ao branch claude/handoff-audit-0w2a31; (5) na resposta final, resume apenas mudanças de estado materiais. Isto é research/watchlist, não aconselhamento financeiro — mantém o disclaimer no output."
 
+## Atualização T10 (13/07/2026)
+
+| Teste | Estado | Registo |
+|---|---|---|
+| **T10 — Regime conjeturado** | **CONCLUÍDO 13/07/2026 — VÁLIDO (o mais forte para o seu alvo)** | t10-tese-claude + t10-avaliacao. Lado Claude completo (perfil emendado). Tese "O gargalo invisível da transição elétrica" (força de rede/estabilidade de tensão, Merus Power/MERUS.HE). Regime conjeturado cumprido com sofisticação (compromissos custosos na periferia AU, conjetura no centro EU); fidelidade a mais rigorosa da série (recusou inventar os compromissos ausentes — refuta o medo de confabulação da v4 no teste mais duro); falsificador de regime produzido; **as duas emendas do Manus validadas ao vivo** (auto-check desqualificou AMSC + recusou pick falso = anti-Manus; facto-charneira primário respeitado). Conclusão: a sub-ponderação do conjeturado no T5 era de ESCOLHA, não incapacidade. Gravidade de domínio refinada: foi para rede elétrica (excluídas IA+defesa) → assinatura = transformações físicas de energia/infraestrutura; sub-explora não-físico → propõe T11 (domínio não-físico forçado). Pendente: lado ChatGPT do T10. |
+
 ## Regras de atualização deste arquivo
 
 1. Cada corrida acrescenta uma linha ao histórico dos temas que tocou e atualiza estados/prazos — nunca reescreve histórico.
