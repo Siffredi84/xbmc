@@ -83,6 +83,12 @@ Para ativar a automação do T1 a partir da interface do Claude Code (agendament
 |---|---|---|
 | **T11 — Domínio não-físico** | **CONCLUÍDO 13/07/2026 — VÁLIDO (nível mais alto)** | t11-tese-claude + t11-avaliacao. Lado Claude completo (perfil emendado, 2.ª corrida). Tese "O Estado dentro da transação" (fiscalidade em tempo real / CTC / e-invoicing, Vertex/VERX). Bem escasso puramente não-físico (portão de licenciamento regulatório + abstração multi-jurisdicional informacional + função de confiança); a lógica de portagem SOBREVIVEU sem gargalo físico (portagem por transação; modo de falha existencial "não faturar→não receber"). Lampejo de topo: a inexistência de pure-play limpo É a confirmação custosa (Avalara/Pagero/Sovos já privatizadas por biliões). As 2 emendas do Manus validadas 2.ª vez no caso mais difícil (auto-check apanhou que a portagem dominante da Vertex é determinação-EUA, não clearance-CTC, e disse-o; facto-charneira flagado secundário). **Conclusão final da gravidade de domínio:** a assinatura funda do perfil NÃO é física/energia/IA — é a CONVERGÊNCIA DE COMPROMISSOS CUSTOSOS; é um detetor geral de inflexões por sinal custoso, indiferente à natureza do gargalo. Perfil validado como método causal geral. |
 
+## Atualização T4 (13/07/2026)
+
+| Teste | Estado | Registo |
+|---|---|---|
+| **T4 — Ablação de regras** | **CONCLUÍDO 13/07/2026** | t4-ablacao. Método: 2 experiências naturais (Manus = perfil sem as 2 emendas → falhou onde elas atacam = LOAD-BEARING; ChatGPT-T2 = sem regra de fecho → fechou na mesma = PARTIAL/dependente do modelo) + contrafactual sobre o arquivo. Resultado: perfil NÃO inchou (9 LB / 3 redes de segurança / 2-3 vocabulário). 3 podas propostas (não aplicadas, ficam para decisão): taxonomia de edge → vocabulário; 12 liberdades → ~7; facto-charneira → reforço da S4, não regra separada. **Princípio de governação estabelecido: a próxima emenda exige justificação de ablação (falha real observada), não só boa história — vacina contra o inchaço.** |
+
 ## Regras de atualização deste arquivo
 
 1. Cada corrida acrescenta uma linha ao histórico dos temas que tocou e atualiza estados/prazos — nunca reescreve histórico.
