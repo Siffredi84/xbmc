@@ -77,6 +77,12 @@ Para ativar a automação do T1 a partir da interface do Claude Code (agendament
 |---|---|---|
 | **T10 — Regime conjeturado** | **CONCLUÍDO 13/07/2026 — VÁLIDO (o mais forte para o seu alvo)** | t10-tese-claude + t10-avaliacao. Lado Claude completo (perfil emendado). Tese "O gargalo invisível da transição elétrica" (força de rede/estabilidade de tensão, Merus Power/MERUS.HE). Regime conjeturado cumprido com sofisticação (compromissos custosos na periferia AU, conjetura no centro EU); fidelidade a mais rigorosa da série (recusou inventar os compromissos ausentes — refuta o medo de confabulação da v4 no teste mais duro); falsificador de regime produzido; **as duas emendas do Manus validadas ao vivo** (auto-check desqualificou AMSC + recusou pick falso = anti-Manus; facto-charneira primário respeitado). Conclusão: a sub-ponderação do conjeturado no T5 era de ESCOLHA, não incapacidade. Gravidade de domínio refinada: foi para rede elétrica (excluídas IA+defesa) → assinatura = transformações físicas de energia/infraestrutura; sub-explora não-físico → propõe T11 (domínio não-físico forçado). Pendente: lado ChatGPT do T10. |
 
+## Atualização T11 (13/07/2026)
+
+| Teste | Estado | Registo |
+|---|---|---|
+| **T11 — Domínio não-físico** | **CONCLUÍDO 13/07/2026 — VÁLIDO (nível mais alto)** | t11-tese-claude + t11-avaliacao. Lado Claude completo (perfil emendado, 2.ª corrida). Tese "O Estado dentro da transação" (fiscalidade em tempo real / CTC / e-invoicing, Vertex/VERX). Bem escasso puramente não-físico (portão de licenciamento regulatório + abstração multi-jurisdicional informacional + função de confiança); a lógica de portagem SOBREVIVEU sem gargalo físico (portagem por transação; modo de falha existencial "não faturar→não receber"). Lampejo de topo: a inexistência de pure-play limpo É a confirmação custosa (Avalara/Pagero/Sovos já privatizadas por biliões). As 2 emendas do Manus validadas 2.ª vez no caso mais difícil (auto-check apanhou que a portagem dominante da Vertex é determinação-EUA, não clearance-CTC, e disse-o; facto-charneira flagado secundário). **Conclusão final da gravidade de domínio:** a assinatura funda do perfil NÃO é física/energia/IA — é a CONVERGÊNCIA DE COMPROMISSOS CUSTOSOS; é um detetor geral de inflexões por sinal custoso, indiferente à natureza do gargalo. Perfil validado como método causal geral. |
+
 ## Regras de atualização deste arquivo
 
 1. Cada corrida acrescenta uma linha ao histórico dos temas que tocou e atualiza estados/prazos — nunca reescreve histórico.
