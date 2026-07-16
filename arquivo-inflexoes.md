@@ -95,6 +95,12 @@ Para ativar a automação do T1 a partir da interface do Claude Code (agendament
 |---|---|---|
 | **T7 — Integração a jusante** | **CONCLUÍDO 13/07/2026** | t7-integracao-jusante. Handoff real gate-a-gate (VERX/T11 principal; FLNC/T9, Merus/T10 cruzamentos). Consumidor humano fundamental: costura LIMPA (campos ausentes = entrada/stop/sizing são corretamente do consumidor). Consumidor pipeline v2 (momentum): MISMATCH revelador — as teses de descoberta são pré-momentum (VERX -66%, FLNC deprimida, Merus ilíquida) e falhariam o passo 2/0/3 do v2 hoje. **Conclusão central:** a fronteira descoberta≠execução é real mas os dois edifícios estão DESFASADOS NO TEMPO — sequenciais, não simultâneos. O handoff não é "passa o ticker", é "estaciona numa watchlist com 2 gatilhos" (preço rompe→v2 momentum; ou sinal industrial confirma→ator fundamental); o Overlay de Convicção ativa-se no momento posterior da rutura, não na descoberta. Refinamento proposto (não aplicado): estado WATCHLIST_ESTACIONADA no overlay. Valida a decisão de fronteira e refina-a: "quem faz o quê E quando na vida do trade". Integração executada (ver a costura a funcionar no tempo) = trabalho do T1. |
 
+## Atualização E2E (13/07/2026)
+
+| Teste | Estado | Registo |
+|---|---|---|
+| **E2E — cadeia completa, perfil PODADO** | **CONCLUÍDO 13/07/2026** | e2e-tese-claude + e2e-relatorio. 1.ª corrida ao vivo do perfil pós-podas do T4 (mandato neutro). Tese "a portagem debaixo da portagem" (tempo-para-energia → transformador não-substituível → GOES). **Regressão das podas: PASS emphático** — todas as disciplinas intactas (facto-charneira integrado marcou charneira secundário + corroborou com book-to-bill primário; auto-check recusou vestir a CLF de "jogada do GOES" = anti-Manus mais fino da série; S8 usado proativamente; vocabulário de edge + 7 liberdades sem perda). As 3 podas eram pura legibilidade. **Descoberta do E2E:** o comutador a jusante do T7 tem **3 posições**, não 2 — este fluxo exercitou-as todas: (1) ambas as curvas alinhadas → handoff+boost AGORA (GEV, coreanos 267260/298040); (2) pré-momentum → parquear (caso T7); (3) sem veículo limpo → parquear com gatilho de aparecimento-de-veículo (GOES; a descoberta recusa entregar a CLF à execução = a fronteira a proteger-se). O framework corre inteiro, não é coleção de partes. Domínio: energia/rede (atractor confirmado 5×), ângulo novo. |
+
 ## Regras de atualização deste arquivo
 
 1. Cada corrida acrescenta uma linha ao histórico dos temas que tocou e atualiza estados/prazos — nunca reescreve histórico.
