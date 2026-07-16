@@ -89,6 +89,12 @@ Para ativar a automação do T1 a partir da interface do Claude Code (agendament
 |---|---|---|
 | **T4 — Ablação de regras** | **CONCLUÍDO 13/07/2026** | t4-ablacao. Método: 2 experiências naturais (Manus = perfil sem as 2 emendas → falhou onde elas atacam = LOAD-BEARING; ChatGPT-T2 = sem regra de fecho → fechou na mesma = PARTIAL/dependente do modelo) + contrafactual sobre o arquivo. Resultado: perfil NÃO inchou (9 LB / 3 redes de segurança / 2-3 vocabulário). 3 podas propostas (não aplicadas, ficam para decisão): taxonomia de edge → vocabulário; 12 liberdades → ~7; facto-charneira → reforço da S4, não regra separada. **Princípio de governação estabelecido: a próxima emenda exige justificação de ablação (falha real observada), não só boa história — vacina contra o inchaço.** |
 
+## Atualização T7 (13/07/2026)
+
+| Teste | Estado | Registo |
+|---|---|---|
+| **T7 — Integração a jusante** | **CONCLUÍDO 13/07/2026** | t7-integracao-jusante. Handoff real gate-a-gate (VERX/T11 principal; FLNC/T9, Merus/T10 cruzamentos). Consumidor humano fundamental: costura LIMPA (campos ausentes = entrada/stop/sizing são corretamente do consumidor). Consumidor pipeline v2 (momentum): MISMATCH revelador — as teses de descoberta são pré-momentum (VERX -66%, FLNC deprimida, Merus ilíquida) e falhariam o passo 2/0/3 do v2 hoje. **Conclusão central:** a fronteira descoberta≠execução é real mas os dois edifícios estão DESFASADOS NO TEMPO — sequenciais, não simultâneos. O handoff não é "passa o ticker", é "estaciona numa watchlist com 2 gatilhos" (preço rompe→v2 momentum; ou sinal industrial confirma→ator fundamental); o Overlay de Convicção ativa-se no momento posterior da rutura, não na descoberta. Refinamento proposto (não aplicado): estado WATCHLIST_ESTACIONADA no overlay. Valida a decisão de fronteira e refina-a: "quem faz o quê E quando na vida do trade". Integração executada (ver a costura a funcionar no tempo) = trabalho do T1. |
+
 ## Regras de atualização deste arquivo
 
 1. Cada corrida acrescenta uma linha ao histórico dos temas que tocou e atualiza estados/prazos — nunca reescreve histórico.
