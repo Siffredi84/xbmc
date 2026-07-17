@@ -103,6 +103,10 @@ Para ativar a automação do T1 a partir da interface do Claude Code (agendament
 |---|---|---|
 | **E2E — cadeia completa, perfil PODADO** | **CONCLUÍDO 13/07/2026** | e2e-tese-claude + e2e-relatorio. 1.ª corrida ao vivo do perfil pós-podas do T4 (mandato neutro). Tese "a portagem debaixo da portagem" (tempo-para-energia → transformador não-substituível → GOES). **Regressão das podas: PASS emphático** — todas as disciplinas intactas (facto-charneira integrado marcou charneira secundário + corroborou com book-to-bill primário; auto-check recusou vestir a CLF de "jogada do GOES" = anti-Manus mais fino da série; S8 usado proativamente; vocabulário de edge + 7 liberdades sem perda). As 3 podas eram pura legibilidade. **Descoberta do E2E:** o comutador a jusante do T7 tem **3 posições**, não 2 — este fluxo exercitou-as todas: (1) ambas as curvas alinhadas → handoff+boost AGORA (GEV, coreanos 267260/298040); (2) pré-momentum → parquear (caso T7); (3) sem veículo limpo → parquear com gatilho de aparecimento-de-veículo (GOES; a descoberta recusa entregar a CLF à execução = a fronteira a proteger-se). O framework corre inteiro, não é coleção de partes. Domínio: energia/rede (atractor confirmado 5×), ângulo novo. |
 
+## Fecho do programa de testes (17/07/2026)
+
+Todas as corridas de operador estão concluídas (T2–T11, E2E, pares ChatGPT T10+T11). A leitura consolidada das conclusões está em **`SINTESE-FINAL-PROGRAMA-TESTES.md`** (veredito: perfil validado como método causal geral; a assinatura funda é a portagem sob compromisso custoso/mandato, não um domínio; o perfil transmite método, não resultado — convergência de estrutura + divergência de conteúdo nas duas mentes). Único teste ainda a decorrer, por natureza: **T1 longitudinal** (2 pontos de dados; acumula no tempo).
+
 ## Regras de atualização deste arquivo
 
 1. Cada corrida acrescenta uma linha ao histórico dos temas que tocou e atualiza estados/prazos — nunca reescreve histórico.
