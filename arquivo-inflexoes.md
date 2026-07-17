@@ -8,44 +8,46 @@
 
 | Tema | Estado | Desde | Prazo/ação pendente | Histórico |
 |---|---|---|---|---|
-| Industrialização do CPO (substratos ABF + teste eletro-ótico WL + montagem) | **qualificado** (marcador TRANSICAO_2_PARA_3) | 11/07/2026 | **Reavaliação obrigatória do gradiente até 05/09/2026** (8 semanas) — falhar o prazo = despromover a maduro por precaução | Corrida #1: 4 classes ≥L3, dois L5 (NVIDIA $4B 02/03/2026; Ibiden ¥500B) |
+| Industrialização do CPO (substratos ABF + teste eletro-ótico WL + montagem) | **qualificado** (marcador TRANSICAO_2_PARA_3) | 11/07/2026 | **Reavaliação obrigatória do gradiente até 05/09/2026** (8 semanas) — falhar o prazo = despromover a maduro por precaução | Corrida #1: 4 classes ≥L3, dois L5 (NVIDIA $4B 02/03/2026; Ibiden ¥500B). Corrida #2 (17/07): perna ABF reforçada (Moody's: escassez substrato PCB→2027); gradiente ainda 1-2 |
 | SRM / energéticos | **qualificado (sem cartão entregável)** | 11/07/2026 | Monitorizar IPOs do universo privado (Anduril, Mach, PacSci, X-Bow) — um IPO torna o tema investível | Corrida #1: 4 classes, rajada ✓; portagens puras privadas/diluídas |
 | Atuadores de humanoides | **maduro** | 11/07/2026 | Sem novas entradas com edge; contribui para métrica de lead time (<12 meses McKinsey→ETF retail) | Corrida #1: reprovado fase 4 (KOID $241M em plataformas retail desde 10/06/2026) |
-| Equipamento elétrico pesado (transformadores/turbinas) | **maduro** | 11/07/2026 | Contribui para métrica de lead time (~9 meses desde detetável em out/2025) | Corrida #1: reprovado fase 4 (cobertura generalista) |
+| Equipamento elétrico pesado (transformadores/turbinas) | **maduro** | 11/07/2026 | Contribui para métrica de lead time (~9 meses desde detetável em out/2025) | Corrida #1: reprovado fase 4 (cobertura generalista). Corrida #2 (17/07): curva industrial AINDA a subir (Siemens Energy b2b 1,72, backlog €154B; GEV backlog 100→110 GW) → "maduro" = perda de edge de cobertura, ≠ pico industrial |
 
 ## Cartões
 
 | Ticker | Etapa | Estado | Calendário | Ação pendente | Invalidadores (resumo) |
 |---|---|---|---|---|---|
-| FORM | Teste eletro-ótico WL (par de duopólio com TER) | **entregue** 11/07/2026 | Earnings 29/07/2026 [confirmado] | — | Insourcing do teste por foundries; parceria Advantest esvaziada; 2 trimestres pós-COUPE sem receita SiPh; rampa CPO adiada 2028+ |
-| TER | Teste eletro-ótico WL (par de duopólio com FORM) | **entregue** 11/07/2026 (ressalva de pureza) | Earnings 28/07/2026 AC [confirmado] | — | Integração Quantifi falhada; ficonTEC perdida; segmento robótico a dominar a narrativa |
-| Ibiden (4062.T) | Substrato ABF | **retido** | NÃO OBTÍVEL | **Ação de desbloqueio: confirmar data de resultados trimestrais no IR da Ibiden (ibiden.com/ir/calendar). 1.ª tentativa falhada 11/07/2026; à 2.ª falha → morto** | Atraso/corte Kawama Cell 6; utilização setor <80% ou devolução de pré-pagamentos; défice 2027 revisto para equilíbrio |
+| FORM | Teste eletro-ótico WL (par de duopólio com TER) | **entregue** 11/07/2026 | Earnings 29/07/2026 [confirmado] | Reavaliar pós-earnings 29/07 | Insourcing do teste por foundries; parceria Advantest esvaziada; 2 trimestres pós-COUPE sem receita SiPh; rampa CPO adiada 2028+. **Corrida #2 (17/07): 0 invalidadores; + sinal reforçador — aquisição da Keystone Photonics (15/12/2025), optical probing SiPh/CPO** |
+| TER | Teste eletro-ótico WL (par de duopólio com FORM) | **entregue** 11/07/2026 (ressalva de pureza) | Earnings 28/07/2026 AC [confirmado] | Reavaliar pós-earnings 28/07 | Integração Quantifi falhada; ficonTEC perdida; segmento robótico a dominar a narrativa. **Corrida #2 (17/07): 0 invalidadores; robótica = motor, não lastro; título "−13,63%" sem data confirmável, NÃO contado** |
+| Ibiden (4062.T) | Substrato ABF | **entregue** 17/07/2026 (era retido) | **Resultados 04/08/2026 [confirmado — Investing.com]** | Reavaliar pós-resultados 04/08 | Atraso/corte Kawama Cell 6; utilização setor <80% ou devolução de pré-pagamentos; défice 2027 revisto para equilíbrio. **Desbloqueado à 2.ª tentativa (data confirmada) — 1.ª validação forward do mecanismo retido→entregue** |
 
 ## Registos sem cartão (portagens não investíveis — regra_4)
 
 - Ajinomoto (2802.T): monopólio do filme ABF >95% — conglomerado, reprova pureza.
 - ficonTEC, US Conec, Quantifi (integrada TER), Senko: privadas (etapas 5-6 CPO).
 - Etapa 5 CPO (montagem/FAU): portagem pouco clara + risco de desintermediação de pluggables; reavaliar com sinal L3+ de design win de montagem CPO. Evento relevante: FN earnings 17 ou 24/08/2026 (data por confirmar).
+- Forgent Power Solutions (grid): corrida #2 (17/07) — book-to-bill 2,3×, backlog $1,98B; nome menos coberto MAS tema grid maduro (sub-camada já retail) → não abre pure-play com edge. Registado, sem cartão.
 - Anduril, Mach Industries, PacSci EMC, X-Bow: privadas (tema SRM).
 
 ## Calendário consolidado
 
 | Data | Evento | Relevância |
 |---|---|---|
-| 28/07/2026 | TER Q2 (after close) | Cartão entregue |
-| 29/07/2026 | FORM Q2 | Cartão entregue |
+| 28/07/2026 | TER Q2 (after close) | Cartão entregue — 1.º teste forward de invalidadores |
+| 29/07/2026 | FORM Q2 | Cartão entregue — 1.º teste forward de invalidadores |
+| 04/08/2026 | **Ibiden resultados [confirmado]** | Cartão entregue (desbloqueado na corrida #2) |
 | 17 ou 24/08/2026 | FN Q4 FY26 (confirmar) | Etapa 5 CPO (sem cartão) |
 | até 05/09/2026 | Reavaliação gradiente tema CPO | Prazo TRANSICAO_2_PARA_3 |
-| por confirmar | Ibiden resultados | Desbloqueio do cartão retido |
 
 ## Métricas do motor (acumuladas)
 
 | Métrica | Valor | Base |
 |---|---|---|
-| Lead time inflexão→mainstream | ~6-9 meses (estimativa inicial, 2 observações retroativas: AP out/2025→1S2026; grid out/2025→1S2026) | A validar com observações forward |
+| Lead time inflexão→mainstream | ~6-9 meses (estimativa inicial, 2 observações retroativas: AP out/2025→1S2026; grid out/2025→1S2026) | Refinamento corrida #2: "mainstream" = perda de edge de cobertura, ≠ pico industrial (grid ainda a subir industrialmente com b2b 1,72) |
 | Taxa de maturação | sem dados forward ainda | — |
-| Honestidade preditiva dos invalidadores | sem dados ainda (nenhuma tese morta) | — |
-| Proxy de valor (cabaz cartões vs benchmark) | Baseline 10/07/2026: FORM $121,42 · TER [registar na corrida #2] · SOXX $584 | Medição a partir da corrida #2 |
+| Honestidade preditiva dos invalidadores | **1.º ciclo forward limpo (17/07): 0 disparos falsos, 0 disparos reais em FORM/TER** | Nenhuma tese morta ainda; primeiro ponto forward |
+| Mecanismo retido→entregue | **1.ª validação forward (17/07): Ibiden desbloqueado à 2.ª tentativa por fonte real** | O mecanismo do cartão retido funciona no tempo |
+| Proxy de valor (cabaz cartões vs benchmark) | Baseline 10/07/2026: FORM $121,42 · SOXX $584. **Corrida #2 (16/07): FORM $110,21 (−9,23%) · TER $321,99 (1.º registo) · SOXX $530,50 (−9,16%)** | Cabaz em linha com benchmark em 6 dias (sem significado de tese — arranque da série) |
 
 ---
 
@@ -53,7 +55,7 @@
 
 | Teste | Estado | Registo |
 |---|---|---|
-| **T1 — Longitudinal forward** | **EM CURSO desde 11/07/2026 (modo manual)** | Ponto de dados #1 = corrida-inflexoes-2026-07-11.md. Automação pendente: a criação de Routine/agendamento persistente exige aprovação que a sessão de origem não conseguiu apresentar (3 tentativas bloqueadas a 11/07/2026 — create_trigger ×2, send_later ×1). Até lá, cada corrida é disparada manualmente ("corre a corrida"); este arquivo garante a continuidade. Duração prevista: 3-6 meses → relatório de calibração |
+| **T1 — Longitudinal forward** | **EM CURSO (modo manual) — 2 pontos de dados** | Ponto #1 = corrida-inflexoes-2026-07-11.md. **Ponto #2 = corrida-inflexoes-2026-07-17.md** (Ibiden desbloqueado RETIDO→ENTREGUE 04/08; 1.º ciclo forward de invalidadores limpo em FORM/TER + sinal reforçador Keystone; nenhum tema novo qualificado; proxy iniciado; insight "maduro≠pico industrial"). Automação ainda pendente: 6 tentativas de create_trigger bloqueadas por "MCP tool call requires approval" (3 em 11/07, 3 em 17/07) — a superfície móvel/web não apresenta o carimbo de aprovação do servidor de agendamento; ativar a partir de app/IDE/Routines no browser (spec abaixo). Até lá, corrida manual por pedido; este arquivo garante a continuidade. Duração prevista: 3-6 meses → relatório de calibração |
 | T2 — Variância do operador | **CONCLUÍDO 13/07/2026 — PASSA** | t2-tese-chatgpt + t2-avaliacao-comparativa. Mesma semente, Claude vs ChatGPT: ambos → energia de IA / transição 800 VDC (convergência de personalidade + domínio), MAS bens escassos diferentes (dP/dt vs fronteira de falha) e ZERO sobreposição de picks (FLNC/VICR/MLCC vs ETN/ABBN/LFUS/ULS). Método reconhecível, conteúdo divergente e complementar → o perfil potencia, não substitui. ChatGPT superior em fontes (primárias), convicção graduada, e fechou em recomendação sem a emenda à secção 6 (valida a emenda). **Gravidade de domínio confirmada nas 2 mentes → T5 (ex-IA) promovido a crítico** |
 | T3 — Adversarial | **CONCLUÍDO 11/07/2026 — PASSA 5/5** | teste-t3-adversarial-gates.md: quantum (contagem, margem de 1 classe), cascata NVIDIA (anti-cascata), hidrogénio (rajada; lacuna: reversões sem campo na fase 3), drones/3 ETFs (verificação ativa), 6G (L1-nunca-conta). +1 correção candidata (sinais_negativos) → 5 acumuladas para a v1.2. Suite reutilizável como regressão |
 | T4 — Ablação | pendente | Aguarda ≥4-6 corridas arquivadas |
