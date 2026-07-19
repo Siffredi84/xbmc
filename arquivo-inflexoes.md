@@ -115,6 +115,10 @@ Para ativar a automação do T1 a partir da interface do Claude Code (agendament
 
 Todas as corridas de operador estão concluídas (T2–T11, E2E, pares ChatGPT T10+T11). A leitura consolidada das conclusões está em **`SINTESE-FINAL-PROGRAMA-TESTES.md`** (veredito: perfil validado como método causal geral; a assinatura funda é a portagem sob compromisso custoso/mandato, não um domínio; o perfil transmite método, não resultado — convergência de estrutura + divergência de conteúdo nas duas mentes). Único teste ainda a decorrer, por natureza: **T1 longitudinal** (2 pontos de dados; acumula no tempo).
 
+## Skill `operador-inflexoes` (empacotado 19/07/2026)
+
+O framework vive agora como skill portátil em `.claude/skills/operador-inflexoes/` (committado neste branch) e como pacote `.skill` entregue ao utilizador para instalação no perfil. Desenho: **arnês, não jaula** — a Parte II do perfil viaja byte-a-byte (diff-verificada) como documento a habitar; o SKILL.md só transporta o harness (3 workflows: descoberta / corrida T1 / kits ChatGPT + comutador a jusante + governação). Testado: benchmark final **com-skill 17/17 (100%) vs sem-skill 12/17 (71%)** — o eval decisivo foi o kit ChatGPT (Parte II 100% verbatim vs baseline que inventou uma "jaula" procedimental e nem achou o perfil); caveats registados no workspace de testes (eval-1 completado inline pelo construtor após 3 mortes por spend limit; 1 defeito real encontrado e corrigido: fallback de instância-fria-simulada-e-declarada). A corrida do T1 pode agora ser disparada em qualquer sessão com "corre a corrida do T1" (o skill carrega o procedimento + motor).
+
 ## Regras de atualização deste arquivo
 
 1. Cada corrida acrescenta uma linha ao histórico dos temas que tocou e atualiza estados/prazos — nunca reescreve histórico.
