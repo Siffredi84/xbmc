@@ -29,6 +29,12 @@
 - Forgent Power Solutions (grid): corrida #2 (17/07) — book-to-bill 2,3×, backlog $1,98B; nome menos coberto MAS tema grid maduro (sub-camada já retail) → não abre pure-play com edge. Registado, sem cartão.
 - Anduril, Mach Industries, PacSci EMC, X-Bow: privadas (tema SRM).
 
+## Teses do operador promovidas ao arquivo (vigiar nas corridas T1)
+
+| Tese | Data / proveniência | Picks e posição no comutador | Gatilhos a vigiar | Falsificadores (resumo) |
+|---|---|---|---|---|
+| **"O funil a meio do ciclo"** (ciclo do combustível nuclear: penhasco legislado 1/1/2028 + funil de oferta 2028-2032; SWU ocidental de janela + HALEU doméstico) | 19/07/2026 — **1.ª tese via skill `operador-inflexoes`** (corrida inline, instância fria simulada, autor=construtor, 6 pesquisas — caveats no ficheiro `tese-operador-funil-nuclear-2026-07-19.md`; avaliação: VÁLIDO) | **LEU** → watchlist estacionada (pré-momentum: $149,74 a 17/07, perto do mín. 52sem); **CCJ** → handoff possível com nota de diluição (só a fração conversão); **SLX** → parqueada sem entrega (opção conjetural TRL-6); **Solstice** → fora, falta dado (peso da conversão no P&L) | (i) **industrial LEU:** decisão de financiamento de Piketon até ~meados 2027 (converte $2,4B contingentes em firmes — 10-Q) ou novo task order DOE; (ii) **preço LEU:** rutura confirmada acima da MA200 → entra no pipeline de execução com boost; (iii) **SLX:** decisão final de construção do PLEF + 1.º contrato comercial GLE; (iv) **Solstice:** mix por segmento no 1.º relatório completo do spin-off | Waivers estendidos para lá de 1/1/2028 ou reabertura do SWU russo (Federal Register/DOE); SMRs derrapam E utilities cobrem 2028-30 sem novas reservas; financiamento Piketon falha (os $2,4B caem do backlog); oferta antecipada (Urenco/Orano 2029-30, GLE acelerada) |
+
 ## Calendário consolidado
 
 | Data | Evento | Relevância |
@@ -38,6 +44,8 @@
 | 04/08/2026 | **Ibiden resultados [confirmado]** | Cartão entregue (desbloqueado na corrida #2) |
 | 17 ou 24/08/2026 | FN Q4 FY26 (confirmar) | Etapa 5 CPO (sem cartão) |
 | até 05/09/2026 | Reavaliação gradiente tema CPO | Prazo TRANSICAO_2_PARA_3 |
+| até ~meados 2027 | Decisão de financiamento Piketon (Centrus, 10-Q) | Tese funil nuclear — gate da LEU ($2,4B contingentes) |
+| 01/01/2028 | Fim legal dos waivers de LEU russo | Tese funil nuclear — teste do penhasco (Federal Register) |
 
 ## Métricas do motor (acumuladas)
 
