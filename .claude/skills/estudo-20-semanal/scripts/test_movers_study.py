@@ -303,10 +303,74 @@ def t_chartbook(tmp="/tmp/estudo20_chartbook_test.html"):
     check(len(html) > 20_000, "HTML tem conteúdo real", f"{len(html)} bytes")
 
 
+# ------------------------------------------------- acumulação (rebuild-stats)
+
+def t_rebuild_stats():
+    """O ponto do skill: com n grande, as hipóteses deixam de vir marcadas
+    como amostra pequena e passam a ter poder discriminante."""
+    import csv as _csv
+    import io as _io
+
+    rows = []
+    for day in range(6):                      # 6 dias × 10 nomes = 60 linhas
+        for i in range(10):
+            price = 1.0 + i * 5.0             # preço sobe...
+            move = 90.0 - i * 6.0             # ...e o move desce -> H1 SUPORTA
+            rows.append({
+                "date": f"2026-06-{day + 1:02d}", "ticker": f"T{day}{i}", "side": "bull",
+                "pct_move": move, "price_at_origin": price,
+                "pos52_at_origin": 0.05 + i * 0.02, "float_shares": 500_000 * (i + 1),
+                "no_4pct_origin": "False", "next_day_ret": -2.0, "is_biotech": "False",
+                "reverse_split_12m": "False",
+            })
+    rows.append({"date": "2026-06-01", "ticker": "SHORT1", "side": "bear", "pct_move": -30.0})
+
+    buf = _io.StringIO()
+    w = _csv.DictWriter(buf, fieldnames=ms.LEDGER_FIELDS, extrasaction="ignore")
+    w.writeheader()
+    for r in rows:
+        w.writerow({k: r.get(k, "") for k in ms.LEDGER_FIELDS})
+    csv_text = buf.getvalue()
+
+    orig = ms.github_get_file
+    ms.github_get_file = lambda path, token: (csv_text, "sha")
+    try:
+        out = ms.rebuild_stats("tok")
+    finally:
+        ms.github_get_file = orig
+
+    check(out["linhas_ledger"] == 61, "rebuild lê todas as linhas do ledger", str(out["linhas_ledger"]))
+    check(out["dias_de_estudo"] == 6, "rebuild conta os dias distintos de estudo")
+    check(out["primeiro_dia"] == "2026-06-01" and out["ultimo_dia"] == "2026-06-06", "janela do estudo correcta")
+    H = out["hipoteses_acumuladas"]
+    check(H["H1_preco_baixo_move_maior"]["veredicto"] == "SUPORTA",
+          "com n=60 o veredicto perde a marca de amostra pequena",
+          H["H1_preco_baixo_move_maior"]["veredicto"])
+    check(H["H1_preco_baixo_move_maior"]["n"] == 60, "H1 agrega os 60 nomes bull")
+    check(H["H8_lado_comprador_domina"]["racio_bull_bear"] == 60.0, "H8 agrega bull vs bear do histórico")
+    check(H["H7_registo_4pct_universal"]["veredicto"] == "SUPORTA", "H7 acumulada sem marca de amostra")
+
+
+def t_chaves_em_falta():
+    import os as _os
+    import subprocess
+    env = dict(_os.environ)
+    env["ESTUDO20_KEYS_FILE"] = "/tmp/estudo20_keys_inexistente.json"
+    for k in ("POLYGON_API_KEY", "GITHUB_TOKEN"):
+        env.pop(k, None)
+    script = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "movers_study.py")
+    p = subprocess.run([sys.executable, script, "--date", "2026-07-24"],
+                       capture_output=True, text=True, env=env, timeout=180)
+    check(p.returncode != 0, "sem POLYGON_API_KEY o script pára em vez de rebentar na rede")
+    check("POLYGON_API_KEY em falta" in p.stderr, "erro nomeia a chave em falta", p.stderr[:200])
+    check(env["ESTUDO20_KEYS_FILE"] in p.stderr,
+          "erro diz onde pôr a chave (o caminho em uso, não um genérico)")
+
+
 def main():
     for fn in (t_find_origin, t_pos52, t_three_lynch, t_reverse_split, t_build_movers,
                t_spearman, t_hypotheses_supporting, t_hypotheses_contradicting,
-               t_buckets, t_ledger, t_chartbook):
+               t_buckets, t_ledger, t_rebuild_stats, t_chaves_em_falta, t_chartbook):
         print(f"\n--- {fn.__name__} ---")
         fn()
     print("\n" + ("=" * 60))

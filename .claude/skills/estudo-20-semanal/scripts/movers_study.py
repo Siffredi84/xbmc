@@ -69,7 +69,8 @@ GITHUB_REPO = "breakout-pipeline-data"
 LEDGER_PATH = "study_ledger.csv"
 
 CACHE_DIR = os.path.expanduser("~/.cache/estudo-20")
-KEYS_FILE = os.path.expanduser("~/.claude/estudo20-keys.json")
+KEYS_FILE = os.environ.get("ESTUDO20_KEYS_FILE",
+                           os.path.expanduser("~/.claude/estudo20-keys.json"))
 TYPES_CACHE = os.path.join(CACHE_DIR, "universe_types.json")
 # D4 — "ADRs, ações comuns norte-americanas e ETFs" da fonte.
 KEEP_TYPES = {"CS", "ADRC", "ADRP", "ADRR", "ETF", "ETV"}
@@ -78,7 +79,7 @@ LEDGER_FIELDS = [
     "date", "ticker", "side", "modo", "lag", "pct_move", "close_T", "volume_T",
     "origin_date", "origin_pct", "origin_gap_pct", "origin_vol_ratio", "days_origin_to_T",
     "no_4pct_origin", "price_at_origin", "pos52_at_origin", "ret20_before", "ret60_before",
-    "consolidation_days", "float_shares", "float_quality", "shares_outstanding",
+    "consolidation_days", "consolidation_capped", "float_shares", "float_quality", "shares_outstanding",
     "reverse_split_12m", "reverse_split_ratio", "sector", "industry", "is_biotech",
     "tl_not_up_3", "tl_prev_narrow_or_down", "tl_close_near_high", "tl_linearity_r2",
     "tl_trend_age_days", "next_day_ret", "mdd_5d_after",
@@ -468,7 +469,14 @@ def analyze_mover(ticker, side, row, df, date_t, lag, threshold, fundamentals, p
 
     lo_win = max(0, ref_idx - 60)
     highs = df["High"].iloc[lo_win:ref_idx]
-    rec["consolidation_days"] = int(ref_idx - (lo_win + int(np.argmax(highs.values)))) if len(highs) > 5 else None
+    if len(highs) > 5:
+        peak_off = int(np.argmax(highs.values))
+        rec["consolidation_days"] = int(ref_idx - (lo_win + peak_off))
+        # o máximo caiu no início da janela: a consolidação pode ser mais longa
+        # do que 60 dias e o número está truncado — dizê-lo em vez de fingir.
+        rec["consolidation_capped"] = bool(peak_off == 0)
+    else:
+        rec["consolidation_days"], rec["consolidation_capped"] = None, None
 
     rec.update(three_lynch_flags(df, ref_idx))
 
@@ -910,8 +918,9 @@ def main():
         shortlist, rejeitados = run_hunt(bull, date_t, args.polygon_key, args)
         result["shortlist"] = shortlist
         result["rejeitados"] = rejeitados
-        result["handoff"] = ("Correr breakout-quality-gate sobre cada ticker da shortlist "
-                             "(--breakout-date {date_T}) antes de qualquer decisão.")
+        result["handoff"] = (
+            f"Correr breakout-quality-gate sobre cada ticker da shortlist "
+            f"(--breakout-date {date_t}) antes de qualquer decisão.")
         _emit(result, args)
         return
 

@@ -117,6 +117,8 @@ def t_modo_estudo():
     check(rec["pos52_at_origin"] is not None and rec["pos52_at_origin"] < 0.2,
           "pos52 no terço inferior (ação castigada)", str(rec.get("pos52_at_origin")))
     check(rec["ret20_before"] is not None and rec["ret20_before"] < 0, "ret20 negativo antes da origem")
+    check(rec["consolidation_capped"] is True,
+          "consolidação truncada na janela de 60d é declarada, não fingida")
 
     H = r["hipoteses"]
     check(len(H) == 8, "as 8 hipóteses são devolvidas", str(list(H)))
@@ -137,6 +139,8 @@ def t_modo_caca():
     check(r["modo"] == "caca" and r["lag_sessions"] == 1, "modo caça usa lag=1 e threshold 4%")
     check("shortlist" in r and "rejeitados" in r, "caça devolve shortlist e rejeitados")
     check("breakout-quality-gate" in r["handoff"], "handoff obrigatório para o gate está no output")
+    check("{date_T}" not in r["handoff"] and DATE_T in r["handoff"],
+          "handoff traz a data real, não o placeholder", r["handoff"])
     for cand in r["shortlist"]:
         check(cand["close_T"] <= 5.0, f"{cand['ticker']} respeita o tecto de preço da caça")
         check(cand.get("float_shares") is None or cand["float_shares"] <= 10_000_000,
