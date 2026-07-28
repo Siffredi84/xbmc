@@ -1,25 +1,18 @@
 ---
 name: estudo-20-semanal
 description: >
-  Estudo diário retrospectivo dos movers de 20% numa semana (metodologia
-  "How to study 20% plus winners in a week"): screener bull+bear de
-  close(T)/close(T-5) >= 20% no universo ADR+common+ETF, anatomia de cada
-  vencedor (onde começou o movimento — o "registo de 4%" —, float, preço,
-  posição no range de 52 semanas, reverse split, flags Three-Lynch), e
-  teste mecânico das 8 afirmações da fonte (H1-H8) com veredicto
-  SUPORTA/CONTRARIA/INCONCLUSIVO. Acumula tudo num ledger para que ao fim
-  de semanas exista evidência e não intuição. Usar quando o utilizador
-  pedir "estudo dos 20%", "movers da semana", "quem subiu 20% esta
-  semana", "estudo diário", "winners da semana", "onde começou o
-  movimento", "livro de gráficos", "chart book", "caça ao registo de 4%",
-  "pesquisa de rutura dos 4%", "estudo de 300% num ano", ou quiser testar
-  se "preço baixo / float baixo / partir de mínimos" se confirma nos
-  dados. NÃO substitui o breakout-quality-gate (valida 1 breakout já
-  identificado) nem o breakout-market-scanner (descobre breakouts de
-  entrada hoje) — este é retrospectivo e estatístico, sobre coortes.
+  Estudo retrospectivo dos movers de 20% numa semana: screener bull+bear,
+  anatomia do registo de 4%, float, preço, posição de 52 semanas, reverse
+  splits e flags Three-Lynch; testa H1-H8 com números e acumula resultados
+  num ledger. Usar para "estudo dos 20%", "movers da semana", "quem subiu
+  20% esta semana", "onde começou o movimento", "chart book", "caça ao
+  registo de 4%", "estudo de 300% num ano", ou para testar se preço baixo,
+  float baixo e partir de mínimos sobrevivem aos dados. Não substitui o
+  gate de qualidade de um breakout nem o scanner de entradas do dia:
+  trabalha retrospectivamente sobre coortes.
 ---
 
-# Estudo 20% Semanal — v1.0
+# Estudo 20% Semanal — v1.1
 
 Responde a uma pergunta que nenhum skill irmão responde:
 
@@ -57,38 +50,51 @@ Estudo semanal e estudo anual são o mesmo cálculo com outro lag —
 
 ```bash
 python3 scripts/movers_study.py --date 2026-07-24 --chartbook ~/chartbook.html
+python3 scripts/movers_study.py --date 2026-07-24 \
+  --security-database ~/.local/share/scan-us-breakouts/market.sqlite3 \
+  --alpha-k-repo /caminho/alpha-k-data-pipeline
 python3 scripts/movers_study.py --modo caca
 python3 scripts/movers_study.py --lag 252 --threshold 300
 python3 scripts/movers_study.py --rebuild-stats     # H1-H8 sobre o ledger inteiro
 ```
 
-### Setup — chaves (desvio deliberado à convenção das skills irmãs)
+### Setup — chaves
 
-O gate e o scanner trazem as chaves hardcoded no script. **Aqui não**: este
-skill é versionado num repositório, e um PAT do GitHub commitado é um
-segredo publicado (o push protection do GitHub bloquearia, e com razão).
-As chaves são lidas por esta ordem: variável de ambiente →
-`~/.claude/estudo20-keys.json` (local, fora de qualquer repo, `chmod 600`):
+Os segredos são lidos **apenas de variáveis de ambiente**. Nunca os passar
+como argumentos CLI — ficam visíveis no histórico e na lista de processos —
+nem gravá-los no skill:
 
-```json
-{"POLYGON_API_KEY": "...", "GITHUB_TOKEN": "..."}
+```bash
+export US_BREAKOUT_POLYGON="..."
+export US_BREAKOUT_TWELVE="..."       # validação Alpha-K
+export ESTUDO20_GITHUB_TOKEN="..."    # ledger remoto, opcional
+export ALPHA_K_DATA_REPO="/caminho/alpha-k-data-pipeline"
 ```
 
-São as mesmas chaves que o `breakout-quality-gate` já usa. Sem
-`POLYGON_API_KEY` o script pára e diz o que falta; sem `GITHUB_TOKEN` corre
-na mesma e avisa que não grava no ledger. `--no-ledger` desliga a escrita
-remota explicitamente.
+Os nomes canónicos `POLYGON_API_KEY`, `TWELVE_DATA_API_KEY` e
+`GITHUB_TOKEN` também são aceites. Sem token GitHub, o estudo corre mas não
+grava no ledger; `--no-ledger` torna essa decisão explícita.
 
-### Estágio 0 — universo e movers (2 chamadas Polygon, 0 por ticker)
+### Estágio 0 — universo e movers
 
-Duas chamadas a `grouped/locale/us/market/stocks/{data}` (T e T−lag),
-merge por ticker. Filtros da fonte: **preço ≥ $5, volume ≥ 100k**, universo
-**ADR + common US + ETF** (cache local de `reference/tickers`, TTL 7 dias;
-warrants, units, rights e preferred ficam de fora).
+`--provider auto` tenta duas chamadas Polygon
+`grouped/locale/us/market/stocks/{data}` (T e T−lag). Se o endpoint não
+pertencer ao plano, usa downloads Yahoo em chunks retomáveis sobre o
+security master SQLite indicado por `--security-database` (ou a cache
+Polygon de tipos). O fallback fica marcado `PROVISIONAL`; nunca se apresenta
+como equivalência silenciosa ao feed primário.
 
-O calendário de sessões vem de uma série do SPY (1 chamada grátis), não de
-recuar dia-a-dia no Polygon — com `--lag 252` isso custaria 252 chamadas a
-uma API de 5/min.
+O retorno da coorte usa **Adjusted Close**, mas os filtros de preço e volume
+usam os valores brutos da sessão. Splits detectados ou divergências materiais
+entre retorno bruto e ajustado ficam em `corporate_action_review` e não entram
+na coorte como falsos movers.
+
+Filtros da fonte: **preço ≥ $5, volume ≥ 100k**, universo **ADR + common US
++ ETF**; warrants, units, rights e preferred ficam de fora.
+
+O calendário de sessões usa cache local e uma série SPY em uma única
+chamada Polygon; Yahoo é apenas fallback. Nunca recua dia-a-dia — com
+`--lag 252` isso custaria centenas de chamadas.
 
 ### Estágio 1 — anatomia de cada vencedor (yfinance, grátis)
 
@@ -111,7 +117,7 @@ idade da tendência), e o risco pós-movimento (retorno D+1, drawdown 5d).
 | H5 | Biotech com catalisador continua depois do gap | % biotech no decil de topo, gap mediano |
 | H6 | O dia seguinte é perigoso | mediana do retorno D+1, % negativos |
 | H7 | Todo o move de 20% contém um dia de 4% (20/5=4) | % da coorte com origem identificada |
-| H8 | O lado comprador oferece mais oportunidades | contagem bull vs bear do mesmo dia |
+| H8 | O lado comprador oferece mais oportunidades | contagem bull vs bear, também separada entre equities e ETF/ETV |
 
 Veredictos: `SUPORTA` / `CONTRARIA` / `INCONCLUSIVO` / `SEM-DADOS`. Com
 `n<50` tudo leva `[AMOSTRA-PEQUENA]` — um dia isolado não decide nada.
@@ -134,7 +140,7 @@ Publicável como Artifact para rever no telemóvel.
 
 ---
 
-## Assunções declaradas (D1-D8)
+## Assunções declaradas (D1-D9)
 
 - **D1** Volume ≥100k aplicado ao dia T — a fonte não diz se é média.
 - **D2** Origem = primeiro dia com variação ≥+4% (≤−4% no bear) cuja subida
@@ -154,6 +160,9 @@ Publicável como Artifact para rever no telemóvel.
   filtro. Default fiel à fonte; **`--coorte-sub5` corre a coorte $1-$5 em
   paralelo** para testar H1 em toda a amplitude. Sem isto, o skill herdava
   o viés de selecção da fonte sem o assinalar.
+- **D9 — fundos não são oportunidades accionistas equivalentes.** H8 mantém
+  a contagem total fiel ao universo da fonte, mas expõe `por_segmento` para
+  separar common/ADR de ETF/ETV. A interpretação principal usa equities.
 
 ---
 
@@ -180,7 +189,7 @@ Publicável como Artifact para rever no telemóvel.
 ## Disciplina epistémica
 
 `[FACTO]` métricas do script, com fonte e data · `[INFERÊNCIA-PROXY]` R² de
-linearidade e classificação biotech · `[ASSUNÇÃO]` qualquer desvio a D1-D8,
+linearidade e classificação biotech · `[ASSUNÇÃO]` qualquer desvio a D1-D9,
 e o universo não tipificado quando a cache de tipos falha ·
 `[AMOSTRA-PEQUENA]` sempre que n<50.
 
@@ -189,19 +198,29 @@ são veredictos honestos — nunca substituir por uma conclusão.
 
 ## Estado de validação (honesto)
 
-- **Suites de regressão, verdes:** `test_movers_study.py` (44 checks:
+- **Suites de regressão, verdes:** `test_movers_study.py` (inclui agora
   detecção da origem incl. contra-exemplos, pos52, flags Three-Lynch,
-  reverse split, funil, Spearman, veredictos, buckets, ledger, chart book)
+  retorno ajustado/splits, segmentação, Spearman, veredictos, ledger e chart book)
   e `test_pipeline_offline.py` (orquestração dos 3 modos + coorte sub-$5 +
   chart book + ajuste de data, com a rede substituída por fixtures).
   Correr ambas depois de qualquer alteração ao motor.
-- **Por exercitar:** as chamadas reais a Polygon e yfinance nunca correram
-  — o container onde o skill foi construído tem esses hosts bloqueados por
-  política de egress (só `api.github.com` passa). A **primeira corrida numa
-  máquina com acesso é o teste que falta**: confirmar o funil
-  (~12k → liquidez → tipo → dezenas de movers), e conferir à mão em 2 nomes
-  que `close(T)/close(T−5)−1` bate certo com o histórico — é aí que
-  apareceria um desalinhamento de datas entre as duas chamadas grouped.
+- **Ensaio real concluído em 2026-07-27:** o endpoint grouped do plano
+  Polygon respondeu `403 plan_restricted`; o fallback Yahoo produziu a
+  coorte e a reconciliação EOD Alpha-K verificou 8 dos 15 movers de maior
+  amplitude. Os 7 restantes ficaram `disputed` por divergências de
+  open/low/volume, mas preservaram o retorno close-to-close e a classificação
+  ±20%. ADVB demonstrou ainda porque uma barra intradiária incompleta não
+  pode ser usada como gate de liquidez antes do EOD.
+- **Reensaio em 2026-07-28:** com o runtime reconfigurado, Polygon grouped
+  respondeu com 12.402/12.388 símbolos em T/T−5. `auto` escolheu correctamente
+  o feed primário; o fallback permanece coberto para planos sem esse acesso.
+- **Screening integral de 2026-07-27:** 12.142 símbolos no merge → 4.610
+  após preço/volume → 4.400 após tipo → 28 bull e 32 bear. Em equities foram
+  20 bull/19 bear; ETF/ETV acrescentaram 8/13, validando a necessidade de D9.
+  A reconciliação top-15 preservou a classificação ±20% em todos os nomes:
+  4 `verified`, 10 `disputed` e 1 `fallback_only`. Duas anatomias bear
+  ficaram sem histórico suficiente. O baseline amostrado de reverse splits
+  foi 5%.
 - **Sem track record:** todos os thresholds (4% do gatilho, 75% de
   cobertura em D2, buckets, ±0.15 de Spearman para o veredicto) são
   proposta inicial, não calibração. Calibram-se com o ledger acumulado,
@@ -212,14 +231,16 @@ são veredictos honestos — nunca substituir por uma conclusão.
 - Estágio 1 é sequencial no `Ticker.info` (float/sector) — ~60 nomes levam
   ~1 min. `--no-fundamentals` salta e perde H3/H5.
 - `Ticker.info` é a peça mais frágil: falhas ficam `null` com flag, nunca
-  silenciadas nem inventadas.
+  silenciadas nem inventadas. H5 não interpreta sector `null` como
+  “não-biotech”; se todos os metadados falharem devolve `SEM-DADOS`.
 - H4 sem `--baseline-sample` não tem termo de comparação e diz-o
   (`SEM-BASELINE`) em vez de fingir um veredicto.
 - H5 é descritiva: sem a base rate de biotech no universo, "40% da coorte é
   biotech" não prova sobre-representação.
-- **Standalone por desenho:** não importa nenhum skill irmão (regra da v1.1
-  do scanner). A lógica partilhada está duplicada — ganha independência
-  total, perde sincronização automática se um dia recalibrares o gate.
+- **Core standalone por desenho:** a descoberta, anatomia, hipóteses e
+  chart book não importam skills irmãos. A reconciliação Alpha-K é opcional,
+  activada apenas com `--alpha-k-repo`; sem esse repo o resultado declara
+  `validation.status=not_run`.
 
 ## Governança
 
@@ -234,3 +255,7 @@ poder medir o que estavam a testar.
 **v1.0** — build inicial: motor de 3 modos (estudo/caça/anual), anatomia
 completa, H1-H8 com veredictos, ledger acumulado com `--rebuild-stats`,
 chart book HTML, coorte sub-$5 (D8) e duas suites de regressão.
+
+**v1.1** — runtime seguro por ambiente, discovery `auto` com fallback Yahoo,
+retornos ajustados e exclusão de corporate actions mecânicas, H8 segmentada
+(D9), reconciliação opcional Alpha-K e validação EOD real.

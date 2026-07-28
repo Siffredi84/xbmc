@@ -136,6 +136,38 @@ def t_reverse_split():
     check(ms._reverse_split(df3, df3.index[-1])[0] is False, "sem splits -> False")
 
 
+# --------------------------------------------------------------- calendário
+
+def t_calendar_cache_coverage():
+    import json as _json
+    import os as _os
+
+    path = "/tmp/estudo20_calendar_coverage_test.json"
+    stale = [d.strftime("%Y-%m-%d") for d in pd.bdate_range("2026-07-01", "2026-07-27")]
+    with open(path, "w") as fh:
+        _json.dump({"coverage_end": "2026-07-27", "sessions": stale}, fh)
+    original_cache, original_key, original_download = (
+        ms.CALENDAR_CACHE, ms.stored_key, ms.yf.download
+    )
+    ms.CALENDAR_CACHE = path
+    ms.stored_key = lambda name: None
+    ms.yf.download = lambda *args, **kwargs: pd.DataFrame(
+        {"Close": 1.0},
+        index=pd.bdate_range("2026-07-01", "2026-08-10"),
+    )
+    try:
+        sessions = ms.trading_calendar("2026-08-10", 5)
+    finally:
+        ms.CALENDAR_CACHE, ms.stored_key, ms.yf.download = (
+            original_cache, original_key, original_download
+        )
+        if _os.path.exists(path):
+            _os.unlink(path)
+    check(sessions[-1] == "2026-08-10",
+          "cache de calendário sem cobertura não devolve uma sessão antiga",
+          sessions[-1])
+
+
 # --------------------------------------------------------------- build_movers
 
 def t_build_movers():
@@ -158,6 +190,10 @@ def t_build_movers():
     check("DDD" not in set(bull["ticker"]), "DDD excluída por volume < 100k")
     check("WARR" not in set(bull["ticker"]), "warrant excluída pelo filtro de tipo [D4]")
     check(funnel["bull"] == 1 and funnel["bear"] == 1, "funil conta bull/bear", str(funnel))
+    check(funnel["by_segment"]["equity"] == {"bull": 1, "bear": 1},
+          "funil separa equities de fundos [D9]", str(funnel["by_segment"]))
+    check(bull.iloc[0]["security_type"] == "CS" and bull.iloc[0]["segment"] == "equity",
+          "mover preserva tipo e segmento")
 
     # D8: a mesma CCC aparece quando se corre a coorte sub-$5
     b5, _, _ = ms.build_movers(df_t, df_lag, 1.0, 5.0, 100_000, 20.0, types)
@@ -166,6 +202,24 @@ def t_build_movers():
     # sem tipos -> funil marca None em vez de fingir que filtrou
     _, _, f2 = ms.build_movers(df_t, df_lag, 5.0, 1e5, 100_000, 20.0, {})
     check(f2["tipo_ADR_CS_ETF"] is None, "sem cache de tipos, o funil declara-o em vez de esconder")
+
+    # Um split pode criar +100% no close bruto sem qualquer retorno económico.
+    split_t = pd.DataFrame({
+        "ticker": ["SPLT"], "Open": [10.0], "High": [10.2], "Low": [9.8],
+        "Close": [10.0], "AdjustedClose": [5.0], "Volume": [1_000_000],
+        "SplitDetected": [True],
+    })
+    split_lag = pd.DataFrame({
+        "ticker": ["SPLT"], "Close": [5.0], "AdjustedClose": [5.0],
+        "SplitDetected": [True],
+    })
+    sb, sbe, sf = ms.build_movers(
+        split_t, split_lag, 5.0, 1e5, 100_000, 20.0, {"SPLT": "CS"}
+    )
+    check(sb.empty and sbe.empty,
+          "retorno ajustado impede que um split mecânico entre na coorte")
+    check(sf["corporate_action_review"] == 1,
+          "split mecânico fica contado para revisão explícita", str(sf))
 
 
 # ------------------------------------------------------------------ Spearman
@@ -207,6 +261,8 @@ def t_hypotheses_supporting():
     check(H["H6_dia_seguinte_perigoso"]["veredicto"].startswith("SUPORTA"), "H6 SUPORTA (D+1 mediano negativo)")
     check(H["H7_registo_4pct_universal"]["veredicto"].startswith("SUPORTA"), "H7 SUPORTA com 100% de origens")
     check(H["H8_lado_comprador_domina"]["veredicto"] == "SUPORTA", "H8 SUPORTA com 6 bull vs 1 bear")
+    check("por_segmento" in H["H8_lado_comprador_domina"],
+          "H8 expõe a decomposição por segmento [D9]")
     check("[AMOSTRA-PEQUENA]" in H["H1_preco_baixo_move_maior"]["veredicto"], "n<50 marca [AMOSTRA-PEQUENA]")
     check(H["H4_reverse_split_sobrerrepresentado"]["veredicto"].startswith("SEM-BASELINE"),
           "H4 assume a falta de baseline em vez de concluir")
@@ -233,6 +289,13 @@ def t_hypotheses_contradicting():
     sem_origem = [dict(r, no_4pct_origin=True) for r in cohort]
     H2 = ms.test_hypotheses(sem_origem, [], {"bull": 6, "bear": 1})
     check(H2["H7_registo_4pct_universal"]["veredicto"].startswith("CONTRARIA"), "H7 CONTRARIA sem nenhuma origem de 4%")
+
+    sector_desconhecido = [dict(r, is_biotech=None) for r in cohort]
+    H3 = ms.test_hypotheses(sector_desconhecido, [], {"bull": 6, "bear": 1})
+    check(H3["H5_biotech_gap_continua"]["veredicto"] == "SEM-DADOS",
+          "H5 não transforma sector desconhecido em não-biotech")
+    check(H3["H5_biotech_gap_continua"]["n_sector_em_falta"] == 6,
+          "H5 quantifica metadados sectoriais em falta")
 
 
 def t_buckets():
@@ -355,20 +418,21 @@ def t_chaves_em_falta():
     import os as _os
     import subprocess
     env = dict(_os.environ)
-    env["ESTUDO20_KEYS_FILE"] = "/tmp/estudo20_keys_inexistente.json"
-    for k in ("POLYGON_API_KEY", "GITHUB_TOKEN"):
+    for k in ("POLYGON_API_KEY", "US_BREAKOUT_POLYGON", "GITHUB_TOKEN"):
         env.pop(k, None)
     script = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "movers_study.py")
-    p = subprocess.run([sys.executable, script, "--date", "2026-07-24"],
+    p = subprocess.run([sys.executable, script, "--provider", "polygon",
+                        "--date", "2026-07-24"],
                        capture_output=True, text=True, env=env, timeout=180)
     check(p.returncode != 0, "sem POLYGON_API_KEY o script pára em vez de rebentar na rede")
     check("POLYGON_API_KEY em falta" in p.stderr, "erro nomeia a chave em falta", p.stderr[:200])
-    check(env["ESTUDO20_KEYS_FILE"] in p.stderr,
-          "erro diz onde pôr a chave (o caminho em uso, não um genérico)")
+    check("US_BREAKOUT_POLYGON" in p.stderr,
+          "erro indica o alias seguro do runtime")
 
 
 def main():
-    for fn in (t_find_origin, t_pos52, t_three_lynch, t_reverse_split, t_build_movers,
+    for fn in (t_find_origin, t_pos52, t_three_lynch, t_reverse_split,
+               t_calendar_cache_coverage, t_build_movers,
                t_spearman, t_hypotheses_supporting, t_hypotheses_contradicting,
                t_buckets, t_ledger, t_rebuild_stats, t_chaves_em_falta, t_chartbook):
         print(f"\n--- {fn.__name__} ---")

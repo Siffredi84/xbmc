@@ -25,7 +25,7 @@ mesma regra da v1.1 do breakout-market-scanner. A lógica partilhada
 aqui, não importada. Trade-off consciente: independência total contra
 sincronização manual se um dia calibrares os irmãos.
 
-ASSUNÇÕES DECLARADAS (D1-D8, ver SKILL.md para o racional completo):
+ASSUNÇÕES DECLARADAS (D1-D9, ver SKILL.md para o racional completo):
   D1. Volume >= 100k aplicado ao dia T (a fonte não diz se é média).
   D2. Origem do movimento = primeiro dia com variação close-to-close >= +4%
       (<= -4% no bear) cuja subida acumulada até T cobre >= 75% do threshold.
@@ -40,6 +40,8 @@ ASSUNÇÕES DECLARADAS (D1-D8, ver SKILL.md para o racional completo):
   D8. A fonte filtra >$5 mas conclui "quanto mais baixo o preço, melhor" — H1
       nasce truncada. Default fiel à fonte; --coorte-sub5 corre $1-$5 em
       paralelo para testar H1 em toda a amplitude.
+  D9. H8 mantém a contagem total, mas separa common/ADR de ETF/ETV para os
+      fundos não inflacionarem a oportunidade accionista interpretada.
 
 Uso:
   python3 movers_study.py --date 2026-07-24
@@ -55,9 +57,11 @@ import csv
 import io
 import json
 import os
+import sqlite3
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -69,21 +73,30 @@ GITHUB_REPO = "breakout-pipeline-data"
 LEDGER_PATH = "study_ledger.csv"
 
 CACHE_DIR = os.path.expanduser("~/.cache/estudo-20")
-KEYS_FILE = os.environ.get("ESTUDO20_KEYS_FILE",
-                           os.path.expanduser("~/.claude/estudo20-keys.json"))
 TYPES_CACHE = os.path.join(CACHE_DIR, "universe_types.json")
+CALENDAR_CACHE = os.path.join(CACHE_DIR, "trading_calendar.json")
 # D4 — "ADRs, ações comuns norte-americanas e ETFs" da fonte.
 KEEP_TYPES = {"CS", "ADRC", "ADRP", "ADRR", "ETF", "ETV"}
 
 LEDGER_FIELDS = [
-    "date", "ticker", "side", "modo", "lag", "pct_move", "close_T", "volume_T",
+    "date", "ticker", "side", "modo", "lag", "pct_move", "raw_pct_move", "close_T", "volume_T",
     "origin_date", "origin_pct", "origin_gap_pct", "origin_vol_ratio", "days_origin_to_T",
     "no_4pct_origin", "price_at_origin", "pos52_at_origin", "ret20_before", "ret60_before",
     "consolidation_days", "consolidation_capped", "float_shares", "float_quality", "shares_outstanding",
     "reverse_split_12m", "reverse_split_ratio", "sector", "industry", "is_biotech",
+    "fundamentals_error",
     "tl_not_up_3", "tl_prev_narrow_or_down", "tl_close_near_high", "tl_linearity_r2",
     "tl_trend_age_days", "next_day_ret", "mdd_5d_after",
+    "security_type", "segment", "corporate_action_review",
 ]
+
+
+class ProviderUnavailable(RuntimeError):
+    def __init__(self, provider, status, message=""):
+        super().__init__(f"{provider}: {status} {message}".strip())
+        self.provider = provider
+        self.status = status
+        self.message = message
 
 
 def _json_default(o):
@@ -123,18 +136,13 @@ def log(msg):
 
 
 def stored_key(name: str):
-    """Chaves NUNCA vivem no código deste skill — ao contrário das irmãs, este
-    ficheiro é versionado num repositório, e um PAT hardcoded aqui seria um
-    segredo publicado. Ordem: variável de ambiente > ~/.claude/estudo20-keys.json
-    (local, fora de qualquer repo). Ver "Setup" no SKILL.md."""
-    v = os.environ.get(name)
-    if v:
-        return v
-    try:
-        with open(KEYS_FILE) as fh:
-            return json.load(fh).get(name)
-    except (OSError, json.JSONDecodeError):
-        return None
+    """Resolve segredos apenas do ambiente, incluindo os aliases do runtime."""
+    aliases = {
+        "POLYGON_API_KEY": "US_BREAKOUT_POLYGON",
+        "TWELVE_DATA_API_KEY": "US_BREAKOUT_TWELVE",
+        "GITHUB_TOKEN": "ESTUDO20_GITHUB_TOKEN",
+    }
+    return os.environ.get(name) or os.environ.get(aliases.get(name, ""))
 
 
 # =====================================================================
@@ -142,21 +150,78 @@ def stored_key(name: str):
 # =====================================================================
 
 def trading_calendar(end_date: str, sessions_needed: int) -> list:
-    """Lista de dias de sessão até end_date (inclusive), via SPY no yfinance.
+    """Lista de dias de sessão até end_date (inclusive), via SPY.
 
-    Porquê SPY e não recuar dia-a-dia no Polygon: com --lag 252 o recuo
-    dia-a-dia custaria 252 chamadas a uma API de 5/min. Uma única série do
-    SPY dá o calendário NYSE exacto (feriados incluídos) de graça.
+    Usa cache, depois uma única série Polygon se houver chave, e só então
+    Yahoo. Nunca recua dia-a-dia: com --lag 252 isso custaria centenas de
+    chamadas e chocaria com os limites dos providers.
     """
     span = int(sessions_needed * 1.7) + 20
     start = (datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days=span)).date()
     end = (datetime.strptime(end_date, "%Y-%m-%d") + timedelta(days=1)).date()
-    spy = yf.download("SPY", start=start, end=end, progress=False, auto_adjust=False)
-    if spy.empty:
-        raise SystemExit("[ERRO] Não foi possível obter o calendário de sessões (SPY vazio).")
-    idx = pd.to_datetime(spy.index).tz_localize(None).normalize()
     target = pd.Timestamp(end_date).normalize()
-    return [d.strftime("%Y-%m-%d") for d in idx if d <= target]
+
+    if os.path.exists(CALENDAR_CACHE):
+        try:
+            with open(CALENDAR_CACHE) as fh:
+                calendar_blob = json.load(fh)
+            cached = calendar_blob.get("sessions", [])
+            eligible = [value for value in cached if start.isoformat() <= value <= end_date]
+            if (
+                calendar_blob.get("coverage_end", "") >= end_date
+                and len(eligible) >= sessions_needed
+            ):
+                return eligible
+        except (OSError, json.JSONDecodeError, AttributeError):
+            pass
+
+    sessions = []
+    polygon_key = stored_key("POLYGON_API_KEY")
+    if polygon_key:
+        try:
+            response = requests.get(
+                f"https://api.polygon.io/v2/aggs/ticker/SPY/range/1/day/{start}/{end}",
+                params={"adjusted": "true", "sort": "asc", "limit": 50000},
+                headers={"Authorization": f"Bearer {polygon_key}"},
+                timeout=45,
+            )
+            if response.status_code == 200:
+                sessions = [
+                    datetime.fromtimestamp(
+                        int(row["t"]) / 1000, tz=timezone.utc
+                    ).strftime("%Y-%m-%d")
+                    for row in response.json().get("results", [])
+                    if row.get("t") is not None
+                ]
+        except (requests.RequestException, ValueError, KeyError):
+            sessions = []
+
+    if not sessions:
+        try:
+            spy = yf.download(
+                "SPY", start=start, end=end, progress=False, auto_adjust=False
+            )
+            if not spy.empty:
+                idx = pd.to_datetime(spy.index).tz_localize(None).normalize()
+                sessions = [d.strftime("%Y-%m-%d") for d in idx if d <= target]
+        except Exception:  # noqa: BLE001 — fallback externo
+            sessions = []
+    sessions = sorted({value for value in sessions if value <= end_date})
+    if len(sessions) < sessions_needed:
+        raise SystemExit(
+            "[ERRO] Não foi possível obter sessões suficientes para o calendário."
+        )
+    try:
+        os.makedirs(CACHE_DIR, exist_ok=True)
+        with open(CALENDAR_CACHE, "w") as fh:
+            json.dump({
+                "fetched": datetime.now().isoformat(),
+                "coverage_end": end_date,
+                "sessions": sessions,
+            }, fh)
+    except OSError:
+        pass
+    return sessions
 
 
 def resolve_dates(end_date: str, lag: int):
@@ -176,18 +241,29 @@ def resolve_dates(end_date: str, lag: int):
 def fetch_grouped(date_str: str, polygon_key: str) -> pd.DataFrame:
     r = requests.get(
         f"https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/{date_str}",
-        params={"apiKey": polygon_key, "adjusted": "true"},
+        params={"adjusted": "true"},
+        headers={"Authorization": f"Bearer {polygon_key}"},
         timeout=45,
     )
+    if r.status_code == 403:
+        raise ProviderUnavailable("polygon_grouped", "plan_restricted")
+    if r.status_code == 429:
+        raise ProviderUnavailable("polygon_grouped", "rate_limited")
+    if r.status_code != 200:
+        raise ProviderUnavailable("polygon_grouped", f"http_{r.status_code}")
     data = r.json()
     if data.get("status") not in ("OK", "DELAYED") or not data.get("results"):
-        raise SystemExit(
-            f"[ERRO] Polygon grouped-daily falhou para {date_str}: "
-            f"{data.get('status')} {data.get('message', '')}"
+        raise ProviderUnavailable(
+            "polygon_grouped",
+            str(data.get("status") or "no_data"),
+            str(data.get("message") or ""),
         )
     df = pd.DataFrame(data["results"])
     df = df.rename(columns={"T": "ticker", "o": "Open", "h": "High", "l": "Low", "c": "Close", "v": "Volume"})
-    return df[["ticker", "Open", "High", "Low", "Close", "Volume"]]
+    df["AdjustedClose"] = df["Close"]
+    df["SplitDetected"] = False
+    return df[["ticker", "Open", "High", "Low", "Close", "AdjustedClose",
+               "Volume", "SplitDetected"]]
 
 
 def load_universe_types(polygon_key: str, refresh_days: int = 7, force: bool = False) -> dict:
@@ -202,15 +278,22 @@ def load_universe_types(polygon_key: str, refresh_days: int = 7, force: bool = F
         except (json.JSONDecodeError, KeyError, ValueError):
             pass
 
+    if not polygon_key:
+        return {}
+
     log("[i] Cache de tipos ausente/expirada — a paginar Polygon reference/tickers (~2-3 min, 5/min).")
     types, url = {}, "https://api.polygon.io/v3/reference/tickers"
-    params = {"market": "stocks", "active": "true", "limit": 1000, "apiKey": polygon_key}
+    params = {"market": "stocks", "active": "true", "limit": 1000}
+    headers = {"Authorization": f"Bearer {polygon_key}"}
     pages = 0
     while url and pages < 30:
-        r = requests.get(url, params=params if pages == 0 else {"apiKey": polygon_key}, timeout=45)
+        r = requests.get(url, params=params if pages == 0 else None,
+                         headers=headers, timeout=45)
         if r.status_code == 429:
             time.sleep(15)
             continue
+        if r.status_code != 200:
+            raise ProviderUnavailable("polygon_reference", f"http_{r.status_code}")
         data = r.json()
         for row in data.get("results", []) or []:
             if row.get("ticker"):
@@ -228,11 +311,167 @@ def load_universe_types(polygon_key: str, refresh_days: int = 7, force: bool = F
     return types
 
 
+def load_universe_types_sqlite(path: str) -> dict:
+    """Reutiliza o security master SQLite do scan-us-breakouts."""
+    connection = sqlite3.connect(path)
+    rows = connection.execute(
+        "SELECT ticker, type FROM securities WHERE active=1"
+    ).fetchall()
+    connection.close()
+    return {ticker: security_type or "UNKNOWN" for ticker, security_type in rows}
+
+
+def _field_frame(data: pd.DataFrame, field: str) -> pd.DataFrame:
+    if not isinstance(data.columns, pd.MultiIndex):
+        return data[[field]] if field in data.columns else pd.DataFrame(index=data.index)
+    if field not in data.columns.get_level_values(0):
+        return pd.DataFrame(index=data.index)
+    frame = data[field]
+    return frame.to_frame() if isinstance(frame, pd.Series) else frame
+
+
+def _value_at(frame: pd.DataFrame, session: str, symbol: str):
+    stamp = pd.Timestamp(session)
+    if stamp not in frame.index or symbol not in frame.columns:
+        return None
+    value = frame.at[stamp, symbol]
+    return None if pd.isna(value) else float(value)
+
+
+def fetch_yahoo_snapshots(date_t: str, date_lag: str, types: dict,
+                          include_all_types: bool = False,
+                          chunk_size: int = 125) -> tuple:
+    """Fallback bulk quando Polygon grouped não pertence ao plano atual.
+
+    Usa Yahoo apenas para descoberta e mantém raw close/volume separados do
+    adjusted close usado no retorno. Os chunks são retomáveis e não são
+    gravados quando a resposta inteira vem vazia.
+    """
+    tickers = sorted(
+        ticker for ticker, security_type in types.items()
+        if include_all_types or security_type in KEEP_TYPES
+    )
+    if not tickers:
+        raise ProviderUnavailable("yahoo_finance", "empty_universe")
+    start = (
+        datetime.strptime(min(date_t, date_lag), "%Y-%m-%d") - timedelta(days=5)
+    ).date()
+    end = (datetime.strptime(date_t, "%Y-%m-%d") + timedelta(days=1)).date()
+    cache_dir = os.path.join(CACHE_DIR, "yahoo", f"{date_t}_{date_lag}")
+    os.makedirs(cache_dir, exist_ok=True)
+    rows_t, rows_lag, failures = [], [], 0
+    total = (len(tickers) + chunk_size - 1) // chunk_size
+
+    for chunk_index in range(total):
+        chunk = tickers[chunk_index * chunk_size:(chunk_index + 1) * chunk_size]
+        cache_path = os.path.join(cache_dir, f"chunk-{chunk_index + 1:03d}.json")
+        payload = None
+        if os.path.exists(cache_path):
+            try:
+                with open(cache_path) as fh:
+                    payload = json.load(fh)
+                if payload.get("tickers") != chunk:
+                    payload = None
+            except (OSError, json.JSONDecodeError):
+                payload = None
+        if payload is None:
+            mapping = {ticker.replace(".", "-"): ticker for ticker in chunk}
+            try:
+                data = yf.download(
+                    list(mapping), start=start, end=end, progress=False,
+                    auto_adjust=False, actions=True, repair=False, threads=True,
+                    group_by="column", timeout=45,
+                )
+            except Exception as exc:  # noqa: BLE001
+                log(f"[!] Yahoo chunk {chunk_index + 1}/{total}: {type(exc).__name__}")
+                continue
+            if data.empty:
+                log(f"[!] Yahoo chunk {chunk_index + 1}/{total}: resposta vazia; não cacheada")
+                continue
+            frames = {
+                field: _field_frame(data, field)
+                for field in ("Open", "High", "Low", "Close", "Adj Close",
+                              "Volume", "Stock Splits")
+            }
+            payload = {
+                "tickers": chunk, "current": [], "lagged": [], "failures": 0
+            }
+            for yahoo_ticker, ticker in mapping.items():
+                values = {}
+                for field, frame in frames.items():
+                    values[(field, "T")] = _value_at(frame, date_t, yahoo_ticker)
+                    values[(field, "L")] = _value_at(frame, date_lag, yahoo_ticker)
+                if values[("Close", "T")] is None or values[("Close", "L")] is None:
+                    payload["failures"] += 1
+                    continue
+                split_detected = False
+                split_frame = frames["Stock Splits"]
+                if not split_frame.empty and yahoo_ticker in split_frame.columns:
+                    window = split_frame.loc[
+                        pd.Timestamp(date_lag):pd.Timestamp(date_t), yahoo_ticker
+                    ]
+                    split_detected = bool((window.fillna(0) > 0).any())
+                payload["current"].append({
+                    "ticker": ticker,
+                    "Open": values[("Open", "T")],
+                    "High": values[("High", "T")],
+                    "Low": values[("Low", "T")],
+                    "Close": values[("Close", "T")],
+                    "AdjustedClose": values[("Adj Close", "T")]
+                    if values[("Adj Close", "T")] is not None
+                    else values[("Close", "T")],
+                    "Volume": values[("Volume", "T")] or 0,
+                    "SplitDetected": split_detected,
+                })
+                payload["lagged"].append({
+                    "ticker": ticker,
+                    "Open": values[("Open", "L")],
+                    "High": values[("High", "L")],
+                    "Low": values[("Low", "L")],
+                    "Close": values[("Close", "L")],
+                    "AdjustedClose": values[("Adj Close", "L")]
+                    if values[("Adj Close", "L")] is not None
+                    else values[("Close", "L")],
+                    "Volume": values[("Volume", "L")] or 0,
+                    "SplitDetected": split_detected,
+                })
+            with open(cache_path, "w") as fh:
+                json.dump(payload, fh, separators=(",", ":"))
+            log(
+                f"[i] Yahoo chunk {chunk_index + 1}/{total}: "
+                f"{len(payload['current'])} completos, {payload['failures']} falhas"
+            )
+            time.sleep(1)
+        rows_t.extend(payload["current"])
+        rows_lag.extend(payload["lagged"])
+        failures += int(payload.get("failures", 0))
+
+    if not rows_t or not rows_lag:
+        raise ProviderUnavailable("yahoo_finance", "no_data")
+    log(f"[i] Yahoo fallback: {len(rows_t)} séries completas; {failures} falhas.")
+    return pd.DataFrame(rows_t), pd.DataFrame(rows_lag), failures
+
+
 def build_movers(df_t, df_lag, price_min, price_max, vol_min, threshold, types):
     """Merge das duas grouped -> coortes bull/bear + contadores do funil."""
-    a = df_t.rename(columns={"Close": "close_T", "Volume": "volume_T", "Open": "open_T",
-                             "High": "high_T", "Low": "low_T"})
-    b = df_lag[["ticker", "Close"]].rename(columns={"Close": "close_lag"})
+    current, lagged = df_t.copy(), df_lag.copy()
+    for frame in (current, lagged):
+        if "AdjustedClose" not in frame:
+            frame["AdjustedClose"] = frame["Close"]
+        if "SplitDetected" not in frame:
+            frame["SplitDetected"] = False
+
+    a = current.rename(columns={
+        "Close": "close_T", "AdjustedClose": "adj_close_T",
+        "Volume": "volume_T", "Open": "open_T", "High": "high_T",
+        "Low": "low_T", "SplitDetected": "split_detected_T",
+    })
+    b = lagged[["ticker", "Close", "AdjustedClose", "SplitDetected"]].rename(
+        columns={
+            "Close": "close_lag", "AdjustedClose": "adj_close_lag",
+            "SplitDetected": "split_detected_lag",
+        }
+    )
     m = a.merge(b, on="ticker", how="inner")
     funnel = {"universo_T": int(len(df_t)), "universo_lag": int(len(df_lag)), "merge": int(len(m))}
 
@@ -245,15 +484,47 @@ def build_movers(df_t, df_lag, price_min, price_max, vol_min, threshold, types):
     else:
         funnel["tipo_ADR_CS_ETF"] = None  # [ASSUNÇÃO] universo não tipificado
 
-    m = m[m["close_lag"] > 0].copy()
+    m = m[(m["close_lag"] > 0) & (m["adj_close_lag"] > 0)].copy()
+    m["security_type"] = m["ticker"].map(
+        lambda ticker: types.get(ticker, "UNKNOWN") if types else "UNKNOWN"
+    )
+    m["segment"] = m["security_type"].map(
+        lambda value: (
+            "fund" if value in {"ETF", "ETV"}
+            else "equity" if value in {"CS", "ADRC", "ADRP", "ADRR"}
+            else "unknown"
+        )
+    )
     # round(6): sem isto, 12.0/10.0-1 = 19.999999999999996 e um mover
     # exactamente no threshold cai fora do scan em silêncio.
-    m["pct_move"] = ((m["close_T"] / m["close_lag"] - 1) * 100).round(6)
+    m["raw_pct_move"] = ((m["close_T"] / m["close_lag"] - 1) * 100).round(6)
+    m["pct_move"] = ((m["adj_close_T"] / m["adj_close_lag"] - 1) * 100).round(6)
+    m["split_detected"] = (
+        m["split_detected_T"].fillna(False).astype(bool)
+        | m["split_detected_lag"].fillna(False).astype(bool)
+    )
+    m["corporate_action_review"] = (
+        m["split_detected"]
+        | ((m["raw_pct_move"] - m["pct_move"]).abs() >= 5.0)
+    )
 
-    bull = m[m["pct_move"] >= threshold].sort_values("pct_move", ascending=False)
-    bear = m[m["pct_move"] <= -threshold].sort_values("pct_move")
+    raw_movers = m[
+        (m["pct_move"].abs() >= threshold)
+        | (m["raw_pct_move"].abs() >= threshold)
+    ]
+    funnel["corporate_action_review"] = int(raw_movers["corporate_action_review"].sum())
+    eligible = m[~m["corporate_action_review"]]
+    bull = eligible[eligible["pct_move"] >= threshold].sort_values("pct_move", ascending=False)
+    bear = eligible[eligible["pct_move"] <= -threshold].sort_values("pct_move")
     funnel["bull"] = int(len(bull))
     funnel["bear"] = int(len(bear))
+    funnel["by_segment"] = {
+        segment: {
+            "bull": int((bull["segment"] == segment).sum()),
+            "bear": int((bear["segment"] == segment).sum()),
+        }
+        for segment in ("equity", "fund", "unknown")
+    }
     return bull, bear, funnel
 
 
@@ -326,7 +597,7 @@ def fetch_fundamentals(ticker: str) -> dict:
 def polygon_shares(ticker: str, polygon_key: str):
     try:
         r = requests.get(f"https://api.polygon.io/v3/reference/tickers/{ticker}",
-                         params={"apiKey": polygon_key}, timeout=20)
+                         headers={"Authorization": f"Bearer {polygon_key}"}, timeout=20)
         res = r.json().get("results") or {}
         return res.get("share_class_shares_outstanding") or res.get("weighted_shares_outstanding")
     except Exception:  # noqa: BLE001
@@ -434,8 +705,12 @@ def analyze_mover(ticker, side, row, df, date_t, lag, threshold, fundamentals, p
         "side": side,
         "date": date_t,
         "pct_move": _f(row["pct_move"], 2),
+        "raw_pct_move": _f(row.get("raw_pct_move"), 2),
         "close_T": _f(row["close_T"], 4),
         "volume_T": int(row["volume_T"]),
+        "security_type": row.get("security_type"),
+        "segment": row.get("segment"),
+        "corporate_action_review": bool(row.get("corporate_action_review", False)),
     }
 
     o_idx = find_origin(df, t_idx, lag, threshold, side)
@@ -488,8 +763,12 @@ def analyze_mover(ticker, side, row, df, date_t, lag, threshold, fundamentals, p
     rec["polygon_shares"] = int(poly_shares_val) if poly_shares_val else None
     rec["sector"] = fundamentals.get("sector")
     rec["industry"] = fundamentals.get("industry")
+    rec["fundamentals_error"] = bool(fundamentals.get("info_error"))
     text = f"{fundamentals.get('sector') or ''} {fundamentals.get('industry') or ''}".lower()
-    rec["is_biotech"] = bool("biotech" in text or "drug" in text or "pharmac" in text)
+    rec["is_biotech"] = (
+        None if rec["fundamentals_error"] and not text.strip()
+        else bool("biotech" in text or "drug" in text or "pharmac" in text)
+    )
 
     rec["reverse_split_12m"], rec["reverse_split_ratio"] = _reverse_split(df, t_ts)
 
@@ -544,7 +823,9 @@ def run_anatomy(cohort_df, side, date_t, lag, threshold, polygon_key,
         fund = fetch_fundamentals(t) if fundamentals_on else {
             "float_shares": None, "shares_outstanding": None, "sector": None,
             "industry": None, "info_error": True}
-        poly = polygon_shares(t, polygon_key) if (fundamentals_on and fund.get("float_shares")) else None
+        poly = polygon_shares(t, polygon_key) if (
+            polygon_key and fundamentals_on and fund.get("float_shares")
+        ) else None
         try:
             records.append(analyze_mover(t, side, row, df, date_t, lag, threshold, fund, poly))
         except Exception as exc:  # noqa: BLE001 — um ticker mau não parte a corrida
@@ -643,6 +924,7 @@ def test_hypotheses(bull, bear, funnel):
     H["H3_float_baixo_mais_explosivo"] = {
         "afirmacao": "Quanto mais baixo o float, mais explosivo o movimento",
         "spearman_float_vs_move": _f(rho3, 3), "n": n3,
+        "n_float_em_falta": sum(1 for r in ok if r.get("float_shares") is None),
         "buckets": bucketize(ok, "float_shares", [0, 1e6, 3e6, 1e7, 5e7, 1e15],
                              ["<1M", "1-3M", "3-10M", "10-50M", ">50M"]),
         "veredicto": _verdict(rho3, "negative", small_n=small),
@@ -661,16 +943,35 @@ def test_hypotheses(bull, bear, funnel):
         "flags": tag,
     }
 
-    bio = [r for r in ok if r.get("is_biotech")]
+    sector_known = [r for r in ok if r.get("is_biotech") is not None]
+    bio = [r for r in sector_known if r.get("is_biotech")]
     top_decile = ok[:max(1, n // 10)] if n else []
+    top_known = [r for r in top_decile if r.get("is_biotech") is not None]
     gaps = [r["origin_gap_pct"] for r in bio if r.get("origin_gap_pct") is not None]
     H["H5_biotech_gap_continua"] = {
         "afirmacao": "Biotecnologia com catalisador abre em gap e continua a subir no mesmo dia",
-        "n_biotech": len(bio), "pct_coorte_biotech": _f(100 * len(bio) / n, 1) if n else None,
-        "pct_decil_topo_biotech": _f(100 * sum(1 for r in top_decile if r.get("is_biotech")) / len(top_decile), 1) if top_decile else None,
+        "n_sector_conhecido": len(sector_known),
+        "n_sector_em_falta": n - len(sector_known),
+        "n_biotech": len(bio),
+        "pct_coorte_biotech": (
+            _f(100 * len(bio) / len(sector_known), 1) if sector_known else None
+        ),
+        "pct_decil_topo_biotech": (
+            _f(
+                100 * sum(1 for r in top_known if r.get("is_biotech"))
+                / len(top_known), 1
+            )
+            if top_known else None
+        ),
         "gap_mediano_biotech_pct": _f(np.median(gaps), 2) if gaps else None,
-        "veredicto": "DESCRITIVO — comparar com a base rate do universo antes de concluir",
-        "flags": tag,
+        "veredicto": (
+            "DESCRITIVO — comparar com a base rate do universo antes de concluir"
+            if sector_known else "SEM-DADOS"
+        ),
+        "flags": tag + (
+            ["[D6] sector/industry indisponível; não classificar null como não-biotech"]
+            if len(sector_known) < n else []
+        ),
     }
 
     nd = [r["next_day_ret"] for r in ok if r.get("next_day_ret") is not None]
@@ -696,12 +997,34 @@ def test_hypotheses(bull, bear, funnel):
     }
 
     nb, nbe = funnel.get("bull", 0), funnel.get("bear", 0)
+    by_segment = funnel.get("by_segment")
+    if not by_segment:
+        all_records = [r for r in bull + bear if not r.get("error")]
+        by_segment = {}
+        for segment in ("equity", "fund", "unknown"):
+            by_segment[segment] = {
+                "bull": sum(
+                    1 for r in all_records
+                    if r.get("side") == "bull"
+                    and (r.get("segment") or "unknown") == segment
+                ),
+                "bear": sum(
+                    1 for r in all_records
+                    if r.get("side") == "bear"
+                    and (r.get("segment") or "unknown") == segment
+                ),
+            }
     H["H8_lado_comprador_domina"] = {
         "afirmacao": "O lado comprador oferece muito mais oportunidades que o vendedor",
         "n_bull": nb, "n_bear": nbe,
         "racio_bull_bear": _f(nb / nbe, 2) if nbe else None,
+        "por_segmento": by_segment,
         "veredicto": "SUPORTA" if nb > nbe else ("CONTRARIA" if nbe > nb else "EMPATE"),
-        "nota": "Leitura de regime, não lei — inverte-se em bear market (a própria fonte o diz).",
+        "nota": (
+            "Leitura de regime, não lei — inverte-se em bear market. "
+            "[D9] A leitura principal separa equities de ETF/ETV para os fundos "
+            "não inflacionarem artificialmente a oportunidade accionável."
+        ),
     }
     return H
 
@@ -830,7 +1153,10 @@ def rebuild_stats(token):
             except ValueError:
                 rec[k] = None
         rec["no_4pct_origin"] = r.get("no_4pct_origin") == "True"
-        rec["is_biotech"] = r.get("is_biotech") == "True"
+        rec["is_biotech"] = (
+            None if r.get("is_biotech") in (None, "")
+            else r.get("is_biotech") == "True"
+        )
         rec["reverse_split_12m"] = (r.get("reverse_split_12m") == "True") if r.get("reverse_split_12m") else None
         recs.append(rec)
     bull = [r for r in recs if r.get("side") == "bull"]
@@ -842,6 +1168,121 @@ def rebuild_stats(token):
             "dias_de_estudo": len(dates), "primeiro_dia": dates[0] if dates else None,
             "ultimo_dia": dates[-1] if dates else None,
             "hipoteses_acumuladas": test_hypotheses(bull, bear, funnel)}
+
+
+# =====================================================================
+# Reconciliação opcional — Alpha-K (Polygon + Twelve Data)
+# =====================================================================
+
+def validate_with_alpha_k(movers, repo_path, cache_path, date_t, date_lag,
+                          threshold, top):
+    """Reconcilia os movers de maior amplitude no broker multi-provider.
+
+    A validação nunca altera a coorte por divergências apenas de O/H/L. O
+    retorno canónico e os campos em conflito ficam expostos para revisão.
+    """
+    if not repo_path:
+        return {"status": "not_run", "reason": "alpha_k_repo_not_supplied"}
+    repo = Path(repo_path).expanduser().resolve()
+    if not (repo / "src/alpha_k_data/market_data/broker.py").exists():
+        return {"status": "not_run", "reason": "alpha_k_repo_invalid", "repo": str(repo)}
+
+    aliases = {
+        "US_BREAKOUT_POLYGON": "POLYGON_API_KEY",
+        "US_BREAKOUT_TWELVE": "TWELVE_DATA_API_KEY",
+    }
+    for source, target in aliases.items():
+        value = os.environ.get(source, "").strip()
+        if value and not os.environ.get(target, "").strip():
+            os.environ[target] = value
+
+    sys.path.insert(0, str(repo / "src"))
+    try:
+        from alpha_k_data.market_data.broker import MarketDataBroker
+    except Exception as exc:  # noqa: BLE001
+        return {"status": "not_run", "reason": f"alpha_k_import_failed:{type(exc).__name__}"}
+
+    selected = sorted(
+        movers, key=lambda row: abs(float(row.get("pct_move") or 0)), reverse=True
+    )[:max(0, top)]
+    if not selected:
+        return {"status": "complete", "requested": 0, "verified": 0,
+                "disputed": 0, "results": []}
+
+    cache = Path(cache_path).expanduser()
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        broker = MarketDataBroker.from_config(
+            providers_config_path=repo / "config/providers.yaml",
+            market_config_path=repo / "config/market_data.yaml",
+            cache_path=cache,
+        )
+    except Exception as exc:  # noqa: BLE001
+        return {"status": "not_run", "reason": f"alpha_k_init_failed:{type(exc).__name__}"}
+
+    session = datetime.strptime(date_t, "%Y-%m-%d").date()
+    lag_session = datetime.strptime(date_lag, "%Y-%m-%d").date()
+    start = lag_session - timedelta(days=12)
+    output = []
+    try:
+        for mover in selected:
+            try:
+                result = broker.fetch_daily_bars(
+                    mover["ticker"], start, session, validate=True
+                )
+                current = next(
+                    (bar for bar in result.canonical_bars if bar.session_date == session),
+                    None,
+                )
+                lagged = next(
+                    (bar for bar in result.canonical_bars if bar.session_date == lag_session),
+                    None,
+                )
+                canonical_return = (
+                    (current.close / lagged.close - 1) * 100
+                    if current and lagged and lagged.close
+                    else None
+                )
+                conflicts = (
+                    result.reconciliation.conflicts if result.reconciliation else []
+                )
+                output.append({
+                    "ticker": mover["ticker"],
+                    "status": result.status,
+                    "confidence": result.confidence,
+                    "canonical_provider": result.canonical_provider,
+                    "discovery_return_pct": _f(mover.get("pct_move"), 4),
+                    "canonical_return_pct": _f(canonical_return, 4),
+                    "classification_preserved": (
+                        None if canonical_return is None else (
+                            canonical_return >= threshold
+                            if float(mover.get("pct_move") or 0) >= 0
+                            else canonical_return <= -threshold
+                        )
+                    ),
+                    "conflict_count": len(conflicts),
+                    "conflict_fields": sorted({conflict.field for conflict in conflicts}),
+                })
+            except Exception as exc:  # noqa: BLE001 — uma falha não invalida os restantes
+                output.append({
+                    "ticker": mover["ticker"],
+                    "status": "error",
+                    "confidence": "unavailable",
+                    "error": type(exc).__name__,
+                })
+    finally:
+        broker.close()
+    return {
+        "status": "complete",
+        "requested": len(selected),
+        "verified": sum(row.get("confidence") == "verified" for row in output),
+        "disputed": sum(row.get("confidence") == "disputed" for row in output),
+        "fallback_only": sum(
+            row.get("confidence") == "fallback_only" for row in output
+        ),
+        "unavailable": sum(row.get("confidence") == "unavailable" for row in output),
+        "results": output,
+    }
 
 
 # =====================================================================
@@ -865,16 +1306,25 @@ def main():
     ap.add_argument("--no-fundamentals", action="store_true", help="Salta float/sector (mais rápido)")
     ap.add_argument("--no-type-filter", action="store_true", help="Salta o filtro ADR/CS/ETF")
     ap.add_argument("--refresh-types", action="store_true", help="Força refresh da cache de tipos")
+    ap.add_argument("--provider", choices=["auto", "polygon", "yahoo"], default="auto",
+                    help="Discovery: Polygon grouped ou fallback bulk Yahoo")
+    ap.add_argument("--security-database", default=None,
+                    help="SQLite securities do alpha-k/scan-us-breakouts para o universo")
+    ap.add_argument("--yahoo-chunk-size", type=int, default=125)
+    ap.add_argument("--alpha-k-repo", default=os.environ.get("ALPHA_K_DATA_REPO"),
+                    help="Repo alpha-k-data-pipeline para reconciliação multi-provider")
+    ap.add_argument("--alpha-k-cache", default=os.path.join(CACHE_DIR, "alpha-k-validation.sqlite3"))
+    ap.add_argument("--validation-top", type=int, default=15)
     ap.add_argument("--hunt-price-max", type=float, default=5.0)
     ap.add_argument("--hunt-float-max", type=float, default=10_000_000)
     ap.add_argument("--hunt-max", type=int, default=40)
     ap.add_argument("--chartbook", default=None, help="Caminho do HTML do chart book")
-    ap.add_argument("--polygon-key", default=stored_key("POLYGON_API_KEY"))
-    ap.add_argument("--github-token", default=stored_key("GITHUB_TOKEN"))
     ap.add_argument("--no-ledger", action="store_true")
     ap.add_argument("--rebuild-stats", action="store_true")
     ap.add_argument("--json", default=None)
     args = ap.parse_args()
+    args.polygon_key = stored_key("POLYGON_API_KEY")
+    args.github_token = stored_key("GITHUB_TOKEN")
 
     if args.rebuild_stats:
         if not args.github_token:
@@ -883,7 +1333,7 @@ def main():
         _emit(result, args)
         return
 
-    if not args.polygon_key:
+    if args.provider == "polygon" and not args.polygon_key:
         raise SystemExit(_missing_key_msg("POLYGON_API_KEY"))
     if not args.github_token and not args.no_ledger:
         log("[!] Sem GITHUB_TOKEN — a corrida faz-se, mas nada é gravado no ledger.")
@@ -897,9 +1347,61 @@ def main():
     date_t, date_lag, adjusted, _cal = resolve_dates(requested, lag)
     log(f"[i] T={date_t} · T-{lag}={date_lag}" + (f" (pedida {requested}, recuada para sessão real)" if adjusted else ""))
 
-    df_t = fetch_grouped(date_t, args.polygon_key)
-    df_lag = fetch_grouped(date_lag, args.polygon_key)
-    types = {} if args.no_type_filter else load_universe_types(args.polygon_key, force=args.refresh_types)
+    warnings = []
+    if args.security_database:
+        try:
+            universe_types = load_universe_types_sqlite(args.security_database)
+        except (OSError, sqlite3.Error) as exc:
+            raise SystemExit(
+                f"[ERRO] security database inválida: {args.security_database} ({exc})"
+            ) from exc
+    else:
+        try:
+            universe_types = load_universe_types(
+                args.polygon_key, force=args.refresh_types
+            )
+        except ProviderUnavailable as exc:
+            universe_types = {}
+            warnings.append(f"tipos_indisponiveis:{exc.status}")
+    types = {} if args.no_type_filter else universe_types
+
+    df_t = df_lag = None
+    discovery_provider = None
+    discovery_failures = 0
+    if args.provider in ("auto", "polygon"):
+        if not args.polygon_key:
+            if args.provider == "polygon":
+                raise SystemExit(_missing_key_msg("POLYGON_API_KEY"))
+            warnings.append("polygon_grouped:não_tentado_sem_chave")
+        else:
+            try:
+                df_t = fetch_grouped(date_t, args.polygon_key)
+                df_lag = fetch_grouped(date_lag, args.polygon_key)
+                discovery_provider = "polygon_grouped"
+            except ProviderUnavailable as exc:
+                warnings.append(f"{exc.provider}:{exc.status}")
+                if args.provider == "polygon":
+                    raise SystemExit(f"[ERRO] discovery Polygon indisponível: {exc}") from exc
+
+    if df_t is None or df_lag is None:
+        if not universe_types:
+            raise SystemExit(
+                "[ERRO] O fallback Yahoo precisa de um universo tipificado. "
+                "Fornece --security-database /caminho/market.sqlite3 ou cria "
+                "a cache de tipos com uma chave Polygon que tenha reference/tickers."
+            )
+        try:
+            df_t, df_lag, discovery_failures = fetch_yahoo_snapshots(
+                date_t, date_lag, universe_types,
+                include_all_types=args.no_type_filter,
+                chunk_size=args.yahoo_chunk_size,
+            )
+            discovery_provider = "yahoo_finance_bulk"
+            warnings.append(
+                "discovery_provisório: validar top movers no Alpha-K após o fecho"
+            )
+        except ProviderUnavailable as exc:
+            raise SystemExit(f"[ERRO] fallback de discovery indisponível: {exc}") from exc
 
     bull, bear, funnel = build_movers(df_t, df_lag, price_min, args.price_max,
                                       args.volume_min, threshold, types)
@@ -912,7 +1414,23 @@ def main():
                     "volume_min": args.volume_min,
                     "tipo": "ADR+CS+ETF" if types else "[ASSUNÇÃO] universo não tipificado"},
         "funnel": funnel,
+        "data_quality": {
+            "discovery_provider": discovery_provider,
+            "confidence": (
+                "PRIMARY_ONLY" if discovery_provider == "polygon_grouped"
+                else "PROVISIONAL"
+            ),
+            "universe_size": len(universe_types) if universe_types else None,
+            "discovery_failures": discovery_failures,
+            "warnings": warnings,
+        },
     }
+
+    validation_rows = pd.concat([bull, bear], ignore_index=True).to_dict("records")
+    result["data_quality"]["validation"] = validate_with_alpha_k(
+        validation_rows, args.alpha_k_repo, args.alpha_k_cache,
+        date_t, date_lag, threshold, args.validation_top,
+    )
 
     if args.modo == "caca":
         shortlist, rejeitados = run_hunt(bull, date_t, args.polygon_key, args)
@@ -925,8 +1443,12 @@ def main():
         return
 
     if args.baseline_sample:
-        universe_for_baseline = build_movers(df_t, df_lag, price_min, args.price_max,
-                                             args.volume_min, 0.0, types)[0]
+        base_bull, base_bear, _ = build_movers(
+            df_t, df_lag, price_min, args.price_max, args.volume_min, 0.0, types
+        )
+        universe_for_baseline = pd.concat(
+            [base_bull, base_bear], ignore_index=True
+        ).drop_duplicates("ticker")
         funnel["baseline_reverse_split_pct"] = baseline_reverse_split(
             universe_for_baseline, args.baseline_sample, date_t)
 
@@ -974,10 +1496,16 @@ def main():
 
 
 def _missing_key_msg(name: str) -> str:
-    return (f"[ERRO] {name} em falta. Exporta a variável de ambiente, ou cria "
-            f"{KEYS_FILE} (local, nunca versionado) com:\n"
-            f'  {{"POLYGON_API_KEY": "...", "GITHUB_TOKEN": "..."}}\n'
-            f"São as mesmas chaves já usadas pelo breakout-quality-gate.")
+    aliases = {
+        "POLYGON_API_KEY": "US_BREAKOUT_POLYGON",
+        "GITHUB_TOKEN": "ESTUDO20_GITHUB_TOKEN",
+    }
+    alias = aliases.get(name)
+    suffix = f" (ou o alias {alias})" if alias else ""
+    return (
+        f"[ERRO] {name} em falta. Exporta a variável de ambiente{suffix}; "
+        "segredos em argumentos CLI ou ficheiros versionados não são suportados."
+    )
 
 
 def _emit(result, args):

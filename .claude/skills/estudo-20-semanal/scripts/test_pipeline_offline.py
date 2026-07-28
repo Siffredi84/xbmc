@@ -15,6 +15,7 @@ validação").
 import contextlib
 import io as _io
 import json
+import os
 import sys
 
 import numpy as np
@@ -80,6 +81,7 @@ def fundamentals_for(ticker):
 
 
 def patch():
+    os.environ["US_BREAKOUT_POLYGON"] = "offline-test"
     ms.trading_calendar = lambda end_date, sessions: CAL
     ms.fetch_grouped = lambda date_str, key: grouped_for(date_str)
     ms.load_universe_types = lambda key, refresh_days=7, force=False: {t: s["type"] for t, s in SPEC.items()}
@@ -124,6 +126,8 @@ def t_modo_estudo():
     check(len(H) == 8, "as 8 hipóteses são devolvidas", str(list(H)))
     check(all("veredicto" in v for v in H.values()), "toda a hipótese traz veredicto")
     check(H["H8_lado_comprador_domina"]["racio_bull_bear"] == 3.0, "H8 conta 3 bull / 1 bear")
+    check(H["H8_lado_comprador_domina"]["por_segmento"]["equity"] == {"bull": 3, "bear": 1},
+          "H8 separa equities de fundos [D9]")
 
 
 def t_coorte_sub5():

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Estudo 20% Semanal"
+  short_description: "Estuda movers semanais e testa hipóteses"
+  default_prompt: "Use $estudo-20-semanal para executar o estudo diário de movers de 20% e interpretar as hipóteses acumuladas."
