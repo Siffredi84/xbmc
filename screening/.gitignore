@@ -1,0 +1,17 @@
+# Caches regeneraveis. O Polygon custa 13 s por sessao; nao vao para o git.
+pg_cache/
+edgar_cache/
+fh_cache/
+pg_universe.json
+
+# Saidas de corrida — o que interessa e reproduzivel a partir do snapshot.
+saida_*.csv
+saida_*.json
+metricas.json
+
+# Segredos. As chaves vivem aqui e nunca num prompt.
+.env
+
+__pycache__/
+*.py[cod]
+.pytest_cache/

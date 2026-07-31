@@ -1,0 +1,33 @@
+Ticker,estado,detalhe,gc_form,gc_data,gc_estado,gc_excerto,itens_red_flag,reverse_split,reverse_split_ratio,eventos_recentes,reprova
+ABEO,FALHA_REDE,https://data.sec.gov/submissions/CIK0000318306.json -> 503 apos 5 tentativas,,,,,,,,,
+ACB,FALHA_REDE,https://data.sec.gov/submissions/CIK0001683541.json -> 503 apos 5 tentativas,,,,,,,,,
+AMIX,OK,,10-K,2026-05-27,A_REVER,mencao a going concern sem conclusao inequivoca,-,2026-06-24,21:1,2026-07-28: outros eventos | 2026-07-15: acordo material; venda nao registada de accoes; outros eventos; 9.01 | 2026-07-10: outros eventos,True
+AQST,OK,,10-Q,2026-05-13,SEM_SINAL,-,-,-,-,2026-06-10: 5.07; 9.01 | 2026-05-13: acordo material; fim de acordo material; resultados; nova divida; venda nao registada de accoes; Reg FD; 9.01,False
+AVIR,OK,,10-Q,2026-05-12,SEM_SINAL,-,-,-,-,2026-06-22: 5.07 | 2026-05-12: resultados; 9.01,False
+BOOM,OK,,10-Q,2026-07-29,A_REVER,mencao a going concern sem conclusao inequivoca,-,-,-,2026-07-29: resultados; 9.01 | 2026-05-14: saida ou entrada de administradores; 5.07; 9.01 | 2026-04-30: resultados; 9.01,False
+BTMD,OK,,10-Q,2026-05-11,SEM_SINAL,-,-,-,-,2026-06-02: saida ou entrada de administradores; Reg FD; 9.01 | 2026-05-18: 5.07 | 2026-05-06: resultados; 9.01,False
+BYRN,OK,,10-Q,2026-07-09,SEM_SINAL,-,-,-,-,2026-07-09: resultados; 9.01 | 2026-07-08: acordo material; Reg FD; 9.01 | 2026-06-18: Reg FD; 9.01,False
+CRDL,OK,,20-F,2024-04-01,A_REVER,mencao a going concern sem conclusao inequivoca,-,-,-,-,False
+DMAC,OK,,10-Q,2026-05-06,SEM_SINAL,-,-,-,-,2026-05-21: 5.07 | 2026-05-06: resultados; 9.01,False
+DTI,OK,,10-Q,2026-05-08,SEM_SINAL,-,-,-,-,2026-05-07: resultados; 9.01 | 2026-05-07: Reg FD; 9.01 | 2026-05-01: saida ou entrada de administradores; 5.07; 9.01,False
+ENGS,OK,,20-F,2025-11-03,A_REVER,mencao a going concern sem conclusao inequivoca,-,-,-,-,False
+EPRX,OK,,-,-,SEM_RELATORIO,-,-,-,-,-,False
+FIP,OK,,10-Q,2026-05-08,SEM_SINAL,-,-,-,-,2026-07-02: acordo material; nova divida; 9.01 | 2026-05-29: 5.07 | 2026-05-07: resultados; 9.01,False
+GAU,OK,,20-F,2011-06-29,A_REVER,mencao a going concern sem conclusao inequivoca,-,-,-,-,False
+GTE,OK,,10-Q,2026-05-08,SEM_SINAL,-,-,-,-,2026-05-12: 5.07 | 2026-05-08: resultados; 9.01,False
+HDSN,OK,,10-Q,2026-05-11,SEM_SINAL,-,-,-,-,2026-06-12: outros eventos | 2026-06-11: 5.07 | 2026-05-28: outros eventos; 9.01,False
+INVE,OK,,10-Q,2026-05-14,SEM_SINAL,-,-,-,-,2026-07-27: outros eventos | 2026-06-24: acordo material; Reg FD; outros eventos; 9.01 | 2026-05-13: resultados; 9.01,False
+JELD,OK,,10-Q,2026-05-05,SEM_SINAL,-,-,-,-,2026-05-04: resultados; Reg FD; 9.01,False
+MBI,OK,,10-Q,2026-05-07,SEM_SINAL,-,-,-,-,2026-05-07: resultados; Reg FD; 9.01,False
+NKLR,OK,,10-Q,2026-07-01,A_REVER,mencao a going concern sem conclusao inequivoca,3.01,-,-,2026-07-02: saida ou entrada de administradores | 2026-05-22: AVISO DE DELISTING,True
+NRXS,OK,,10-Q,2026-05-12,A_REVER,mencao a going concern sem conclusao inequivoca,-,-,-,2026-07-10: outros eventos | 2026-06-12: 5.07,False
+PYPD,OK,,20-F,2026-02-25,CONFIRMADO,"ss, operating results, and financial condition would be adversely affected, and there is substantial doubt about our ability to continue as a going concern. We have a shareholders&#8217; equity of",-,-,-,-,True
+RBBN,OK,,10-Q,2026-05-06,SEM_SINAL,-,-,-,-,2026-07-28: resultados; 9.01 | 2026-06-17: Reg FD; 9.01 | 2026-06-05: 5.07,False
+SEER,OK,,10-Q,2026-05-13,SEM_SINAL,-,-,-,-,2026-07-20: outros eventos; 9.01 | 2026-07-02: outros eventos; 9.01 | 2026-05-22: outros eventos; 9.01,False
+SIGA,OK,,10-Q,2026-05-07,SEM_SINAL,-,-,-,-,2026-06-10: saida ou entrada de administradores; 5.07; 9.01 | 2026-05-07: resultados; 9.01,False
+SNDL,OK,,20-F,2023-04-24,SEM_SINAL,-,-,-,-,-,False
+TOP,OK,,10-K,2026-07-07,SEM_SINAL,-,-,-,-,2026-07-23: outros eventos; 9.01 | 2026-07-20: acordo material; venda nao registada de accoes; 9.01 | 2026-07-13: venda nao registada de accoes; Reg FD; 9.01,False
+UROY,OK,,-,-,SEM_RELATORIO,-,-,-,-,-,False
+USIO,OK,,10-Q,2026-05-13,SEM_SINAL,-,-,-,-,2026-06-17: saida ou entrada de administradores; 9.01 | 2026-06-10: alteracao de estatutos; 5.07; Reg FD; 9.01 | 2026-05-13: resultados; 9.01,False
+WHWK,OK,,10-Q,2026-05-07,SEM_SINAL,-,-,-,-,2026-06-12: 5.07 | 2026-05-21: outros eventos; 9.01 | 2026-05-13: acordo material; venda nao registada de accoes; Reg FD; 9.01,False
+XFOR,OK,,10-Q,2026-05-06,A_REVER,mencao a going concern sem conclusao inequivoca,-,-,-,2026-07-01: saida ou entrada de administradores; Reg FD; 9.01 | 2026-05-12: saida ou entrada de administradores; 5.07,False

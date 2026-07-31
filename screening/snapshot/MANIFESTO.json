@@ -1,0 +1,71 @@
+{
+ "descricao": "Snapshot congelado das sessoes de 29 e 30 de julho de 2026. Base da comparacao A vs B da Fase 5.",
+ "regra": "Imutavel. Alterar um ficheiro invalida a Fase 5 inteira; uma sessao nova entra como ficheiro novo, nunca por cima.",
+ "ficheiros": {
+  "cont_2907.csv": {
+   "sha256": "6144e7b558712dda732acf8b447c0623fed1bd902386054f59d54b94b2c7c83b",
+   "bytes": 1385,
+   "sessao": "2026-07-29"
+  },
+  "desc_2907.csv": {
+   "sha256": "2c472c4b381c4317f5442badc5cd10ab231a89018b66a3674c7a4f64607399c3",
+   "bytes": 1238,
+   "sessao": "2026-07-29"
+  },
+  "edgar_2907.csv": {
+   "sha256": "362b8a866c774a89460a9bd1bf74be75c58bac40788008f9af78a40ef76f6824",
+   "bytes": 4553,
+   "sessao": "2026-07-29"
+  },
+  "enriq_2907.csv": {
+   "sha256": "f0f4296806e64b21f46a9372b6817a986bee68b515f69dc17a33f126e5752c09",
+   "bytes": 19152,
+   "sessao": "2026-07-29"
+  },
+  "finalistas_2907.csv": {
+   "sha256": "96b19720a1288107624f9c1f94e04ba6e9bd57f5da7960c62a779f3e7219cd7a",
+   "bytes": 10618,
+   "sessao": "2026-07-29"
+  },
+  "pg_shortlist63.csv": {
+   "sha256": "bf07eaa73cfb8965622e9c4ca27b3c6e972bab9aad71e460575fe440caa16c4f",
+   "bytes": 12523,
+   "sessao": "2026-07-29+30"
+  },
+  "pg_universe.json.gz": {
+   "sha256": "4b63c3fe42832383fb6a09216df7b948c001e23ed830dcdeb4f0e7828ae85e0b",
+   "bytes": 16191270,
+   "sessao": "2026-07-29+30"
+  },
+  "pg_universo_diag.csv": {
+   "sha256": "de8e8a3d2aaa313536ab23c1a2f0cdc4f84f88beb4a5cdd6757eec3d65363e94",
+   "bytes": 932151,
+   "sessao": "2026-07-29+30"
+  },
+  "setups_3007.csv": {
+   "sha256": "cb7fab2d77ed7706ffb0a0ed451e7c18dff69e940838ab08aea1c20785f9c2c5",
+   "bytes": 7494,
+   "sessao": "2026-07-30"
+  },
+  "sinais_abc_2907.csv": {
+   "sha256": "a24a69895663f4232bc839921a07fbdfa3987abf2fbd1524b168c81632dd7091",
+   "bytes": 59261,
+   "sessao": "2026-07-29"
+  },
+  "spreads_3007.csv": {
+   "sha256": "d787d4fbeac3efdcaf9d01530251ec5c47fe8aeec9a7499699e044db19c971ec",
+   "bytes": 661,
+   "sessao": "2026-07-30"
+  },
+  "t2_rem_perfil.csv": {
+   "sha256": "b37ac35731d458641a37f511dd42d4e4e67513d636912a98d1ff632b2f13253d",
+   "bytes": 1995,
+   "sessao": "2026-07-29+30"
+  },
+  "t2_sob_perfil.csv": {
+   "sha256": "f7e1b28ebe5878beeef3f4d5a10a812016a0939e2ee115d02209c1dcb37e4fbb",
+   "bytes": 6370,
+   "sessao": "2026-07-29+30"
+  }
+ }
+}

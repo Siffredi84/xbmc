@@ -1,0 +1,142 @@
+{
+ "ABOS": {
+  "description": "ACUMEN PHARMACEUTICALS INC",
+  "exchange": "NASDAQ",
+  "conid": 499901350,
+  "optionable": true
+ },
+ "ANIX": {
+  "description": "ANIXA BIOSCIENCES INC",
+  "exchange": "NASDAQ",
+  "conid": 335611120,
+  "optionable": true
+ },
+ "AQST": {
+  "description": "AQUESTIVE THERAPEUTICS INC",
+  "exchange": "NASDAQ",
+  "conid": 327314210,
+  "optionable": true
+ },
+ "AVIR": {
+  "description": "ATEA PHARMACEUTICALS INC",
+  "exchange": "NASDAQ",
+  "conid": 452821503,
+  "optionable": true
+ },
+ "BYRN": {
+  "description": "BYRNA TECHNOLOGIES INC",
+  "exchange": "NASDAQ",
+  "conid": 484414864,
+  "optionable": true,
+  "bid": 4.2,
+  "ask": 4.74,
+  "last": 4.18,
+  "usd_vol_90d": 2971924,
+  "call_vol": 1371,
+  "put_vol": 22,
+  "iv_pct_52w": 0.96,
+  "hist_vol_annual": 1.32
+ },
+ "CIA": {
+  "description": "CITIZENS INC",
+  "exchange": "NYSE",
+  "conid": 754105,
+  "optionable": true
+ },
+ "CMRC": {
+  "description": "COMMERCE.COM INC",
+  "exchange": "NASDAQ",
+  "conid": 438186706,
+  "optionable": true
+ },
+ "MBI": {
+  "description": "MBIA INC",
+  "exchange": "NYSE",
+  "conid": 9388,
+  "optionable": true
+ },
+ "NVA": {
+  "description": "NOVA MINERALS CORP",
+  "exchange": "AMEX",
+  "conid": 892733831,
+  "optionable": true
+ },
+ "PACB": {
+  "description": "PACIFIC BIOSCIENCES OF CALIF",
+  "exchange": "NASDAQ",
+  "conid": 80410754,
+  "optionable": true
+ },
+ "PMVP": {
+  "description": "PMV PHARMACEUTICALS INC",
+  "exchange": "NASDAQ",
+  "conid": 447372793,
+  "optionable": true
+ },
+ "PRLD": {
+  "description": "PRELUDE THERAPEUTICS INC",
+  "exchange": "NASDAQ",
+  "conid": 447350230,
+  "optionable": true
+ },
+ "SIGA": {
+  "description": "SIGA TECHNOLOGIES INC",
+  "exchange": "NASDAQ",
+  "conid": 4818014,
+  "optionable": true
+ },
+ "SND": {
+  "description": "SMART SAND INC",
+  "exchange": "NASDAQ",
+  "conid": 254358203,
+  "optionable": true
+ },
+ "TOI": {
+  "description": "ONCOLOGY INSTITUTE INC/THE",
+  "exchange": "NASDAQ",
+  "conid": 526424674,
+  "optionable": true
+ },
+ "XFOR": {
+  "description": "X4 PHARMACEUTICALS INC",
+  "exchange": "NASDAQ",
+  "conid": 780020120,
+  "optionable": true
+ },
+ "XPOF": {
+  "description": "XPONENTIAL FITNESS INC-A",
+  "exchange": "NYSE",
+  "conid": 504091786,
+  "optionable": true
+ },
+ "MIST": {
+  "description": "MILESTONE PHARMACEUTICALS IN",
+  "exchange": "NASDAQ",
+  "conid": 365328968,
+  "optionable": true
+ },
+ "CRDL": {
+  "description": "CARDIOL THERAPEUTICS INC-A",
+  "exchange": "NASDAQ",
+  "conid": 349869086,
+  "optionable": true
+ },
+ "SNDL": {
+  "description": "SNDL INC",
+  "exchange": "NASDAQ",
+  "conid": 575890378,
+  "optionable": true
+ },
+ "SUPX": {
+  "description": "SUPERX AI TECHNOLOGY LTD",
+  "exchange": "NASDAQ",
+  "conid": 697319656,
+  "optionable": false
+ },
+ "TLRY": {
+  "description": "TILRAY BRANDS INC",
+  "exchange": "NASDAQ",
+  "conid": 835599999,
+  "optionable": true
+ }
+}
