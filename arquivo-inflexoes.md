@@ -134,3 +134,50 @@ O framework vive agora como skill portátil em `.claude/skills/operador-inflexoe
 2. Transições de estado exigem justificação datada.
 3. Cartões retidos: registar cada tentativa de desbloqueio; 2 falhas → morto.
 4. O proxy de valor regista o fecho mais recente disponível de cada cartão entregue e do benchmark, por corrida.
+
+---
+
+## Correção retroativa — Discovery de 21/07/2026 (persistida em 05/08/2026)
+
+**Natureza da correção:** a corrida completa de discovery executada em conversa em 21/07/2026 não tinha sido persistida no branch. Foi reconstruída sem introduzir evidência posterior e gravada como `corrida-inflexoes-2026-07-21.md`. A corrida é extraordinária e **não incrementa os pontos T1**, mas altera o estado vivo que todas as corridas T1 seguintes têm de ler.
+
+**Integridade temporal:** as Fases 0–4 usaram cutoff factual de 18/07/2026; a Fase 5 declarou fecho em 21/07/2026. A discrepância foi preservada e documentada, não corrigida silenciosamente.
+
+### Temas acrescentados ao estado vivo
+
+| Tema | Estado desde 21/07/2026 | Prazo/ação | Registo original |
+|---|---|---|---|
+| **Tubo flexível submarino certificado** | **qualificado — TRANSICAO_2_PARA_3** | Re-teste de invisibilidade entre **29/08 e 12/09/2026** | 3 classes L3+, máximo L5, rajada ✓; portagem por km de riser/flowline; cobertura generalista episódica, sem narrativa financeira autónoma |
+| **Integridade, intervenção e substituição subsea** | **qualificado — nível 1–2** | Verificar invalidadores e eventos de OII em cada T1 | Portagem recorrente sobre base instalada envelhecida; subcamada mais invisível, mas exposição cotada menos pura |
+| **Destruição permanente de PFAS** | **qualificado com reserva — TRANSICAO_2_PARA_3** | Re-teste de invisibilidade entre **29/08 e 12/09/2026**; exigir prova comercial | 3 classes L3+, máximo L5, rajada ✓; reserva causal entre obrigação ambiental e captura de receita pelas tecnologias emergentes |
+| Radioisótopos e fabrico cGMP | **embrião** | Retestar em 2 semanas a partir de 21/07 | 4 classes e L5, mas sem sinal L3+ nos 30 dias anteriores ao cutoff |
+| Distribuição elétrica de média tensão | **embrião** | Retestar em 3 semanas | Apenas 2 classes independentes |
+| Energetics / arm-and-fire | **embrião** | Retestar em 4 semanas | Um emissor/classe, apesar de lançamento e contratos iniciais |
+
+### Cartões acrescentados ao estado vivo
+
+| Ticker | Etapa | Estado em 21/07/2026 | Calendário original | Ação pendente | Invalidadores imutáveis — resumo |
+|---|---|---|---|---|---|
+| **OII** | Inspeção, intervenção, instalação e integridade subsea | **entregue / qualificado** | Q2 em 23/07; redenção das notes ~25/07 | Próximo T1 deve tratar resultados, redenção e invalidadores | Utilização ROV <55% por 2T; awards SSR <$150M por 2T; atraso West Delta >2026; receitas SSR+OPG+IMDS −15% por 2T sem recuperação |
+| **FTI** | Flexible flowlines/risers e integração subsea | **entregue / qualificado** | Q2 e call em 30/07 | Próximo T1 deve tratar resultados, awards e invalidadores | Backlog Subsea −10% YoY por 2T; book-to-bill <1 por 2T; cancelamento Azule/Eni/Equinor/Vår; margem EBITDA Subsea <18% por 2T |
+| **NOV** | Fabrico certificado de tubo flexível | **RETIDO** | Call Q2 em 29/07 | **Ação de desbloqueio:** após resultados, provar que flexible pipe representa >20% da receita ou crescimento; se continuar não divulgado, procurar confirmação no IR | Redução/adiamento de Açu; backlog <2 anos; perda de utilização; substituição tecnológica acelerada |
+| **SCWO** | Destruição de PFAS por AirSCWO | **RETIDO** | 11/08 era apenas estimativa de terceiros | **Ações de desbloqueio:** confirmar calendário oficial e exigir dollar volume médio 20d >US$5M | Sem contratos recorrentes; eficiência não reproduzida; subprodutos/licenciamento; diluição recorrente antes de receita material |
+
+### Alternativa rejeitada
+
+- **PESI:** liquidez aproximada acima do piso, mas exposição PFAS não divulgada separadamente e calendário futuro não confirmado. Rejeitada como segundo cartão da mesma etapa, sem duopólio formal.
+
+### Calendário consolidado acrescentado
+
+| Data | Evento | Relevância para o T1 seguinte |
+|---|---|---|
+| 23/07/2026 | OII Q2 | Verificar os quatro invalidadores e novo calendário |
+| ~25/07/2026 | OII — redenção das notes 2028 | Confirmar execução e impacto financeiro |
+| 29/07/2026 | NOV Q2 call | Executar a ação de desbloqueio da materialidade do flexible pipe |
+| 30/07/2026 | FTI Q2 e call | Verificar backlog, book-to-bill, margem e contratos |
+| 11/08/2026 — não confirmado | SCWO | Confirmar calendário oficial; não contar estimativa |
+| 29/08–12/09/2026 | Subsea/PFAS | Re-teste obrigatório de invisibilidade |
+
+### Consequência para a corrida T1 de 05/08/2026
+
+A corrida T1 executada antes desta correção leu um estado incompleto. Não deve ser tratada como fecho longitudinal definitivo até ser repetida com OII, FTI, NOV, SCWO e os temas subsea/PFAS incluídos nas ações pendentes.
