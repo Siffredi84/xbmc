@@ -31,7 +31,7 @@
 - Etapa 5 CPO (montagem/FAU): portagem pouco clara + risco de desintermediação de pluggables; reavaliar com sinal L3+ de design win de montagem CPO. **Corrida #3 (20/07): IR da FN ainda não publicou a data Q4 FY2026; estimativa agosto NÃO conta.**
 - Forgent Power Solutions (grid): corrida #2 (17/07) — book-to-bill 2,3×, backlog $1,98B; nome menos coberto MAS tema grid maduro (sub-camada já retail) → não abre pure-play com edge. Registado, sem cartão.
 - Anduril, Mach Industries, PacSci EMC, X-Bow: privadas (tema SRM).
-- Cadeia NdFeB não-China: MP Materials já mainstream/diluída para a subportagem; fabricantes/qualificadores mais puros privados/pré-comerciais/diluídas. Corrida #3 classificou o tema como maduro, sem cartão.
+- Cadeia NdFeB não-China: MP Materials já mainstream/diluída para a subportagem; fabricantes/qualificadores mais puros privados ou pré-comerciais. Corrida #3 classificou o tema como maduro, sem cartão.
 
 ## Teses do operador promovidas ao arquivo (vigiar nas corridas T1)
 
@@ -47,7 +47,7 @@
 | 28/07/2026 | TER Q2 release (16:30 ET ou depois) | Cartão entregue — teste forward de invalidadores |
 | 29/07/2026 | TER Q2 call (08:30 ET) | Quantifi, mix robótica/teste e outlook |
 | 29/07/2026 | FORM Q2 (16:25 ET) | Cartão entregue — receita SiPh/CPO e rampa |
-| 04/08/2026 | **Ibiden resultados 15:40 JST [confirmado — IR oficial]** | Cartão entregue (desbloqueado na corrida #2) |
+| 04/08/2026 | **Ibiden resultados 15:40 JST [IR oficial]** | Cartão entregue (desbloqueado na corrida #2) |
 | agosto 2026 — **não confirmado** | FN Q4 FY26 | Etapa 5 CPO (sem cartão); aguardar IR |
 | até 05/09/2026 | Reavaliação gradiente tema CPO | Prazo TRANSICAO_2_PARA_3 |
 | 01/01/2027 | Entrada em vigor da restrição full-chain NdFeB DFARS | Tema maduro; vigiar waivers/nonavailability |
