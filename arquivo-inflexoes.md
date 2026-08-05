@@ -31,7 +31,7 @@
 - Etapa 5 CPO (montagem/FAU): portagem pouco clara + risco de desintermediação de pluggables; reavaliar com sinal L3+ de design win de montagem CPO. **Corrida #3 (20/07): IR da FN ainda não publicou a data Q4 FY2026; estimativa agosto NÃO conta.**
 - Forgent Power Solutions (grid): corrida #2 (17/07) — book-to-bill 2,3×, backlog $1,98B; nome menos coberto MAS tema grid maduro (sub-camada já retail) → não abre pure-play com edge. Registado, sem cartão.
 - Anduril, Mach Industries, PacSci EMC, X-Bow: privadas (tema SRM).
-- Cadeia NdFeB não-China: MP Materials já mainstream/diluída para a subportagem; fabricantes/qualificadores mais puros privados ou pré-comerciais. Corrida #3 classificou o tema como maduro, sem cartão.
+- Cadeia NdFeB não-China: MP Materials já mainstream/diluída para a subportagem; fabricantes/qualificadores mais puros privados/pré-comerciais/diluídas. Corrida #3 classificou o tema como maduro, sem cartão.
 
 ## Teses do operador promovidas ao arquivo (vigiar nas corridas T1)
 
@@ -47,7 +47,7 @@
 | 28/07/2026 | TER Q2 release (16:30 ET ou depois) | Cartão entregue — teste forward de invalidadores |
 | 29/07/2026 | TER Q2 call (08:30 ET) | Quantifi, mix robótica/teste e outlook |
 | 29/07/2026 | FORM Q2 (16:25 ET) | Cartão entregue — receita SiPh/CPO e rampa |
-| 04/08/2026 | **Ibiden resultados 15:40 JST [IR oficial]** | Cartão entregue (desbloqueado na corrida #2) |
+| 04/08/2026 | **Ibiden resultados 15:40 JST [confirmado — IR oficial]** | Cartão entregue (desbloqueado na corrida #2) |
 | agosto 2026 — **não confirmado** | FN Q4 FY26 | Etapa 5 CPO (sem cartão); aguardar IR |
 | até 05/09/2026 | Reavaliação gradiente tema CPO | Prazo TRANSICAO_2_PARA_3 |
 | 01/01/2027 | Entrada em vigor da restrição full-chain NdFeB DFARS | Tema maduro; vigiar waivers/nonavailability |
@@ -181,3 +181,67 @@ O framework vive agora como skill portátil em `.claude/skills/operador-inflexoe
 ### Consequência para a corrida T1 de 05/08/2026
 
 A corrida T1 executada antes desta correção leu um estado incompleto. Não deve ser tratada como fecho longitudinal definitivo até ser repetida com OII, FTI, NOV, SCWO e os temas subsea/PFAS incluídos nas ações pendentes.
+
+---
+
+## T1 — ponto de dados #4, 05/08/2026 — corrida repetida sobre o arquivo corrigido
+
+**Ficheiro completo:** `corrida-inflexoes-2026-08-05.md`  
+**Resultado da persistência:** esta secção substitui apenas a consequência operacional da nota anterior; nenhum histórico foi apagado.
+
+### Mudanças de estado
+
+| Tema/cartão | Estado após a corrida | Fundamentação |
+|---|---|---|
+| OII | **RETIDO — tentativa 1/2** | Q2 não acionou invalidadores: utilização ROV 66%; receitas SSR+OPG+IMDS +9,5% YoY; awards Q2 NÃO OBTÍVEL. Próximo earnings não publicado. |
+| FTI | **RETIDO — tentativa 1/2** | Backlog Subsea $15,833B, b2b 1,0x e margem EBITDA 23,2%; nenhum invalidador. Próximo earnings não publicado. |
+| FORM | **RETIDO — tentativa 1/2** | CPO/HBM contribuíram para crescimento; nenhum invalidador demonstrado. Próximo earnings não publicado. |
+| TER | **RETIDO — tentativa 1/2** | Robotics apenas 7,5% da receita; nenhum invalidador demonstrado. Próximo earnings não publicado. |
+| Ibiden | **RETIDO — tentativa 1/2** | Q1 confirmou procura acima da capacidade e utilização elevada; nenhum invalidador. Próximo earnings não publicado. |
+| NOV | **RETIDO — tentativa 1/2 falhada** | Q2 continua sem disclosure que prove flexible pipe >20% da receita ou crescimento. Segunda tentativa na próxima revisão. |
+| SCWO | **RETIDO — tentativa 1/2 falhada** | Sem calendário oficial futuro; IBKR avg 90d dollar volume ≈$134,9k, cerca de 37x abaixo do gate. |
+| FEIM | **MORTO** | Segunda falha do calendário. Morte procedimental; contratos de $18M e $8M reforçam a tese industrial. |
+| Timing/sincronização espacial | **QUALIFICADO, sem cartão entregável** | Tema sobrevive à morte procedimental de FEIM. |
+| Radioisótopos/cGMP | **EMBRIÃO** | Re-teste não encontrou novo sinal L3+ que complete a rajada; novo re-teste em 02/09/2026. |
+
+### Invalidadores e discovery
+
+- Invalidadores industriais demonstrados nesta corrida: **0**.
+- Campo não obtido relevante: awards trimestrais de Subsea Robotics da OII.
+- Temas novos qualificados: **0**.
+- Equipamento elétrico pesado voltou a reforçar a curva industrial, mas permanece **maduro** quanto à cobertura.
+- A watchlist ativa termina com **zero cartões**, por aplicação literal do calendário obrigatório.
+
+### Proxy IBKR — ponto #4
+
+| Instrumento | Valor atual | Variação desde a referência anterior |
+|---|---:|---:|
+| OII | $50,43 | +12,95% |
+| FTI | $70,02 | −6,16% |
+| NOV | $19,99 | −0,99% |
+| SCWO | $2,21 | +8,87% |
+| FORM | $120,30 | +14,23% |
+| TER | $403,56 | +20,91% |
+| SOXX | $542,21 | +3,45% |
+| Ibiden | ¥20.750 | +32,29% |
+| FEIM | $70,34 | +5,43% |
+| LEU | $189,24 | +21,01% |
+
+### Próximas ações
+
+1. Próxima T1: segunda tentativa de calendário de OII, FTI, FORM, TER e Ibiden.
+2. Próxima revisão: segunda tentativa de materialidade da NOV; falha → morto.
+3. Próxima revisão mensal: segunda tentativa de calendário e liquidez da SCWO; falha → morto.
+4. 11/08/2026: re-teste de média tensão.
+5. 18/08/2026: re-teste de arm-and-fire.
+6. 29/08–12/09/2026: re-teste de invisibilidade subsea/PFAS.
+7. 02/09/2026: re-teste de radioisótopos/cGMP.
+8. Até 05/09/2026: reavaliação do gradiente CPO.
+
+### Métricas atualizadas
+
+- **T1 longitudinal:** 4 pontos de dados.
+- **Temas novos qualificados na corrida #4:** 0.
+- **Cartões mortos acumulados por regra de calendário:** 1 — FEIM.
+- **Cartões retidos ativos:** OII, FTI, FORM, TER, Ibiden, NOV e SCWO.
+- **Defeito operacional documentado:** intervalo normal pós-earnings sem próximo calendário publicado provoca retenção. Regra não alterada; correção mínima candidata permanece não aprovada.
