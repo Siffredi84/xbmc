@@ -1,7 +1,7 @@
 {
  "data": "2026-08-06",
  "empresas": 38,
- "vagas": 3527,
+ "vagas": 3530,
  "titulos": {
   "shieldai": [
    "Accountant (R5520)",
@@ -3001,6 +3001,7 @@
    "Mission Engineer II ",
    "Paralegal II",
    "Principal DevOps Engineer ",
+   "Production Controller",
    "Program Manager II",
    "Propellant Tank Responsible Engineer - In-Space",
    "Propulsion Engineer II (Vehicle)",
@@ -3018,6 +3019,7 @@
    "Senior Fluids Analyst",
    "Senior FPGA Verification Engineer ",
    "Senior Ground Support Design Engineer ",
+   "Senior Indirect Buyer",
    "Senior Loads & Dynamics Analyst, Solid Missile Systems",
    "Senior Machinist ",
    "Senior Manager, Integrated Business Processes",
@@ -3047,6 +3049,7 @@
    "Staff Thermal-Fluids Analysis Engineer",
    "Staff Turbomachinery Engineer",
    "Structural Analysis Engineer II, Solid Missile Systems",
+   "Supply Planner",
    "Systems Engineer, Solid Missile Systems",
    "Talent Acquisition Coordinator",
    "Talent Acquisition Partner",
@@ -3300,7 +3303,8 @@
    "SCADA Networking and Telecom Engineer",
    "Settlements",
    "Strategy and Business Development Team Member",
-   "Structural/Civil Engineer - Natural Gas Power Projects"
+   "Structural/Civil Engineer - Natural Gas Power Projects",
+   "Treasury Team Member"
   ],
   "astera": [
    "Machine Learning Researcher - Springtail",
@@ -3418,7 +3422,6 @@
    "Electrical Engineering Internship - Summer 2027",
    "Experienced Professionals",
    "Fuels Process Engineer",
-   "Lead Operator, Engineering",
    "Machinist III",
    "Manager, Commercial Program Management",
    "Mechanical and Manufacturing Engineering Internship - Summer 2027 ",
@@ -3653,18 +3656,18 @@
    "shieldai",
    "ursamajor"
   ],
-  "autonomy": [
-   "1x",
-   "saronic",
-   "shieldai",
-   "skydio"
-  ],
   "open": [
    "1x",
    "oklo",
    "rigetti",
    "shieldai",
    "sila"
+  ],
+  "autonomy": [
+   "1x",
+   "saronic",
+   "shieldai",
+   "skydio"
   ],
   "compliance": [
    "1x",
@@ -3693,12 +3696,6 @@
    "shieldai",
    "sila"
   ],
-  "flight": [
-   "ionq",
-   "relativity",
-   "shieldai",
-   "skydio"
-  ],
   "integration": [
    "apptronik",
    "cerebras",
@@ -3720,6 +3717,12 @@
    "astera",
    "saronic",
    "shieldai"
+  ],
+  "flight": [
+   "ionq",
+   "relativity",
+   "shieldai",
+   "skydio"
   ],
   "autonomy integration": [
    "saronic",
@@ -3767,6 +3770,21 @@
    "shieldai",
    "skydio"
   ],
+  "edge": [
+   "crusoe",
+   "shieldai"
+  ],
+  "release": [
+   "1x",
+   "cerebras",
+   "physicalintelligence",
+   "shieldai"
+  ],
+  "build release": [
+   "1x",
+   "physicalintelligence",
+   "shieldai"
+  ],
   "build": [
    "1x",
    "cerebras",
@@ -3777,33 +3795,18 @@
    "saronic",
    "shieldai"
   ],
-  "release": [
-   "1x",
-   "cerebras",
-   "physicalintelligence",
-   "shieldai"
-  ],
   "c++": [
    "nebius",
    "shieldai",
    "tenstorrent"
   ],
-  "edge": [
-   "crusoe",
-   "shieldai"
-  ],
-  "build release": [
-   "1x",
-   "physicalintelligence",
+  "vision": [
+   "dexterity",
+   "redwoodmaterials",
    "shieldai"
   ],
   "computer vision": [
    "dexterity",
-   "shieldai"
-  ],
-  "vision": [
-   "dexterity",
-   "redwoodmaterials",
    "shieldai"
   ],
   "computer": [
@@ -3874,13 +3877,6 @@
    "shieldai",
    "skydio"
   ],
-  "indirect": [
-   "1x",
-   "nebius",
-   "pacificfusion",
-   "relativity",
-   "shieldai"
-  ],
   "indirect procurement": [
    "relativity",
    "shieldai"
@@ -3894,6 +3890,14 @@
    "relativity",
    "shieldai",
    "twelve",
+   "ursamajor"
+  ],
+  "indirect": [
+   "1x",
+   "nebius",
+   "pacificfusion",
+   "relativity",
+   "shieldai",
    "ursamajor"
   ],
   "corporate": [
@@ -3960,6 +3964,11 @@
    "kairospower",
    "shieldai"
   ],
+  "failure analysis": [
+   "psiquantum",
+   "shieldai",
+   "skydio"
+  ],
   "analysis": [
    "astera",
    "oklo",
@@ -3969,7 +3978,7 @@
    "skydio",
    "ursamajor"
   ],
-  "failure analysis": [
+  "failure": [
    "psiquantum",
    "shieldai",
    "skydio"
@@ -3982,11 +3991,6 @@
    "relativity",
    "saronic",
    "shieldai"
-  ],
-  "failure": [
-   "psiquantum",
-   "shieldai",
-   "skydio"
   ],
   "controls": [
    "1x",
@@ -4020,6 +4024,11 @@
    "tenstorrent",
    "ursamajor"
   ],
+  "structural analysis": [
+   "relativity",
+   "shieldai",
+   "ursamajor"
+  ],
   "structural": [
    "astera",
    "relativity",
@@ -4027,10 +4036,9 @@
    "shieldai",
    "ursamajor"
   ],
-  "structural analysis": [
+  "design analysis": [
    "relativity",
-   "shieldai",
-   "ursamajor"
+   "shieldai"
   ],
   "thermal": [
    "crusoe",
@@ -4042,10 +4050,6 @@
    "relativity",
    "shieldai",
    "ursamajor"
-  ],
-  "design analysis": [
-   "relativity",
-   "shieldai"
   ],
   "estimation": [
    "astera",
@@ -4063,17 +4067,22 @@
    "relativity",
    "shieldai"
   ],
+  "front": [
+   "cerebras",
+   "shieldai"
+  ],
   "desk": [
    "crusoe",
    "nebius",
    "shieldai"
   ],
-  "front": [
-   "cerebras",
-   "shieldai"
-  ],
   "nordics": [
    "saronic",
+   "shieldai"
+  ],
+  "government": [
+   "factorialenergy",
+   "relativity",
    "shieldai"
   ],
   "relations": [
@@ -4081,11 +4090,6 @@
    "intersect",
    "psiquantum",
    "redwoodmaterials",
-   "shieldai"
-  ],
-  "government": [
-   "factorialenergy",
-   "relativity",
    "shieldai"
   ],
   "ground": [
@@ -4130,14 +4134,14 @@
    "shieldai",
    "skydio"
   ],
+  "middle east": [
+   "nebius",
+   "shieldai"
+  ],
   "east": [
    "nebius",
    "shieldai",
    "skydio"
-  ],
-  "middle east": [
-   "nebius",
-   "shieldai"
   ],
   "middle": [
    "nebius",
@@ -4204,6 +4208,16 @@
    "skydio",
    "tenstorrent"
   ],
+  "real estate": [
+   "avantus",
+   "crusoe",
+   "shieldai"
+  ],
+  "real": [
+   "avantus",
+   "crusoe",
+   "shieldai"
+  ],
   "estate": [
    "avantus",
    "crusoe",
@@ -4222,25 +4236,6 @@
    "skydio",
    "tenstorrent"
   ],
-  "real": [
-   "avantus",
-   "crusoe",
-   "shieldai"
-  ],
-  "real estate": [
-   "avantus",
-   "crusoe",
-   "shieldai"
-  ],
-  "planning": [
-   "cerebras",
-   "crusoe",
-   "nebius",
-   "psiquantum",
-   "shieldai",
-   "skydio",
-   "ursamajor"
-  ],
   "materials": [
    "1x",
    "apptronik",
@@ -4257,11 +4252,16 @@
    "skydio",
    "ursamajor"
   ],
-  "propulsion engine": [
-   "relativity",
-   "shieldai"
+  "planning": [
+   "cerebras",
+   "crusoe",
+   "nebius",
+   "psiquantum",
+   "shieldai",
+   "skydio",
+   "ursamajor"
   ],
-  "engine": [
+  "propulsion engine": [
    "relativity",
    "shieldai"
   ],
@@ -4271,17 +4271,21 @@
    "shieldai",
    "ursamajor"
   ],
+  "engine": [
+   "relativity",
+   "shieldai"
+  ],
   "fuel": [
    "helion",
    "oklo",
    "shieldai",
    "twelve"
   ],
-  "components": [
+  "propulsion components": [
    "relativity",
    "shieldai"
   ],
-  "propulsion components": [
+  "components": [
    "relativity",
    "shieldai"
   ],
@@ -4358,6 +4362,12 @@
    "relativity",
    "shieldai"
   ],
+  "voltage": [
+   "helion",
+   "intersect",
+   "redwoodmaterials",
+   "shieldai"
+  ],
   "high voltage": [
    "helion",
    "intersect",
@@ -4369,12 +4379,6 @@
    "relativity",
    "shieldai",
    "tenstorrent"
-  ],
-  "voltage": [
-   "helion",
-   "intersect",
-   "redwoodmaterials",
-   "shieldai"
   ],
   "fluid": [
    "oklo",
@@ -4395,6 +4399,13 @@
    "saronic",
    "shieldai"
   ],
+  "ai/ml": [
+   "cerebras",
+   "nebius",
+   "relativity",
+   "shieldai",
+   "tenstorrent"
+  ],
   "models": [
    "astera",
    "cerebras",
@@ -4403,23 +4414,8 @@
    "shieldai",
    "tenstorrent"
   ],
-  "ai/ml": [
-   "cerebras",
-   "nebius",
-   "relativity",
-   "shieldai",
-   "tenstorrent"
-  ],
   "transformation": [
    "redwoodmaterials",
-   "shieldai"
-  ],
-  "asset": [
-   "cerebras",
-   "figure",
-   "intersect",
-   "nebius",
-   "saronic",
    "shieldai"
   ],
   "management": [
@@ -4442,6 +4438,14 @@
   ],
   "asset management": [
    "intersect",
+   "shieldai"
+  ],
+  "asset": [
+   "cerebras",
+   "figure",
+   "intersect",
+   "nebius",
+   "saronic",
    "shieldai"
   ],
   "inspector": [
@@ -4487,13 +4491,18 @@
    "etched",
    "shieldai"
   ],
+  "south": [
+   "shieldai",
+   "skydio"
+  ],
   "korea": [
    "factorialenergy",
    "shieldai"
   ],
-  "south": [
-   "shieldai",
-   "skydio"
+  "air": [
+   "crusoe",
+   "intersect",
+   "shieldai"
   ],
   "vehicle fluid": [
    "relativity",
@@ -4504,11 +4513,6 @@
    "shieldai",
    "skydio",
    "ursamajor"
-  ],
-  "air": [
-   "crusoe",
-   "intersect",
-   "shieldai"
   ],
   "infrastructure": [
    "1x",
@@ -4547,15 +4551,15 @@
    "relativity",
    "shieldai"
   ],
-  "full-stack": [
-   "shieldai",
-   "skydio"
-  ],
   "foundry": [
    "lightmatter",
    "psiquantum",
    "saronic",
    "shieldai"
+  ],
+  "full-stack": [
+   "shieldai",
+   "skydio"
   ],
   "sensor": [
    "saronic",
@@ -4587,15 +4591,6 @@
    "shieldai",
    "skydio"
   ],
-  "hiring": [
-   "shieldai",
-   "sila"
-  ],
-  "levels": [
-   "saronic",
-   "shieldai",
-   "skydio"
-  ],
   "automation": [
    "cerebras",
    "crusoe",
@@ -4612,6 +4607,15 @@
    "shieldai",
    "skydio"
   ],
+  "levels": [
+   "saronic",
+   "shieldai",
+   "skydio"
+  ],
+  "hiring": [
+   "shieldai",
+   "sila"
+  ],
   "modeling": [
    "astera",
    "etched",
@@ -4627,13 +4631,6 @@
    "relativity",
    "shieldai"
   ],
-  "officer": [
-   "figure",
-   "helion",
-   "insitro",
-   "oklo",
-   "shieldai"
-  ],
   "security officer": [
    "helion",
    "shieldai"
@@ -4641,6 +4638,13 @@
   "facility": [
    "cerebras",
    "kairospower",
+   "oklo",
+   "shieldai"
+  ],
+  "officer": [
+   "figure",
+   "helion",
+   "insitro",
    "oklo",
    "shieldai"
   ],
@@ -4658,6 +4662,7 @@
   "treasury": [
    "crusoe",
    "figure",
+   "intersect",
    "shieldai"
   ],
   "proposal": [
@@ -4701,22 +4706,13 @@
    "shieldai",
    "tenstorrent"
   ],
-  "recovery": [
-   "relativity",
-   "shieldai"
-  ],
   "launch": [
    "relativity",
    "shieldai"
   ],
-  "verification": [
-   "cerebras",
-   "etched",
-   "lightmatter",
-   "saronic",
-   "shieldai",
-   "tenstorrent",
-   "ursamajor"
+  "recovery": [
+   "relativity",
+   "shieldai"
   ],
   "validation": [
    "1x",
@@ -4728,6 +4724,15 @@
    "psiquantum",
    "shieldai",
    "tenstorrent"
+  ],
+  "verification": [
+   "cerebras",
+   "etched",
+   "lightmatter",
+   "saronic",
+   "shieldai",
+   "tenstorrent",
+   "ursamajor"
   ],
   "supervisor": [
    "1x",
@@ -4824,6 +4829,10 @@
    "nebius",
    "shieldai"
   ],
+  "special projects": [
+   "oklo",
+   "shieldai"
+  ],
   "projects": [
    "etched",
    "intersect",
@@ -4833,10 +4842,6 @@
   "special": [
    "oklo",
    "saronic",
-   "shieldai"
-  ],
-  "special projects": [
-   "oklo",
    "shieldai"
   ],
   "composite": [
@@ -5023,19 +5028,19 @@
    "relativity",
    "saronic"
   ],
-  "cnc": [
-   "1x",
-   "apptronik",
-   "crusoe",
-   "relativity",
-   "saronic"
-  ],
   "machinist": [
    "apptronik",
    "kairospower",
    "relativity",
    "saronic",
    "ursamajor"
+  ],
+  "cnc": [
+   "1x",
+   "apptronik",
+   "crusoe",
+   "relativity",
+   "saronic"
   ],
   "programmer": [
    "apptronik",
@@ -5054,6 +5059,22 @@
    "crusoe",
    "redwoodmaterials",
    "relativity"
+  ],
+  "supply": [
+   "1x",
+   "apptronik",
+   "crusoe",
+   "etched",
+   "nebius",
+   "physicalintelligence",
+   "psiquantum",
+   "redwoodmaterials",
+   "relativity",
+   "saronic",
+   "skydio",
+   "tenstorrent",
+   "twelve",
+   "ursamajor"
   ],
   "chain": [
    "apptronik",
@@ -5076,21 +5097,6 @@
    "redwoodmaterials",
    "relativity",
    "saronic",
-   "tenstorrent",
-   "twelve"
-  ],
-  "supply": [
-   "1x",
-   "apptronik",
-   "crusoe",
-   "etched",
-   "nebius",
-   "physicalintelligence",
-   "psiquantum",
-   "redwoodmaterials",
-   "relativity",
-   "saronic",
-   "skydio",
    "tenstorrent",
    "twelve"
   ],
@@ -5130,11 +5136,11 @@
    "pacificfusion",
    "relativity"
   ],
-  "1st shift": [
+  "1st": [
    "relativity",
    "saronic"
   ],
-  "1st": [
+  "1st shift": [
    "relativity",
    "saronic"
   ],
@@ -5175,6 +5181,19 @@
    "helion",
    "relativity"
   ],
+  "compute": [
+   "apptronik",
+   "cerebras",
+   "crusoe",
+   "ionq",
+   "nebius",
+   "relativity",
+   "tenstorrent"
+  ],
+  "responsible": [
+   "relativity",
+   "ursamajor"
+  ],
   "performance": [
    "cerebras",
    "crusoe",
@@ -5184,19 +5203,6 @@
    "oklo",
    "relativity",
    "skydio",
-   "tenstorrent"
-  ],
-  "responsible": [
-   "relativity",
-   "ursamajor"
-  ],
-  "compute": [
-   "apptronik",
-   "cerebras",
-   "crusoe",
-   "ionq",
-   "nebius",
-   "relativity",
    "tenstorrent"
   ],
   "electrician": [
@@ -5480,7 +5486,7 @@
    "nebius",
    "tenstorrent"
   ],
-  "center design": [
+  "data center design": [
    "crusoe",
    "nebius"
   ],
@@ -5491,7 +5497,7 @@
    "nebius",
    "tenstorrent"
   ],
-  "data center design": [
+  "center design": [
    "crusoe",
    "nebius"
   ],
@@ -5509,11 +5515,11 @@
    "cerebras",
    "nebius"
   ],
-  "detection response": [
+  "response": [
    "1x",
    "nebius"
   ],
-  "response": [
+  "detection response": [
    "1x",
    "nebius"
   ],
@@ -5548,10 +5554,6 @@
    "helion",
    "nebius"
   ],
-  "field data": [
-   "crusoe",
-   "nebius"
-  ],
   "field data center": [
    "crusoe",
    "nebius"
@@ -5562,13 +5564,13 @@
    "oklo",
    "physicalintelligence"
   ],
+  "field data": [
+   "crusoe",
+   "nebius"
+  ],
   "fixed": [
    "nebius",
    "skydio"
-  ],
-  "cloud platform": [
-   "ionq",
-   "nebius"
   ],
   "physical ai": [
    "dexterity",
@@ -5583,6 +5585,10 @@
    "saronic",
    "skydio",
    "tenstorrent"
+  ],
+  "cloud platform": [
+   "ionq",
+   "nebius"
   ],
   "deployment": [
    "cerebras",
@@ -5599,14 +5605,14 @@
    "avantus",
    "nebius"
   ],
-  "user": [
-   "arcadia",
-   "nebius"
-  ],
   "interface": [
    "etched",
    "nebius",
    "tenstorrent"
+  ],
+  "user": [
+   "arcadia",
+   "nebius"
   ],
   "frontend": [
    "1x",
@@ -5623,16 +5629,16 @@
    "ionq",
    "nebius"
   ],
-  "group": [
-   "crusoe",
-   "ionq",
-   "nebius"
-  ],
   "reporting": [
    "apptronik",
    "etched",
    "figure",
    "helion",
+   "ionq",
+   "nebius"
+  ],
+  "group": [
+   "crusoe",
    "ionq",
    "nebius"
   ],
@@ -5716,6 +5722,14 @@
    "nebius",
    "tenstorrent"
   ],
+  "llm": [
+   "cerebras",
+   "nebius"
+  ],
+  "inference model": [
+   "cerebras",
+   "nebius"
+  ],
   "inference": [
    "cerebras",
    "crusoe",
@@ -5729,14 +5743,6 @@
    "nebius",
    "skydio",
    "tenstorrent"
-  ],
-  "inference model": [
-   "cerebras",
-   "nebius"
-  ],
-  "llm": [
-   "cerebras",
-   "nebius"
   ],
   "center construction": [
    "crusoe",
@@ -5879,14 +5885,14 @@
    "cerebras",
    "nebius"
   ],
-  "server network": [
-   "cerebras",
-   "nebius"
-  ],
   "server": [
    "cerebras",
    "nebius",
    "tenstorrent"
+  ],
+  "server network": [
+   "cerebras",
+   "nebius"
   ],
   "writer": [
    "nebius",
@@ -5933,15 +5939,15 @@
    "saronic",
    "ursamajor"
   ],
-  "material handler": [
-   "1x",
-   "crusoe"
-  ],
   "handler": [
    "1x",
    "crusoe",
    "dexterity",
    "ursamajor"
+  ],
+  "material handler": [
+   "1x",
+   "crusoe"
   ],
   "energy": [
    "astera",
@@ -5964,20 +5970,20 @@
    "cerebras",
    "crusoe"
   ],
-  "room": [
-   "crusoe",
-   "intersect"
-  ],
   "control room": [
    "crusoe",
    "intersect"
   ],
-  "internal audit": [
+  "room": [
+   "crusoe",
+   "intersect"
+  ],
+  "audit": [
    "crusoe",
    "ionq",
    "oklo"
   ],
-  "audit": [
+  "internal audit": [
    "crusoe",
    "ionq",
    "oklo"
@@ -5996,14 +6002,14 @@
    "intersect",
    "ionq"
   ],
+  "journeyman electrician": [
+   "crusoe",
+   "sila"
+  ],
   "journeyman": [
    "crusoe",
    "sila",
    "ursamajor"
-  ],
-  "journeyman electrician": [
-   "crusoe",
-   "sila"
   ],
   "initiatives": [
    "crusoe",
@@ -6054,11 +6060,11 @@
    "saronic",
    "tenstorrent"
   ],
-  "apprentice electrician": [
+  "apprentice": [
    "crusoe",
    "sila"
   ],
-  "apprentice": [
+  "apprentice electrician": [
    "crusoe",
    "sila"
   ],
@@ -6137,15 +6143,15 @@
    "saronic",
    "sila"
   ],
+  "international": [
+   "ionq",
+   "saronic"
+  ],
   "defense": [
    "factorialenergy",
    "psiquantum",
    "saronic",
    "skydio"
-  ],
-  "international": [
-   "ionq",
-   "saronic"
   ],
   "camera": [
    "1x",
@@ -6217,12 +6223,12 @@
    "saronic",
    "ursamajor"
   ],
-  "information technology": [
+  "information": [
+   "charmindustrial",
    "saronic",
    "tenstorrent"
   ],
-  "information": [
-   "charmindustrial",
+  "information technology": [
    "saronic",
    "tenstorrent"
   ],
@@ -6279,7 +6285,7 @@
    "dexterity",
    "redwoodmaterials"
   ],
-  "supply mechanicals": [
+  "mechanicals": [
    "etched",
    "redwoodmaterials",
    "skydio"
@@ -6289,7 +6295,7 @@
    "redwoodmaterials",
    "skydio"
   ],
-  "mechanicals": [
+  "supply mechanicals": [
    "etched",
    "redwoodmaterials",
    "skydio"
@@ -6384,14 +6390,14 @@
    "ionq",
    "tenstorrent"
   ],
+  "core design": [
+   "oklo",
+   "tenstorrent"
+  ],
   "design verification": [
    "cerebras",
    "etched",
    "lightmatter",
-   "tenstorrent"
-  ],
-  "core design": [
-   "oklo",
    "tenstorrent"
   ],
   "generator": [
@@ -6544,17 +6550,17 @@
    "cerebras",
    "ionq"
   ],
-  "intellectual property": [
-   "1x",
-   "cerebras",
-   "insitro"
-  ],
   "intellectual": [
    "1x",
    "cerebras",
    "insitro"
   ],
   "property": [
+   "1x",
+   "cerebras",
+   "insitro"
+  ],
+  "intellectual property": [
    "1x",
    "cerebras",
    "insitro"
@@ -6761,6 +6767,11 @@
    "lightmatter",
    "psiquantum"
   ],
+  "ic": [
+   "lightmatter",
+   "psiquantum",
+   "rigetti"
+  ],
   "ic design": [
    "lightmatter",
    "psiquantum"
@@ -6768,11 +6779,6 @@
   "mixed-signal": [
    "lightmatter",
    "psiquantum"
-  ],
-  "ic": [
-   "lightmatter",
-   "psiquantum",
-   "rigetti"
   ],
   "cryogenic": [
    "psiquantum",
@@ -6836,11 +6842,11 @@
    "avantus",
    "intersect"
   ],
-  "scada": [
+  "scada controls": [
    "intersect",
    "plusPower"
   ],
-  "scada controls": [
+  "scada": [
    "intersect",
    "plusPower"
   ],
