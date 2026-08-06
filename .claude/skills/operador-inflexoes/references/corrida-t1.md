@@ -23,10 +23,17 @@ O estado vivo está no repo do projeto: branch `claude/handoff-audit-0w2a31` de 
 
 ```bash
 cd coletor-sinais && python3 coletar.py          # classe 6: vagas, difusão de vocabulário
-cd obra && python3 coletar_obra.py               # classe 7: fila de interconexão, energia firme
+cd obra && python3 coletar_obra.py               # classe 7: geradores planeados (EIA-860M mensal)
 ```
 
-Cada corrida acrescenta um retrato datado — **é a acumulação que produz sinal, não o retrato isolado**. Ler o output à luz de duas perguntas: que termos técnicos ganharam empresas desde o último retrato (zona de inflexão: 3-8 empresas distintas), e que região duplicou a energia firme pedida. Um sinal aqui não é uma tese — é um *pointer* para investigar na fase de descoberta, e nunca conta como compromisso custoso por si só (é L2, não L5).
+O coletor de obra colhe o mês publicado mais recente e imprime as **derivadas a 1, 3 e 12 meses** contra a série já em `snapshots/` (2023-01 em diante, construída de uma vez com `--backfill`). Como o EIA publica mensalmente, há retrato novo cerca de uma vez em cada quatro corridas; nas outras o coletor não repete trabalho e limita-se a reimprimir a leitura.
+
+Ler o output à luz de três perguntas:
+- que **termos técnicos** ganharam empresas desde o último retrato (zona de inflexão: 3-8 empresas distintas);
+- que **região** ganhou GW firmes planeados, e qual duplicou;
+- que **entidades** entraram no top-40 e não lá estavam há seis meses — são nomes concretos, e é daqui que sai a semente de watchlist.
+
+Um sinal aqui não é uma tese — é um *pointer* para investigar na fase de descoberta, e nunca conta como compromisso custoso por si só (é L2, não L5). A folha *Canceled or Postponed* é o falsificador simétrico: capacidade que **saiu** dos planos vale como sinal de reversão com a mesma força com que a entrada valia como sinal de procura.
 
 Se um coletor falhar (rede, fonte em baixo), regista-se e continua-se: a corrida não depende deles.
 

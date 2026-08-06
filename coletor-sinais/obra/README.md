@@ -1,54 +1,77 @@
-# Classe 7 — obra física (fila de interconexão elétrica)
+# Classe 7 — obra física (geradores planeados + fila de interconexão)
 
 ## O sinal
 
-Um projeto industrial pede ligação à rede **anos antes** de haver obra, encomendas ou
-notícias. É um compromisso administrativo datado e público — sinal L2 na hierarquia do
-motor ("permits obtidos").
+Um projeto industrial pede ligação à rede e regista o gerador que vai construir **anos
+antes** de haver obra, encomendas ou notícias. É um compromisso administrativo datado,
+público e **assinado por uma entidade com nome** — sinal L2/L3 na hierarquia do motor
+("permits obtidos"). Não é opinião nem guidance: custa dinheiro e expõe quem o faz.
 
 **Mede-se energia FIRME** (gás, nuclear, geotérmica, carvão): é o que serve carga 24/7.
 Solar e eólica não sinalizam procura industrial contínua da mesma forma.
 
-**O sinal é a derivada**, não o nível: uma duplicação semestral numa região.
+**O sinal é a derivada e a difusão**, nunca o nível:
+
+1. que região (autoridade de balanço) ganhou GW firmes planeados desde o retrato anterior;
+2. que **entidades** aparecem pela primeira vez — a mesma lógica das 3-8 empresas
+   distintas do coletor de vocabulário, aplicada a betão e turbinas;
+3. que capacidade passou a **cancelada/adiada** — o falsificador, o sinal de reversão.
 
 ## Validação
 
 `teste-retroativo-sinais-precoces-2026-08-06.md` — a fila virou no 1.º semestre de
 2024; o operador só detetou o tema em outubro de 2025. **~18 meses de antecedência.**
 
-## Estado atual (06/08/2026)
+## Duas fontes, dois papéis
 
-O coletor deteta sozinho três duplicações: 2022-S1, **2024-S1** (a que o teste
-retroativo tinha encontrado à mão) e **2025-S1**. E mostra que a aceleração *continua*:
-79,7 → 91,1 GW nos dois últimos semestres. MISO domina (+30,3 GW em 4 semestres);
-PJM, a "data center alley", quase não aparece.
+| | **EIA-860M** (primária) | **LBNL** (secundária) |
+|---|---|---|
+| Frequência | **mensal** | anual |
+| Latência | ~1-2 meses | ~5 meses |
+| Cobertura | geradores planeados/cancelados | fila de interconexão completa (38k pedidos) |
+| História | 2023-01 em diante (42 meses) | desde 2000 |
+| Nomeia a empresa | **sim** (`Entity Name`) | não |
+| Papel | **deteção** | história profunda e contexto |
 
-## Limitação decisiva: latência
+A latência era a limitação declarada da versão anterior deste coletor — o LBNL anual
+reduzia a antecedência prática de ~18 para ~5 meses. O EIA-860M resolve-a: é mensal e,
+por ser publicado em arquivo, **a série histórica inteira estava disponível de
+imediato** — não foi preciso esperar meses a acumular retratos.
 
-O ficheiro do LBNL é **anual**. Isso reduz a antecedência prática de ~18 para ~5 meses.
+### Nota sobre a API do EIA (testado, não serve para isto)
 
-Para latência **mensal** são precisas as filas dos ISOs — e todas exigem **registo
-gratuito**, que esta sessão não pode fazer:
-
-| Fonte | O que falta |
-|---|---|
-| **EIA** (`api.eia.gov`) | chave gratuita em eia.gov/opendata — **a mais fácil e valiosa** |
-| **PJM** (`api.pjm.com`) | subscrição gratuita em pjm.com (o DataMiner web é uma app, não uma API) |
-| ERCOT, CAISO | registo / parsing de relatórios |
-| `interconnection.fyi` | aplicação web, sem API pública documentada |
-
-Quando houver chaves, acrescentam-se como fontes adicionais — a métrica e a estrutura
-do snapshot não mudam.
+`api.eia.gov/v2/electricity/operating-generator-capacity` só expõe estados **operáveis**
+(`OP`, `OS`, `SB`, `OA`) na faceta `status`. Não tem geradores planeados. A chave
+`EIA_API_KEY` está no ambiente e funciona, mas o sinal precoce vive no Excel mensal, não
+na API. O coletor usa o Excel; não precisa de chave.
 
 ## Uso
 
 ```bash
-python3 coletar_obra.py              # análise do ficheiro local
-python3 coletar_obra.py --download   # buscar edição nova ao LBNL
+python3 coletar_obra.py                 # último mês + derivadas a 1/3/12 meses
+python3 coletar_obra.py --backfill      # constrói a série mensal toda (2023-01 -> hoje)
+python3 coletar_obra.py --mes 2025-06   # um mês específico
+python3 coletar_obra.py --lbnl          # história profunda (fila LBNL, semestral)
 ```
 
-**Nota de acesso:** as páginas do LBNL têm proteção Cloudflare (403), mas os ficheiros
-em `/sites/default/files/` não. O script usa o caminho direto. Quando sair a edição de
-2027, o URL segue o mesmo padrão.
+Cada mês demora ~20 s (descarrega 13 MB, agrega, **descarta o xlsx**). Só os retratos
+JSON (~6 KB cada) ficam versionados, em `snapshots/`.
 
-O `.xlsx` (15 MB) não é versionado — o script descarrega-o quando falta.
+**Nota de acesso:** o mês corrente vive em `/xls/`, os anteriores em `/archive/xls/`; o
+script tenta os dois e valida o `Content-Type` — um pedido a um mês inexistente é
+**redirecionado para a homepage do EIA com HTTP 200**, pelo que verificar só o código de
+estado dá falsos positivos (67.094 bytes de HTML disfarçados de sucesso). As páginas do
+LBNL têm Cloudflare (403), mas os ficheiros em `/sites/default/files/` não.
+
+O `.xlsx` do LBNL (15 MB) não é versionado — o script descarrega-o quando falta.
+
+## Ganhos de latência ainda por explorar
+
+| Fonte | O que falta |
+|---|---|
+| **PJM** (`api.pjm.com`) | subscrição gratuita em pjm.com (o DataMiner web é uma app, não uma API) |
+| ERCOT, CAISO | registo / parsing de relatórios |
+| `interconnection.fyi` | aplicação web, sem API pública documentada |
+
+As filas dos ISOs atualizam mais vezes do que o EIA-860M, mas o salto grande — de anual
+para mensal — já está feito. Acrescentar um ISO é ganho incremental, não estrutural.

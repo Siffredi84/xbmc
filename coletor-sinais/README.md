@@ -28,7 +28,16 @@ de pergunta aberta a lista fechada de 3-8 nomes"* — agora observável em tempo
 ## Duas classes
 
 - **Classe 6 — talento** (este diretório): `coletar.py`, vagas de emprego.
-- **Classe 7 — obra física**: `obra/coletar_obra.py`, fila de interconexão elétrica.
+  Mede difusão de *vocabulário técnico* por empresas distintas.
+- **Classe 7 — obra física**: `obra/coletar_obra.py`, geradores planeados (EIA-860M,
+  **mensal**, com o nome da entidade) e fila de interconexão (LBNL, anual).
+  Mede difusão de *capital firme comprometido* por região e por entidade.
+
+As duas medem a mesma coisa em dois materiais diferentes — **quantos atores
+independentes se comprometeram** —, e é por isso que se corrigem uma à outra: a classe 6
+apanha intenção (barata, cedo, ruidosa), a classe 7 apanha compromisso (caro, mais
+tarde, quase sem ruído). Um tema que aparece nas duas é qualitativamente diferente de um
+tema que só aparece numa.
 
 ## Uso
 
