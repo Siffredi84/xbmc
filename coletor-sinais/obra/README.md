@@ -45,6 +45,19 @@ imediato** — não foi preciso esperar meses a acumular retratos.
 `EIA_API_KEY` está no ambiente e funciona, mas o sinal precoce vive no Excel mensal, não
 na API. O coletor usa o Excel; não precisa de chave.
 
+## Estado atual (série 2023-01 → 2026-06, 42 retratos)
+
+Análise completa em `analise-obra-serie-mensal-2026-08-06.md`. O essencial:
+
+- **73,6 GW firmes planeados**, contra um fundo de 18,2 GW em julho de 2024. **+86% em 12 meses** — o alarme está a disparar.
+- **Antecedência ~9 meses** sobre a deteção do tema pelo motor (a derivada cruzou +50% em janeiro de 2025; o motor detetou em outubro de 2025). Com o LBNL anual eram ~5.
+- **94 entidades distintas** com capacidade firme planeada, contra 56 estagnadas durante todo o 2023.
+- **Falsificador silencioso:** ~13 GW planeados por cada 1 GW cancelado, com o ritmo de cancelamento estável desde 2023.
+- ERCOT (+15,3 GW) e MISO (+12,1) duplicaram em 12 meses; **PJM +0,1**.
+
+**Limiar de alarme:** `LIMIAR_ALARME = 50.0` (% a 12 meses), fixado a 06/08/2026. Foi
+escolhido **depois** de ver a série — só disparos futuros contam como validação.
+
 ## Uso
 
 ```bash

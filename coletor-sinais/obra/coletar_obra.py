@@ -57,6 +57,7 @@ EIA_URLS = ['https://www.eia.gov/electricity/data/eia860m/archive/xls/{m}_genera
 # As páginas do LBNL têm Cloudflare (403); os ficheiros em /sites/default/files/ não.
 URL_LBNL = 'https://emp.lbl.gov/sites/default/files/2026-05/LBNL_Ix_Queue_Data_File_thru2025.xlsx'
 
+LIMIAR_ALARME = 50.0     # % de crescimento a 12 meses da capacidade firme planeada
 FIRME = re.compile(r'natural gas|nuclear|geothermal|coal|petroleum|other gas', re.I)
 CARGA_BASE = re.compile(r'natural gas|nuclear', re.I)   # o subconjunto que responde a procura nova
 UA = {'User-Agent': 'Mozilla/5.0'}
@@ -64,12 +65,23 @@ UA = {'User-Agent': 'Mozilla/5.0'}
 
 # ---------------------------------------------------------------- EIA-860M
 
+class _SemRedirecao(urllib.request.HTTPRedirectHandler):
+    """Um mês inexistente é redirecionado para a homepage do EIA com HTTP 200.
+    Seguir a redireção custa 67 KB de HTML e vários segundos, e o resultado
+    parece um sucesso. Tratamos qualquer redireção como 'não existe'."""
+    def redirect_request(self, *a, **kw):
+        return None
+
+
+_OPENER = urllib.request.build_opener(_SemRedirecao)
+
+
 def url_do_mes(ano, mes):
     """Devolve o primeiro URL que serve mesmo um xlsx (e não a homepage por redireção)."""
     for tpl in EIA_URLS:
         u = tpl.format(m=MESES[mes - 1], y=ano)
         try:
-            r = urllib.request.urlopen(urllib.request.Request(u, method='HEAD', headers=UA), timeout=30)
+            r = _OPENER.open(urllib.request.Request(u, method='HEAD', headers=UA), timeout=20)
             if 'sheet' in r.headers.get('Content-Type', ''):
                 return u
         except Exception:
@@ -196,6 +208,18 @@ def relatar(serie):
     print("\n--- Firme planeado por ano de operação (GW) ---")
     print('  ' + ' · '.join(f"{a}: {g:.1f}" for a, g in list(p.get('por_ano_gw', {}).items())[:8]))
 
+    # Limiar de alarme, fixado a 06/08/2026 sobre a série 2023-01..2026-06.
+    # Sobre essa série teria disparado em 2025-01, ~9 meses antes de o motor detetar
+    # o tema da energia. RESSALVA: foi escolhido DEPOIS de ver a série — só disparos
+    # futuros contam como validação.
+    if len(serie) > 12:
+        base = serie[-13].get('planeado', {}).get('firme', {}).get('gw', 0)
+        agora = p.get('firme', {}).get('gw', 0)
+        if base:
+            var = (agora / base - 1) * 100
+            estado = "** ALARME **" if var >= LIMIAR_ALARME else "abaixo do limiar"
+            print(f"\n[{estado}] variação a 12 meses: {var:+.0f}% (limiar: +{LIMIAR_ALARME:.0f}%)")
+
     for jan, rot in ((1, '1 mês'), (3, '3 meses'), (12, '12 meses')):
         if len(serie) <= jan:
             continue
@@ -300,14 +324,26 @@ def main():
                 print(f"  {a}-{m:02d}: " + (f"{r['planeado']['firme']['gw']:.1f} GW firmes planeados"
                                             if r else "indisponível"), flush=True)
     else:
-        # o último mês publicado: recua até encontrar um que exista
-        a, m = hoje.year, hoje.month
-        for _ in range(4):
+        # Só se procuram meses POSTERIORES ao retrato mais recente que já existe:
+        # o EIA publica uma vez por mês, logo a maioria das corridas não tem nada
+        # novo para colher e não deve gastar tempo a sondar o servidor.
+        serie = sorted(SNAPS.glob('eia860m-*.json'))
+        a, m = (2023, 1)
+        if serie:
+            a, m = map(int, serie[-1].stem.split('-')[1:])
+            m += 1
+            if m == 13:
+                a, m = a + 1, 1
+        novos = 0
+        while (a, m) <= (hoje.year, hoje.month):
             if colher_mes(a, m):
-                break
-            m -= 1
-            if m == 0:
-                a, m = a - 1, 12
+                print(f"  novo retrato: {a}-{m:02d}")
+                novos += 1
+            m += 1
+            if m == 13:
+                a, m = a + 1, 1
+        if not novos:
+            print("Sem edição nova do EIA desde o último retrato — leitura sobre a série existente.")
     relatar(carregar_serie())
 
 
