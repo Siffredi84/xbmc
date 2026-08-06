@@ -25,6 +25,11 @@ de pergunta aberta a lista fechada de 3-8 nomes"* — agora observável em tempo
 **A zona de inflexão é 3-8 empresas.** Acima disso o tema já está estabelecido; abaixo
 é ruído de uma empresa só.
 
+## Duas classes
+
+- **Classe 6 — talento** (este diretório): `coletar.py`, vagas de emprego.
+- **Classe 7 — obra física**: `obra/coletar_obra.py`, fila de interconexão elétrica.
+
 ## Uso
 
 ```bash
