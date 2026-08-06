@@ -135,7 +135,7 @@ As duas classes que apareceram como NÃO OBTÍVEL em todas as corridas até 06/0
 | Classe | Fonte | Estado | Latência |
 |---|---|---|---|
 | **6 — Talento** | vagas de 38 empresas de fronteira (Greenhouse/Lever/Ashby, sem chaves) | ✅ operacional | semanal (a cadência da corrida) |
-| **7 — Obra física** | fila de interconexão elétrica (LBNL, 38.201 pedidos) | ✅ operacional | **anual** — as filas mensais dos ISOs exigem registo gratuito (EIA, PJM) |
+| **7 — Obra física** | geradores planeados (**EIA-860M**, mensal, com nome da entidade) + fila de interconexão (LBNL, 38.201 pedidos, anual) | ✅ operacional | **mensal** desde 06/08/2026 — ver atualização abaixo |
 
 **Acopladas à corrida do T1** (passo 2.5 do procedimento no skill): cada corrida acrescenta um retrato datado. O sinal nasce da acumulação, não do retrato isolado.
 
@@ -144,6 +144,15 @@ As duas classes que apareceram como NÃO OBTÍVEL em todas as corridas até 06/0
 **Primeiros achados (06/08/2026):**
 - Classe 6: `physical design` + `design verification` em Cerebras/Etched/Lightmatter; **`power electronics` em Helion/Redwood/Relativity** — três indústrias diferentes a pedir a mesma competência, confirmação independente do bem escasso da tese T10 (que lá chegou por outro caminho).
 - Classe 7: três duplicações semestrais detetadas automaticamente (2022-S1, **2024-S1**, 2025-S1); aceleração a continuar (79,7 → 91,1 GW nos dois últimos semestres); MISO domina, PJM quase ausente.
+
+**Atualização da classe 7 — 06/08/2026 (mesmo dia, após o teste retroativo):** a limitação declarada acima era a latência anual do LBNL, que reduzia a antecedência de ~18 para ~5 meses. Resolvida com o **EIA-860M** (geradores planeados, mensal). O arquivo do EIA guarda todas as edições desde 2023-01, pelo que a série de **42 retratos mensais** foi construída de imediato em vez de acumulada. Análise em `analise-obra-serie-mensal-2026-08-06.md`. O que muda:
+
+- **Antecedência ~5 → ~9 meses** sobre a deteção do motor (derivada a 12 meses cruza +50% em jan/2025; o motor detetou em out/2025). Limiar de alarme fixado a +50%/12m — escolhido *depois* de ver a série, logo só disparos futuros validam.
+- **A classe 7 passa a nomear entidades**, o que a converte de termómetro macro em gerador de watchlist. Estado atual: 73,6 GW firmes planeados (+86% em 12m), 94 entidades distintas contra 56 estagnadas em 2023.
+- **Falsificador simétrico ativo e silencioso:** a folha de cancelamentos regista ~1 GW cancelado por cada 13 GW planeados, a ritmo estável desde 2023.
+- **Lição metodológica que vale para todo o framework:** LBNL e EIA datam a viragem em alturas diferentes sem se contradizerem — medem dois pontos do mesmo tubo. O sinal do LBNL acontece 2-3 trimestres mais cedo e chega às mãos 4 meses mais tarde. Ao escolher fontes de sinal precoce, a pergunta não é *"que sinal acontece primeiro?"* mas ***"que sinal está publicado primeiro?"***.
+- **Achado geográfico de 2.ª ordem confirmado em dados independentes:** ERCOT (+15,3 GW) e MISO (+12,1) duplicaram em 12 meses; PJM, a "data center alley", **+0,1 GW**.
+- Nota de honestidade: o EIA-860M foi testado também via API (`operating-generator-capacity`) — **não serve**, a faceta `status` só expõe estados operáveis. O sinal vive no Excel mensal. A chave `EIA_API_KEY` está no ambiente e funciona, mas o coletor não precisa dela.
 
 ## Regras de atualização deste arquivo
 
