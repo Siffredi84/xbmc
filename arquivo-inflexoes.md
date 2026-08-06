@@ -128,6 +128,23 @@ Todas as corridas de operador estão concluídas (T2–T11, E2E, pares ChatGPT T
 
 O framework vive agora como skill portátil em `.claude/skills/operador-inflexoes/` (committado neste branch) e como pacote `.skill` entregue ao utilizador para instalação no perfil. Desenho: **arnês, não jaula** — a Parte II do perfil viaja byte-a-byte (diff-verificada) como documento a habitar; o SKILL.md só transporta o harness (3 workflows: descoberta / corrida T1 / kits ChatGPT + comutador a jusante + governação). Testado: benchmark final **com-skill 17/17 (100%) vs sem-skill 12/17 (71%)** — o eval decisivo foi o kit ChatGPT (Parte II 100% verbatim vs baseline que inventou uma "jaula" procedimental e nem achou o perfil); caveats registados no workspace de testes (eval-1 completado inline pelo construtor após 3 mortes por spend limit; 1 defeito real encontrado e corrigido: fallback de instância-fria-simulada-e-declarada). A corrida do T1 pode agora ser disparada em qualquer sessão com "corre a corrida do T1" (o skill carrega o procedimento + motor).
 
+## Sinais precoces — classes 6 e 7 (operacionais desde 06/08/2026)
+
+As duas classes que apareceram como NÃO OBTÍVEL em todas as corridas até 06/08/2026 estão agora **abertas e a acumular série**, em `coletor-sinais/`:
+
+| Classe | Fonte | Estado | Latência |
+|---|---|---|---|
+| **6 — Talento** | vagas de 38 empresas de fronteira (Greenhouse/Lever/Ashby, sem chaves) | ✅ operacional | semanal (a cadência da corrida) |
+| **7 — Obra física** | fila de interconexão elétrica (LBNL, 38.201 pedidos) | ✅ operacional | **anual** — as filas mensais dos ISOs exigem registo gratuito (EIA, PJM) |
+
+**Acopladas à corrida do T1** (passo 2.5 do procedimento no skill): cada corrida acrescenta um retrato datado. O sinal nasce da acumulação, não do retrato isolado.
+
+**Estatuto dos sinais:** são L2 na hierarquia do motor (contratações em escala, permits) — servem de *pointer* para investigar, **nunca contam como compromisso custoso** para triangulação.
+
+**Primeiros achados (06/08/2026):**
+- Classe 6: `physical design` + `design verification` em Cerebras/Etched/Lightmatter; **`power electronics` em Helion/Redwood/Relativity** — três indústrias diferentes a pedir a mesma competência, confirmação independente do bem escasso da tese T10 (que lá chegou por outro caminho).
+- Classe 7: três duplicações semestrais detetadas automaticamente (2022-S1, **2024-S1**, 2025-S1); aceleração a continuar (79,7 → 91,1 GW nos dois últimos semestres); MISO domina, PJM quase ausente.
+
 ## Regras de atualização deste arquivo
 
 1. Cada corrida acrescenta uma linha ao histórico dos temas que tocou e atualiza estados/prazos — nunca reescreve histórico.

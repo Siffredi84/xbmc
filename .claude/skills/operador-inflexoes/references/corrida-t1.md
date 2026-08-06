@@ -19,6 +19,17 @@ O estado vivo está no repo do projeto: branch `claude/handoff-audit-0w2a31` de 
 - calendário de eventos (earnings, etc.) — confirmar datas, notar as que se aproximam;
 - proxy de valor — registar o fecho mais recente disponível de cada cartão entregue e do benchmark.
 
+**2.5. Sinais precoces (classes 6 e 7) — antes da descoberta.** Correr os dois coletores, que vivem em `coletor-sinais/`:
+
+```bash
+cd coletor-sinais && python3 coletar.py          # classe 6: vagas, difusão de vocabulário
+cd obra && python3 coletar_obra.py               # classe 7: fila de interconexão, energia firme
+```
+
+Cada corrida acrescenta um retrato datado — **é a acumulação que produz sinal, não o retrato isolado**. Ler o output à luz de duas perguntas: que termos técnicos ganharam empresas desde o último retrato (zona de inflexão: 3-8 empresas distintas), e que região duplicou a energia firme pedida. Um sinal aqui não é uma tese — é um *pointer* para investigar na fase de descoberta, e nunca conta como compromisso custoso por si só (é L2, não L5).
+
+Se um coletor falhar (rede, fonte em baixo), regista-se e continua-se: a corrida não depende deles.
+
 **3. Descoberta (fases 0-5 do motor).** Correr as fases com pesquisa web live, orçamento ~10-15 WebSearch (WebFetch pode estar bloqueado no gateway — se der 403, não insistir). As regras de honestidade do motor não são opcionais, porque o valor da série está na sua auditabilidade:
 - cada sinal contado carrega **fonte + data**;
 - o que não se obteve declara-se **"NÃO OBTÍVEL"** — nunca se preenche com um valor plausível;
