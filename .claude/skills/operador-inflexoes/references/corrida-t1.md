@@ -17,7 +17,7 @@ O estado vivo está no repo do projeto: branch `claude/handoff-audit-0w2a31` de 
 - ações de desbloqueio de cartões retidos — tentar; **regra das 2 falhas: à segunda tentativa falhada de desbloqueio, o cartão morre** (registado, nunca apagado);
 - verificação dos invalidadores de cada cartão entregue — para cada um, registar "disparou" ou "não disparou" com a evidência; um sinal *reforçador* novo também se regista;
 - calendário de eventos (earnings, etc.) — confirmar datas, notar as que se aproximam;
-- proxy de valor — registar o fecho mais recente disponível de cada cartão entregue e do benchmark.
+- **proxy de valor — correr `cd coletor-sinais/precos && python3 coletar_precos.py`** (fonte única, retorno desde a data de entrega contra o benchmark). Manter `carteira.json` alinhada com os cartões do arquivo. Duas regras que não se contornam: uma linha marcada **SUSPEITO** não se cita — resolve-se o símbolo primeiro (declarar `exchange`/`moeda`); e um ADR de balcão é **proxy**, nunca um fecho oficial. Não misturar valores desta série com os históricos de outro fornecedor — foi esse o erro que obrigou à nota "manter fonte consistente".
 
 **2.5. Sinais precoces (classes 6 e 7) — antes da descoberta.** Correr os dois coletores, que vivem em `coletor-sinais/`:
 

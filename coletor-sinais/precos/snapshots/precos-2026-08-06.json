@@ -1,0 +1,169 @@
+{
+ "data": "2026-08-06",
+ "janela_desde": "2026-07-09",
+ "posicoes": [
+  {
+   "ticker": "FORM",
+   "rotulo": "Teste eletro-ótico WL",
+   "fonte": "twelvedata",
+   "desde": "2026-07-13",
+   "instrumento": {
+    "exchange": "NASDAQ",
+    "currency": "USD",
+    "type": "Common Stock"
+   },
+   "fecho_inicial": 110.3,
+   "data_ultimo": "2026-08-06",
+   "fecho_ultimo": 115.12,
+   "retorno_pct": 4.37,
+   "benchmark": "SOXX",
+   "benchmark_pct": -3.88,
+   "excesso_pp": 8.25
+  },
+  {
+   "ticker": "TER",
+   "rotulo": "Teste eletro-ótico WL (par)",
+   "fonte": "twelvedata",
+   "desde": "2026-07-13",
+   "instrumento": {
+    "exchange": "NASDAQ",
+    "currency": "USD",
+    "type": "Common Stock"
+   },
+   "fecho_inicial": 341.11,
+   "data_ultimo": "2026-08-06",
+   "fecho_ultimo": 384.91,
+   "retorno_pct": 12.84,
+   "benchmark": "SOXX",
+   "benchmark_pct": -3.88,
+   "excesso_pp": 16.72
+  },
+  {
+   "ticker": "IBIDF",
+   "rotulo": "Ibiden — substrato ABF (ADR OTC, PROXY de 4062.T)",
+   "fonte": "twelvedata",
+   "desde": "2026-07-17",
+   "instrumento": {
+    "exchange": "OTC",
+    "currency": "USD",
+    "type": "Common Stock"
+   },
+   "fecho_inicial": 97.97,
+   "data_ultimo": "2026-08-04",
+   "fecho_ultimo": 98.4,
+   "retorno_pct": 0.44,
+   "benchmark": "SOXX",
+   "benchmark_pct": 1.98,
+   "excesso_pp": -1.54,
+   "ressalva": "ADR em USD e pouco líquido. NÃO é a linha da TSE: os valores históricos em ienes do arquivo não são comparáveis com esta série. Serve para medir direção relativa, não para citar como fecho oficial.",
+   "proxy_de": "4062.T"
+  },
+  {
+   "ticker": "FEIM",
+   "rotulo": "Relógios atómicos / time-frequency (cartão RETIDO — mede-se na mesma)",
+   "fonte": "twelvedata",
+   "desde": "2026-07-20",
+   "instrumento": {
+    "exchange": "NASDAQ",
+    "currency": "USD",
+    "type": "Common Stock"
+   },
+   "fecho_inicial": 66.72,
+   "data_ultimo": "2026-08-06",
+   "fecho_ultimo": 74.4,
+   "retorno_pct": 11.51,
+   "benchmark": "SPY",
+   "benchmark_pct": 3.56,
+   "excesso_pp": 7.95
+  },
+  {
+   "ticker": "LEU",
+   "rotulo": "Funil nuclear — watchlist estacionada (pré-momentum)",
+   "fonte": "twelvedata",
+   "desde": "2026-07-20",
+   "instrumento": {
+    "exchange": "NYSE",
+    "currency": "USD",
+    "type": "Common Stock"
+   },
+   "fecho_inicial": 156.39,
+   "data_ultimo": "2026-08-06",
+   "fecho_ultimo": 178.15,
+   "retorno_pct": 13.91,
+   "benchmark": "SPY",
+   "benchmark_pct": 3.56,
+   "excesso_pp": 10.35
+  },
+  {
+   "ticker": "CCJ",
+   "rotulo": "Funil nuclear — handoff com nota de diluição",
+   "fonte": "twelvedata",
+   "desde": "2026-07-20",
+   "instrumento": {
+    "exchange": "NYSE",
+    "currency": "USD",
+    "type": "Common Stock"
+   },
+   "fecho_inicial": 84.85,
+   "data_ultimo": "2026-08-06",
+   "fecho_ultimo": 93.63,
+   "retorno_pct": 10.35,
+   "benchmark": "SPY",
+   "benchmark_pct": 3.56,
+   "excesso_pp": 6.79
+  },
+  {
+   "ticker": "SILXY",
+   "rotulo": "Silex Systems (GLE/PLEF) — parqueada, opção conjetural",
+   "fonte": "twelvedata",
+   "desde": "2026-07-20",
+   "instrumento": {
+    "exchange": "OTC",
+    "currency": "USD",
+    "type": "American Depositary Receipt"
+   },
+   "fecho_inicial": 15.69,
+   "data_ultimo": "2026-08-05",
+   "fecho_ultimo": 17.61,
+   "retorno_pct": 12.24,
+   "benchmark": "SPY",
+   "benchmark_pct": 3.56,
+   "excesso_pp": 8.68,
+   "ressalva": "ADR OTC MUITO pouco líquido (centenas de ações/dia). O preço é indicativo, não uma cotação utilizável. A linha real é SLX na ASX, em AUD. NUNCA usar 'SLX' sem bolsa: esse símbolo devolve o VanEck Steel ETF (NYSE).",
+   "proxy_de": "SLX.AX"
+  }
+ ],
+ "benchmarks": {
+  "SOXX": {
+   "ticker": "SOXX",
+   "rotulo": "iShares Semiconductor (benchmark do cabaz CPO)",
+   "fonte": "twelvedata",
+   "desde": "2026-07-09",
+   "instrumento": {
+    "exchange": "NASDAQ",
+    "currency": "USD",
+    "type": "ETF"
+   },
+   "fecho_inicial": 581.7,
+   "data_ultimo": "2026-08-06",
+   "fecho_ultimo": 532.135,
+   "retorno_pct": -8.52
+  },
+  "SPY": {
+   "ticker": "SPY",
+   "rotulo": "S&P 500 (benchmark largo)",
+   "fonte": "twelvedata",
+   "desde": "2026-07-09",
+   "instrumento": {
+    "exchange": "NYSE",
+    "currency": "USD",
+    "type": "ETF"
+   },
+   "fecho_inicial": 751.71,
+   "data_ultimo": "2026-08-06",
+   "fecho_ultimo": 768.53,
+   "retorno_pct": 2.24
+  }
+ },
+ "nota": "Retornos desde a data de entrega/promoção no arquivo. Sem entradas, stops, sizing ou timing — descoberta ≠ execução."
+}

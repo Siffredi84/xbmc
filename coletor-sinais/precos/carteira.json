@@ -1,0 +1,21 @@
+{
+ "_nota": "Cartões entregues e picks a vigiar. A data é a de entrega/promoção no arquivo — é a partir dela que se mede. Editar quando o arquivo mudar; nunca apagar histórico, marcar com 'ativo': false.",
+ "_guarda_de_simbolo": "'exchange' e 'moeda' NÃO são decoração: o coletor compara-os com o que o fornecedor devolve e marca a linha SUSPEITO se divergirem. Foi assim que se apanhou 'SLX', que devolve a Silex Systems (ASX) OU o VanEck Steel ETF (NYSE) conforme o fornecedor — e devolveu o ETF de aço.",
+ "benchmarks": [
+  {"ticker": "SOXX", "rotulo": "iShares Semiconductor (benchmark do cabaz CPO)", "moeda": "USD"},
+  {"ticker": "SPY", "rotulo": "S&P 500 (benchmark largo)", "moeda": "USD"}
+ ],
+ "cartoes": [
+  {"ticker": "FORM", "desde": "2026-07-11", "rotulo": "Teste eletro-ótico WL", "benchmark": "SOXX", "moeda": "USD", "ativo": true},
+  {"ticker": "TER", "desde": "2026-07-11", "rotulo": "Teste eletro-ótico WL (par)", "benchmark": "SOXX", "moeda": "USD", "ativo": true},
+  {"ticker": "IBIDF", "desde": "2026-07-17", "rotulo": "Ibiden — substrato ABF (ADR OTC, PROXY de 4062.T)", "benchmark": "SOXX", "exchange": "OTC", "moeda": "USD", "ativo": true, "proxy_de": "4062.T",
+   "ressalva": "ADR em USD e pouco líquido. NÃO é a linha da TSE: os valores históricos em ienes do arquivo não são comparáveis com esta série. Serve para medir direção relativa, não para citar como fecho oficial."},
+  {"ticker": "FEIM", "desde": "2026-07-20", "rotulo": "Relógios atómicos / time-frequency (cartão RETIDO — mede-se na mesma)", "benchmark": "SPY", "moeda": "USD", "ativo": true}
+ ],
+ "picks_de_tese": [
+  {"ticker": "LEU", "desde": "2026-07-19", "rotulo": "Funil nuclear — watchlist estacionada (pré-momentum)", "benchmark": "SPY", "moeda": "USD", "ativo": true},
+  {"ticker": "CCJ", "desde": "2026-07-19", "rotulo": "Funil nuclear — handoff com nota de diluição", "benchmark": "SPY", "moeda": "USD", "ativo": true},
+  {"ticker": "SILXY", "desde": "2026-07-19", "rotulo": "Silex Systems (GLE/PLEF) — parqueada, opção conjetural", "benchmark": "SPY", "exchange": "OTC", "moeda": "USD", "ativo": true, "proxy_de": "SLX.AX",
+   "ressalva": "ADR OTC MUITO pouco líquido (centenas de ações/dia). O preço é indicativo, não uma cotação utilizável. A linha real é SLX na ASX, em AUD. NUNCA usar 'SLX' sem bolsa: esse símbolo devolve o VanEck Steel ETF (NYSE)."}
+ ]
+}
