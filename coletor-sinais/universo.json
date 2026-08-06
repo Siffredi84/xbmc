@@ -1,0 +1,192 @@
+[
+ {
+  "ats": "lever",
+  "token": "shieldai",
+  "jobs": 440
+ },
+ {
+  "ats": "greenhouse",
+  "token": "relativity",
+  "jobs": 359
+ },
+ {
+  "ats": "greenhouse",
+  "token": "nebius",
+  "jobs": 357
+ },
+ {
+  "ats": "ashby",
+  "token": "crusoe",
+  "jobs": 355
+ },
+ {
+  "ats": "ashby",
+  "token": "saronic",
+  "jobs": 251
+ },
+ {
+  "ats": "lever",
+  "token": "sila",
+  "jobs": 198
+ },
+ {
+  "ats": "greenhouse",
+  "token": "redwoodmaterials",
+  "jobs": 139
+ },
+ {
+  "ats": "greenhouse",
+  "token": "tenstorrent",
+  "jobs": 126
+ },
+ {
+  "ats": "ashby",
+  "token": "cerebras",
+  "jobs": 123
+ },
+ {
+  "ats": "ashby",
+  "token": "skydio",
+  "jobs": 115
+ },
+ {
+  "ats": "ashby",
+  "token": "etched",
+  "jobs": 110
+ },
+ {
+  "ats": "ashby",
+  "token": "helion",
+  "jobs": 109
+ },
+ {
+  "ats": "greenhouse",
+  "token": "ionq",
+  "jobs": 100
+ },
+ {
+  "ats": "greenhouse",
+  "token": "apptronik",
+  "jobs": 83
+ },
+ {
+  "ats": "ashby",
+  "token": "1x",
+  "jobs": 80
+ },
+ {
+  "ats": "greenhouse",
+  "token": "ursamajor",
+  "jobs": 73
+ },
+ {
+  "ats": "greenhouse",
+  "token": "psiquantum",
+  "jobs": 69
+ },
+ {
+  "ats": "greenhouse",
+  "token": "lightmatter",
+  "jobs": 68
+ },
+ {
+  "ats": "greenhouse",
+  "token": "oklo",
+  "jobs": 65
+ },
+ {
+  "ats": "lever",
+  "token": "intersect",
+  "jobs": 38
+ },
+ {
+  "ats": "ashby",
+  "token": "astera",
+  "jobs": 38
+ },
+ {
+  "ats": "greenhouse",
+  "token": "pacificfusion",
+  "jobs": 33
+ },
+ {
+  "ats": "ashby",
+  "token": "physicalintelligence",
+  "jobs": 29
+ },
+ {
+  "ats": "greenhouse",
+  "token": "kairospower",
+  "jobs": 26
+ },
+ {
+  "ats": "lever",
+  "token": "dexterity",
+  "jobs": 25
+ },
+ {
+  "ats": "greenhouse",
+  "token": "figure",
+  "jobs": 19
+ },
+ {
+  "ats": "greenhouse",
+  "token": "factorialenergy",
+  "jobs": 14
+ },
+ {
+  "ats": "greenhouse",
+  "token": "avantus",
+  "jobs": 13
+ },
+ {
+  "ats": "lever",
+  "token": "arcadia",
+  "jobs": 13
+ },
+ {
+  "ats": "ashby",
+  "token": "insitro",
+  "jobs": 13
+ },
+ {
+  "ats": "lever",
+  "token": "rigetti",
+  "jobs": 11
+ },
+ {
+  "ats": "lever",
+  "token": "charmindustrial",
+  "jobs": 10
+ },
+ {
+  "ats": "ashby",
+  "token": "substrate",
+  "jobs": 7
+ },
+ {
+  "ats": "greenhouse",
+  "token": "group14",
+  "jobs": 5
+ },
+ {
+  "ats": "ashby",
+  "token": "twelve",
+  "jobs": 5
+ },
+ {
+  "ats": "greenhouse",
+  "token": "plusPower",
+  "jobs": 3
+ },
+ {
+  "ats": "ashby",
+  "token": "impulse",
+  "jobs": 3
+ },
+ {
+  "ats": "greenhouse",
+  "token": "shield",
+  "jobs": 1
+ }
+]
