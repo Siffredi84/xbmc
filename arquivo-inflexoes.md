@@ -245,3 +245,75 @@ A corrida T1 executada antes desta correção leu um estado incompleto. Não dev
 - **Cartões mortos acumulados por regra de calendário:** 1 — FEIM.
 - **Cartões retidos ativos:** OII, FTI, FORM, TER, Ibiden, NOV e SCWO.
 - **Defeito operacional documentado:** intervalo normal pós-earnings sem próximo calendário publicado provoca retenção. Regra não alterada; correção mínima candidata permanece não aprovada.
+
+---
+
+## T1 — ponto de dados #5, 07/08/2026
+
+**Ficheiro completo:** `corrida-inflexoes-2026-08-07.md`  
+**Cutoff factual:** 07/08/2026.  
+**Nota de infraestrutura:** o branch canónico tinha sido apagado e foi restaurado exatamente no commit `c449812d618d445ec20dcdc04602be780638cf24` antes da corrida; não houve reconstrução por memória.
+
+### Mudanças de estado
+
+| Tema/cartão | Estado após 07/08 | Fundamentação |
+|---|---|---|
+| OII | **MORTO** | 2.ª falha de calendário; nenhum invalidador industrial novo demonstrado |
+| FTI | **MORTO** | 2.ª falha de calendário; nenhum invalidador industrial novo demonstrado |
+| FORM | **MORTO** | 2.ª falha de calendário; nenhum invalidador industrial novo demonstrado |
+| TER | **MORTO** | 2.ª falha de calendário; nenhum invalidador industrial novo demonstrado |
+| Ibiden | **MORTO** | 2.ª falha de calendário; nenhum invalidador industrial novo demonstrado |
+| NOV | **MORTO** | 2.ª falha da ação de desbloqueio: materialidade >20% de flexible pipe continua não verificável |
+| SCWO | **RETIDO — 1/2** | revisão mensal ainda não vencida; contador não incrementado |
+| FEIM | **MORTO** | inalterado |
+| CPO | **QUALIFICADO — TRANSICAO_2_PARA_3, sem cartão entregável** | FORM/TER mortos procedimentalmente; tema não invalidado |
+| Tubo flexível subsea | **QUALIFICADO — TRANSICAO_2_PARA_3, sem cartão entregável** | FTI/NOV mortos como cartões; portagem não invalidada |
+| Integridade/intervenção subsea | **QUALIFICADO — nível 1–2, sem cartão entregável** | OII morto como cartão; tema não invalidado |
+| PFAS destruction | **QUALIFICADO COM RESERVA — TRANSICAO_2_PARA_3** | SCWO continua retido; re-teste de invisibilidade não vencido |
+| Funil nuclear / LEU | **WATCHLIST_ESTACIONADA** | gatilho DOE original era pré-existente à tese; preço 07/08 $191,37 abaixo da MA200 calculada ~$223,70 |
+
+### Proxy IBKR — ponto #5
+
+| Instrumento | Fecho 07/08 | Variação vs ponto #4 |
+|---|---:|---:|
+| OII | $47,97 | −4,88% |
+| FTI | $69,62 | −0,57% |
+| NOV | $19,65 | −1,70% |
+| SCWO | $2,15 | −2,71% |
+| FORM | $117,39 | −2,42% |
+| TER | $379,31 | −6,01% |
+| SOXX | $543,27 | +0,20% |
+| Ibiden | **NÃO OBTÍVEL IBKR** | NÃO OBTÍVEL |
+| FEIM | $74,43 | +5,81% |
+| LEU | $191,37 | +1,13% |
+
+### Discovery e métricas
+
+- Temas novos qualificados: **0**.
+- Invalidadores industriais acionados: **0**.
+- Propulsão/transmissões de defesa mostrou aceleração industrial, mas a Reuters cobriu diretamente o recorde de encomendas da RENK em 06/08 → nível 3, sem edge de invisibilidade.
+- Baker Hughes/Vertiv reforçam power/data-center infrastructure, mas a família permanece `MADURO`.
+- ReElement US$25M reforça refinação crítica, mas não cria 3 classes novas e sobrepõe-se a NdFeB `MADURO`.
+- **T1 longitudinal:** 5 pontos.
+- **Cartões mortos nesta corrida:** 6.
+- **Cartões mortos acumulados:** 7, incluindo FEIM.
+- **Cartões retidos ativos:** 1 — SCWO.
+- **Watchlist ativa:** 0.
+
+### Governação — falha reproduzida
+
+A regra “duas falhas → morto” mostrou dependência da frequência de revisão: OII, FTI, FORM, TER e Ibiden morreram após duas verificações separadas por apenas 48 horas, sem mudança industrial. A ligação causal está agora documentada. A menor correção candidata é distinguir uma nova oportunidade real de obtenção de calendário da mera repetição da mesma ausência pós-evento. **Não aplicada; motor canónico intacto.**
+
+### Correção factual — tese nuclear
+
+O contrato DOE de US$900M da Centrus foi assinado em 01/07/2026 e arquivado na SEC em 02/07, antes da tese de 19/07. Logo, o gatilho “novo task order DOE” não pode contar como validação forward. Em 07/08, LEU fechou a $191,37 e a MA200 calculada pelo histórico IBKR era ~$223,70; o gatilho de preço não disparou.
+
+### Próximas ações
+
+1. 11/08/2026 — re-teste média tensão.
+2. 18/08/2026 — re-teste arm-and-fire.
+3. Próxima revisão mensal — 2.ª ação de desbloqueio SCWO (calendário + dollar volume 20d >$5M).
+4. 29/08–12/09/2026 — re-teste invisibilidade subsea/PFAS.
+5. 02/09/2026 — re-teste radioisótopos/cGMP.
+6. Até 05/09/2026 — reavaliação do gradiente CPO.
+7. Cada T1 — LEU: confirmar financiamento material do build-out e recalcular MA200.
